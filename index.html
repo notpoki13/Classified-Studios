@@ -26,10 +26,6 @@
             text-decoration: none;
         }
 
-        /* =========================
-           NAVBAR
-        ========================= */
-
         nav {
             position: fixed;
             top: 0;
@@ -87,10 +83,6 @@
         nav ul li a:hover {
             color: #fff;
         }
-
-        /* =========================
-           HERO
-        ========================= */
 
         .hero {
             min-height: 100vh;
@@ -180,10 +172,6 @@
             background: #fff;
         }
 
-        /* =========================
-           GENERAL
-        ========================= */
-
         section {
             padding: 100px 7%;
         }
@@ -202,10 +190,6 @@
             color: #888;
         }
 
-        /* =========================
-           FEATURED GAME
-        ========================= */
-
         .featured {
             max-width: 1100px;
             margin: auto;
@@ -213,6 +197,14 @@
             border: 1px solid #292929;
             border-radius: 15px;
             overflow: hidden;
+        }
+
+        .featured-image {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+            background: #101010;
         }
 
         .featured-content {
@@ -229,10 +221,6 @@
             margin-bottom: 25px;
         }
 
-        /* =========================
-           GAMES
-        ========================= */
-
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -245,13 +233,25 @@
             background: #101010;
             border: 1px solid #252525;
             border-radius: 12px;
-            padding: 25px;
+            overflow: hidden;
             transition: 0.25s;
         }
 
         .game-card:hover {
             transform: translateY(-5px);
             border-color: #555;
+        }
+
+        .game-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+            background: #090909;
+        }
+
+        .game-info {
+            padding: 25px;
         }
 
         .game-card h3 {
@@ -264,9 +264,15 @@
             margin-bottom: 20px;
         }
 
-        /* =========================
-           ABOUT
-        ========================= */
+        .game-status {
+            display: inline-block;
+            color: #aaa;
+            border: 1px solid #333;
+            padding: 4px 9px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
 
         .about {
             max-width: 900px;
@@ -278,10 +284,6 @@
             color: #999;
             font-size: 17px;
         }
-
-        /* =========================
-           DEVELOPMENT
-        ========================= */
 
         .development-grid {
             max-width: 1100px;
@@ -305,10 +307,6 @@
         .dev-box p {
             color: #888;
         }
-
-        /* =========================
-           JOBS
-        ========================= */
 
         #jobs {
             background: #080808;
@@ -362,20 +360,12 @@
             transform: translateY(-2px);
         }
 
-        /* =========================
-           SOCIALS
-        ========================= */
-
         .socials {
             display: flex;
             justify-content: center;
             gap: 15px;
             flex-wrap: wrap;
         }
-
-        /* =========================
-           FOOTER
-        ========================= */
 
         footer {
             border-top: 1px solid #222;
@@ -384,10 +374,6 @@
             color: #666;
             font-size: 13px;
         }
-
-        /* =========================
-           MODAL
-        ========================= */
 
         .modal {
             position: fixed;
@@ -415,16 +401,6 @@
             border-radius: 15px;
             padding: 30px;
             position: relative;
-            box-shadow: 0 20px 80px rgba(0,0,0,0.8);
-        }
-
-        .modal-box h2 {
-            margin-bottom: 5px;
-        }
-
-        .modal-box > p {
-            color: #777;
-            margin-bottom: 25px;
         }
 
         .close-modal {
@@ -436,10 +412,6 @@
             color: #aaa;
             font-size: 28px;
             cursor: pointer;
-        }
-
-        .close-modal:hover {
-            color: #fff;
         }
 
         .application-form {
@@ -468,12 +440,6 @@
             font-family: inherit;
         }
 
-        .application-form input:focus,
-        .application-form select:focus,
-        .application-form textarea:focus {
-            border-color: #777;
-        }
-
         .application-form textarea {
             min-height: 120px;
             resize: vertical;
@@ -487,53 +453,27 @@
             color: #000;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
-        }
-
-        .application-submit:hover {
-            background: #fff;
         }
 
         .application-submit:disabled {
             opacity: 0.6;
-            cursor: not-allowed;
         }
 
         .form-message {
-            display: none;
-            padding: 12px;
-            border-radius: 7px;
-            margin-top: 5px;
-            background: #161616;
-            border: 1px solid #333;
-            color: #ccc;
-            font-size: 14px;
-        }
-
-        .form-message.show {
-            display: block;
+            color: #aaa;
+            margin-top: 8px;
         }
 
         .success-message {
-            text-align: center;
-            padding: 25px 10px;
             display: none;
+            text-align: center;
+            padding: 25px;
         }
 
         .success-message.show {
             display: block;
         }
 
-        .success-message h3 {
-            font-size: 25px;
-            margin-bottom: 10px;
-        }
-
-        .success-message p {
-            color: #888;
-        }
-
-        /* Honeypot */
         .website-field {
             position: absolute !important;
             left: -9999px !important;
@@ -542,12 +482,7 @@
             overflow: hidden !important;
         }
 
-        /* =========================
-           MOBILE
-        ========================= */
-
         @media (max-width: 700px) {
-
             nav {
                 padding: 0 4%;
             }
@@ -582,10 +517,6 @@
                 padding: 75px 5%;
             }
 
-            .section-title h2 {
-                font-size: 30px;
-            }
-
             .featured-content {
                 padding: 25px;
             }
@@ -599,937 +530,852 @@
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================= -->
+<nav>
+    <a href="#home" class="nav-logo">
+        <div class="mini-logo">C</div>
+        <span>CLASSIFIED STUDIOS</span>
+    </a>
 
-    <nav>
-        <a href="#home" class="nav-logo">
-            <div class="mini-logo">C</div>
-            <span>CLASSIFIED STUDIOS</span>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#games">Games</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#development">Development</a></li>
+        <li><a href="#jobs">Jobs</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="hero-logo">C</div>
+
+        <h1>CLASSIFIED STUDIOS</h1>
+
+        <p>
+            Creating unique Roblox experiences,
+            experimental projects, and games worth playing.
+        </p>
+
+        <div class="hero-buttons">
+            <a class="button primary" href="#games">
+                VIEW GAMES
+            </a>
+
+            <a class="button" href="#jobs">
+                JOIN THE TEAM
+            </a>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="section-title">
+        <h2>Featured Game</h2>
+        <p>Our latest project.</p>
+    </div>
+
+    <div class="featured" id="featuredGame">
+        <div class="featured-content">
+            <h3>Loading...</h3>
+            <p>Loading our featured game.</p>
+        </div>
+    </div>
+</section>
+
+<section id="games">
+    <div class="section-title">
+        <h2>Our Games</h2>
+        <p>Projects developed by Classified Studios.</p>
+    </div>
+
+    <div class="games-grid" id="gamesGrid">
+        <div class="game-card">
+            <div class="game-info">
+                <h3>Loading games...</h3>
+                <p>Loading games from Classified Studios.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="section-title">
+        <h2>About Us</h2>
+    </div>
+
+    <div class="about">
+        <p>
+            Classified Studios is a Roblox game development
+            studio focused on creating memorable experiences,
+            interesting mechanics, and original ideas.
+        </p>
+    </div>
+</section>
+
+<section id="development">
+    <div class="section-title">
+        <h2>Development</h2>
+        <p>Building the future of Classified Studios.</p>
+    </div>
+
+    <div class="development-grid">
+
+        <div class="dev-box">
+            <h3>🎮 Game Development</h3>
+            <p>
+                Designing gameplay systems and experiences for Roblox.
+            </p>
+        </div>
+
+        <div class="dev-box">
+            <h3>🏗️ Building</h3>
+            <p>
+                Creating environments, maps, locations and detailed worlds.
+            </p>
+        </div>
+
+        <div class="dev-box">
+            <h3>✨ VFX</h3>
+            <p>
+                Creating visual effects that make gameplay more immersive.
+            </p>
+        </div>
+
+        <div class="dev-box">
+            <h3>💻 Scripting</h3>
+            <p>
+                Developing gameplay systems, mechanics and technical features.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section id="jobs">
+    <div class="section-title">
+        <h2>Join Classified Studios</h2>
+        <p>
+            Think you can contribute to our projects?
+            Apply for a development position.
+        </p>
+    </div>
+
+    <div class="jobs-grid">
+
+        <div class="job-card">
+            <h3>🎬 Animator</h3>
+            <p>Create character and gameplay animations.</p>
+            <button class="apply-button" onclick="openApplication('Animator')">
+                APPLY
+            </button>
+        </div>
+
+        <div class="job-card">
+            <h3>🏗️ Builder</h3>
+            <p>Build environments, maps and detailed locations.</p>
+            <button class="apply-button" onclick="openApplication('Builder')">
+                APPLY
+            </button>
+        </div>
+
+        <div class="job-card">
+            <h3>✨ VFX Artist</h3>
+            <p>Create visual effects and gameplay visuals.</p>
+            <button class="apply-button" onclick="openApplication('VFX Artist')">
+                APPLY
+            </button>
+        </div>
+
+        <div class="job-card">
+            <h3>💻 Scripter</h3>
+            <p>Develop gameplay systems and mechanics.</p>
+            <button class="apply-button" onclick="openApplication('Scripter')">
+                APPLY
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <div class="section-title">
+        <h2>Find Us</h2>
+        <p>Follow Classified Studios and keep up with our projects.</p>
+    </div>
+
+    <div class="socials">
+
+        <a class="button"
+           href="https://www.roblox.com/users/3259064637/profile"
+           target="_blank"
+           rel="noopener noreferrer">
+            ROBLOX
         </a>
 
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#games">Games</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#development">Development</a></li>
-            <li><a href="#jobs">Jobs</a></li>
-        </ul>
-    </nav>
+        <a class="button"
+           href="https://discord.gg/pwR7Xxs7Ra"
+           target="_blank"
+           rel="noopener noreferrer">
+            DISCORD
+        </a>
 
+        <a class="button"
+           href="https://m.youtube.com/channel/UCJBBKeHI5Rr2fo5bdIufqnA?ra=m"
+           target="_blank"
+           rel="noopener noreferrer">
+            YOUTUBE
+        </a>
 
-    <!-- =========================
-         HERO
-    ========================= -->
+        <a class="button"
+           href="https://x.com/"
+           target="_blank"
+           rel="noopener noreferrer">
+            X
+        </a>
 
-    <section class="hero" id="home">
+    </div>
+</section>
 
-        <div class="hero-content">
+<div class="modal" id="applicationModal">
 
-            <div class="hero-logo">C</div>
+    <div class="modal-box">
 
-            <h1>CLASSIFIED STUDIOS</h1>
+        <button
+            class="close-modal"
+            onclick="closeApplication()">
+            ×
+        </button>
 
-            <p>
-                Creating unique Roblox experiences,
-                experimental projects, and games worth playing.
+        <div id="applicationContent">
+
+            <h2>Job Application</h2>
+
+            <p style="color:#777;margin-bottom:25px;">
+                Apply to join Classified Studios.
             </p>
 
-            <div class="hero-buttons">
-
-                <a
-                    class="button primary"
-                    href="#games"
-                >
-                    VIEW GAMES
-                </a>
-
-                <a
-                    class="button"
-                    href="#jobs"
-                >
-                    JOIN THE TEAM
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         FEATURED GAME
-    ========================= -->
-
-    <section>
-
-        <div class="section-title">
-            <h2>Featured Game</h2>
-            <p>Our latest project.</p>
-        </div>
-
-        <div class="featured">
-
-            <div class="featured-content">
-
-                <h3>Hello Neighbor</h3>
-
-                <p>
-                    Explore the mysterious neighborhood,
-                    uncover secrets, and survive what waits
-                    inside the Neighbor's house.
-                </p>
-
-                <a
-                    class="button primary"
-                    href="https://www.roblox.com/games/86495471270335/Hello-Neighbor"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    PLAY ON ROBLOX
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         GAMES
-    ========================= -->
-
-    <section id="games">
-
-        <div class="section-title">
-            <h2>Our Games</h2>
-            <p>Projects developed by Classified Studios.</p>
-        </div>
-
-        <div class="games-grid">
-
-            <div class="game-card">
-
-                <h3>Hello Neighbor</h3>
-
-                <p>
-                    A Roblox experience inspired by
-                    mysterious neighborhood horror.
-                </p>
-
-                <a
-                    class="button"
-                    href="https://www.roblox.com/games/86495471270335/Hello-Neighbor"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    PLAY
-                </a>
-
-            </div>
-
-
-            <div class="game-card">
-
-                <h3>Subliminal</h3>
-
-                <p>
-                    Enter strange environments and
-                    discover what isn't quite right.
-                </p>
-
-                <a
-                    class="button"
-                    href="https://www.roblox.com/games/120870537763162/Subliminal"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    PLAY
-                </a>
-
-            </div>
-
-
-            <div class="game-card">
-
-                <h3>Coming Soon</h3>
-
-                <p>
-                    A new Classified Studios project
-                    is currently in development.
-                </p>
-
-                <span class="button">
-                    SOON
-                </span>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         ABOUT
-    ========================= -->
-
-    <section id="about">
-
-        <div class="section-title">
-            <h2>About Us</h2>
-        </div>
-
-        <div class="about">
-
-            <p>
-                Classified Studios is a Roblox game development
-                studio focused on creating memorable experiences,
-                interesting mechanics, and original ideas.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         DEVELOPMENT
-    ========================= -->
-
-    <section id="development">
-
-        <div class="section-title">
-
-            <h2>Development</h2>
-
-            <p>
-                Building the future of Classified Studios.
-            </p>
-
-        </div>
-
-        <div class="development-grid">
-
-            <div class="dev-box">
-
-                <h3>🎮 Game Development</h3>
-
-                <p>
-                    Designing gameplay systems and
-                    experiences for Roblox.
-                </p>
-
-            </div>
-
-
-            <div class="dev-box">
-
-                <h3>🏗️ Building</h3>
-
-                <p>
-                    Creating environments, maps,
-                    locations, and detailed worlds.
-                </p>
-
-            </div>
-
-
-            <div class="dev-box">
-
-                <h3>✨ VFX</h3>
-
-                <p>
-                    Creating visual effects that make
-                    gameplay more immersive.
-                </p>
-
-            </div>
-
-
-            <div class="dev-box">
-
-                <h3>💻 Scripting</h3>
-
-                <p>
-                    Developing gameplay systems,
-                    mechanics, and technical features.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         JOBS
-    ========================= -->
-
-    <section id="jobs">
-
-        <div class="section-title">
-
-            <h2>Join Classified Studios</h2>
-
-            <p>
-                Think you can contribute to our projects?
-                Apply for a development position.
-            </p>
-
-        </div>
-
-
-        <div class="jobs-grid">
-
-            <!-- Animator -->
-
-            <div class="job-card">
-
-                <h3>🎬 Animator</h3>
-
-                <p>
-                    Create character, creature, and
-                    gameplay animations.
-                </p>
+            <form class="application-form" id="applicationForm">
+
+                <label>
+                    Name
+                    <input
+                        type="text"
+                        name="name"
+                        maxlength="60"
+                        required>
+                </label>
+
+                <label>
+                    Roblox Username
+                    <input
+                        type="text"
+                        name="roblox_username"
+                        maxlength="30"
+                        required>
+                </label>
+
+                <label>
+                    Position
+                    <select name="position" id="positionSelect" required>
+                        <option>Animator</option>
+                        <option>Builder</option>
+                        <option>VFX Artist</option>
+                        <option>Scripter</option>
+                    </select>
+                </label>
+
+                <label>
+                    Portfolio Link
+                    <input
+                        type="url"
+                        name="portfolio"
+                        maxlength="300"
+                        placeholder="https://...">
+                </label>
+
+                <label>
+                    Experience
+                    <textarea
+                        name="experience"
+                        maxlength="3000"
+                        required
+                        placeholder="Tell us about your experience..."></textarea>
+                </label>
+
+                <label>
+                    Why do you want to join?
+                    <textarea
+                        name="reason"
+                        maxlength="3000"
+                        required
+                        placeholder="Tell us why you want to join Classified Studios..."></textarea>
+                </label>
+
+                <div class="website-field">
+                    <input type="text" name="website" tabindex="-1">
+                </div>
 
                 <button
-                    class="apply-button"
-                    type="button"
-                    onclick="openApplication('Animator')"
-                >
-                    APPLY
+                    class="application-submit"
+                    id="submitApplication">
+                    SUBMIT APPLICATION
                 </button>
 
-            </div>
+                <div
+                    class="form-message"
+                    id="formMessage">
+                </div>
 
-
-            <!-- Builder -->
-
-            <div class="job-card">
-
-                <h3>🏗️ Builder</h3>
-
-                <p>
-                    Build environments, maps,
-                    structures, and detailed locations.
-                </p>
-
-                <button
-                    class="apply-button"
-                    type="button"
-                    onclick="openApplication('Builder')"
-                >
-                    APPLY
-                </button>
-
-            </div>
-
-
-            <!-- VFX -->
-
-            <div class="job-card">
-
-                <h3>✨ VFX Artist</h3>
-
-                <p>
-                    Create visual effects,
-                    particles, lighting effects,
-                    and gameplay visuals.
-                </p>
-
-                <button
-                    class="apply-button"
-                    type="button"
-                    onclick="openApplication('VFX Artist')"
-                >
-                    APPLY
-                </button>
-
-            </div>
-
-
-            <!-- Scripter -->
-
-            <div class="job-card">
-
-                <h3>💻 Scripter</h3>
-
-                <p>
-                    Develop gameplay systems,
-                    mechanics, UI systems,
-                    and backend logic.
-                </p>
-
-                <button
-                    class="apply-button"
-                    type="button"
-                    onclick="openApplication('Scripter')"
-                >
-                    APPLY
-                </button>
-
-            </div>
+            </form>
 
         </div>
 
-    </section>
+        <div class="success-message" id="successMessage">
 
+            <h3>Application Submitted!</h3>
 
-    <!-- =========================
-         SOCIALS
-    ========================= -->
-
-    <section>
-
-        <div class="section-title">
-
-            <h2>Find Us</h2>
-
-            <p>
-                Follow Classified Studios and
-                keep up with our projects.
+            <p style="color:#888;">
+                Your application has been sent to Classified Studios.
             </p>
 
-        </div>
-
-
-        <div class="socials">
-
-            <a
-                class="button"
-                href="https://www.roblox.com/users/3259064637/profile"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                ROBLOX
-            </a>
-
-            <a
-                class="button"
-                href="https://discord.gg/pwR7Xxs7Ra"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                DISCORD
-            </a>
-
-            <a
-                class="button"
-                href="https://m.youtube.com/channel/UCJBBKeHI5Rr2fo5bdIufqnA?ra=m"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                YOUTUBE
-            </a>
-
-            <a
-                class="button"
-                href="https://x.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                X
-            </a>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         APPLICATION MODAL
-    ========================= -->
-
-    <div
-        class="modal"
-        id="applicationModal"
-        aria-hidden="true"
-    >
-
-        <div class="modal-box">
+            <p style="color:#888;margin-top:10px;">
+                Your application is now <strong>Pending</strong>.
+            </p>
 
             <button
-                class="close-modal"
-                type="button"
+                class="button"
                 onclick="closeApplication()"
-                aria-label="Close"
-            >
-                ×
+                style="margin-top:20px;">
+                CLOSE
             </button>
-
-
-            <!-- FORM -->
-
-            <div id="applicationContent">
-
-                <h2>Job Application</h2>
-
-                <p>
-                    Apply to join Classified Studios.
-                    Please provide accurate information.
-                </p>
-
-
-                <form
-                    class="application-form"
-                    id="applicationForm"
-                    method="POST"
-                    target="applicationFrame"
-                >
-
-                    <!-- Name -->
-
-                    <label>
-                        Name
-
-                        <input
-                            type="text"
-                            name="name"
-                            maxlength="60"
-                            required
-                            autocomplete="name"
-                        >
-
-                    </label>
-
-
-                    <!-- Roblox Username -->
-
-                    <label>
-                        Roblox Username
-
-                        <input
-                            type="text"
-                            name="robloxUsername"
-                            maxlength="30"
-                            required
-                            autocomplete="off"
-                        >
-
-                    </label>
-
-
-                    <!-- Position -->
-
-                    <label>
-                        Position
-
-                        <select
-                            name="position"
-                            id="positionSelect"
-                            required
-                        >
-
-                            <option value="Animator">
-                                Animator
-                            </option>
-
-                            <option value="Builder">
-                                Builder
-                            </option>
-
-                            <option value="VFX Artist">
-                                VFX Artist
-                            </option>
-
-                            <option value="Scripter">
-                                Scripter
-                            </option>
-
-                        </select>
-
-                    </label>
-
-
-                    <!-- Portfolio -->
-
-                    <label>
-                        Portfolio Link
-                        <span style="color:#666;">
-                            (Optional)
-                        </span>
-
-                        <input
-                            type="url"
-                            name="portfolio"
-                            maxlength="300"
-                            placeholder="https://..."
-                        >
-
-                    </label>
-
-
-                    <!-- Experience -->
-
-                    <label>
-                        Experience
-
-                        <textarea
-                            name="experience"
-                            maxlength="3000"
-                            required
-                            placeholder="Tell us about your experience..."
-                        ></textarea>
-
-                    </label>
-
-
-                    <!-- Reason -->
-
-                    <label>
-                        Why do you want to join?
-
-                        <textarea
-                            name="reason"
-                            maxlength="3000"
-                            required
-                            placeholder="Tell us why you want to join Classified Studios..."
-                        ></textarea>
-
-                    </label>
-
-
-                    <!-- Honeypot -->
-
-                    <div class="website-field">
-
-                        <label>
-                            Website
-
-                            <input
-                                type="text"
-                                name="website"
-                                autocomplete="off"
-                                tabindex="-1"
-                            >
-
-                        </label>
-
-                    </div>
-
-
-                    <button
-                        class="application-submit"
-                        id="submitApplication"
-                        type="submit"
-                    >
-                        SUBMIT APPLICATION
-                    </button>
-
-
-                    <div
-                        class="form-message"
-                        id="formMessage"
-                    ></div>
-
-                </form>
-
-            </div>
-
-
-            <!-- SUCCESS -->
-
-            <div
-                class="success-message"
-                id="successMessage"
-            >
-
-                <h3>Application Submitted!</h3>
-
-                <p>
-                    Your application has been sent to
-                    Classified Studios for review.
-                </p>
-
-                <p style="margin-top:10px;">
-                    Your application will start as
-                    <strong>Pending</strong>.
-                </p>
-
-                <button
-                    class="button"
-                    type="button"
-                    onclick="closeApplication()"
-                    style="margin-top:20px;"
-                >
-                    CLOSE
-                </button>
-
-            </div>
 
         </div>
 
     </div>
 
+</div>
 
-    <!-- Hidden iframe used to submit the form -->
+<footer>
+    © 2026 Classified Studios. All rights reserved.
+</footer>
 
-    <iframe
-        name="applicationFrame"
-        id="applicationFrame"
-        style="display:none;"
-    ></iframe>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
 
-    <!-- =========================
-         FOOTER
-    ========================= -->
+    /*
+    ========================================================
+    SUPABASE CONFIG
+    ========================================================
 
-    <footer>
+    WE WILL PUT YOUR SUPABASE VALUES HERE LATER.
+    */
 
-        © 2026 Classified Studios.
-        All rights reserved.
+    const SUPABASE_URL =
+        "PASTE_YOUR_SUPABASE_URL_HERE";
 
-    </footer>
+    const SUPABASE_PUBLISHABLE_KEY =
+        "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
 
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
-
-    <script>
-
-        /*
-        ========================================================
-        GOOGLE APPS SCRIPT URL
-        ========================================================
-        */
-
-        const APPLICATION_URL =
-            "https://script.google.com/macros/s/AKfycbxdV2sFcy-Cq2SmS35IchApSoBfD9vorXg1w0R6zFmWb39tTbhQUxHi2x4VaA6NUzd_4g/exec";
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
 
 
-        /*
-        ========================================================
-        ELEMENTS
-        ========================================================
-        */
+    /*
+    ========================================================
+    ESCAPE HTML
+    ========================================================
+    */
 
-        const applicationModal =
-            document.getElementById("applicationModal");
+    function escapeHTML(value) {
 
-        const applicationForm =
-            document.getElementById("applicationForm");
+        return String(value || "").replace(
+            /[&<>"']/g,
+            function(character) {
 
-        const positionSelect =
-            document.getElementById("positionSelect");
-
-        const applicationContent =
-            document.getElementById("applicationContent");
-
-        const successMessage =
-            document.getElementById("successMessage");
-
-        const submitApplication =
-            document.getElementById("submitApplication");
-
-        const formMessage =
-            document.getElementById("formMessage");
-
-
-        /*
-        ========================================================
-        OPEN APPLICATION
-        ========================================================
-        */
-
-        function openApplication(position) {
-
-            positionSelect.value = position;
-
-            applicationContent.style.display = "block";
-
-            successMessage.classList.remove("show");
-
-            formMessage.classList.remove("show");
-
-            formMessage.textContent = "";
-
-            applicationForm.reset();
-
-            positionSelect.value = position;
-
-            applicationModal.classList.add("active");
-
-            applicationModal.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-            document.body.style.overflow = "hidden";
-        }
-
-
-        /*
-        ========================================================
-        CLOSE APPLICATION
-        ========================================================
-        */
-
-        function closeApplication() {
-
-            applicationModal.classList.remove("active");
-
-            applicationModal.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-            document.body.style.overflow = "";
-
-            applicationForm.reset();
-
-            applicationContent.style.display = "block";
-
-            successMessage.classList.remove("show");
-
-            formMessage.classList.remove("show");
-
-            formMessage.textContent = "";
-        }
-
-
-        /*
-        ========================================================
-        CLOSE WHEN CLICKING OUTSIDE
-        ========================================================
-        */
-
-        applicationModal.addEventListener(
-            "click",
-            function(event) {
-
-                if (event.target === applicationModal) {
-                    closeApplication();
-                }
+                return {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#039;"
+                }[character];
 
             }
         );
 
+    }
 
-        /*
-        ========================================================
-        ESC KEY
-        ========================================================
-        */
 
-        document.addEventListener(
-            "keydown",
-            function(event) {
+    /*
+    ========================================================
+    IMAGE URL
+    ========================================================
+    */
 
-                if (
-                    event.key === "Escape" &&
-                    applicationModal.classList.contains("active")
-                ) {
-                    closeApplication();
+    function getImageURL(image) {
+
+        if (!image) {
+            return "";
+        }
+
+        image = image.trim();
+
+        if (
+            image.startsWith("https://") ||
+            image.startsWith("http://") ||
+            image.startsWith("/")
+        ) {
+            return image;
+        }
+
+        return image;
+    }
+
+
+    /*
+    ========================================================
+    LOAD GAMES
+    ========================================================
+    */
+
+    async function loadGames() {
+
+        const gamesGrid =
+            document.getElementById("gamesGrid");
+
+        const featuredGame =
+            document.getElementById("featuredGame");
+
+
+        const result =
+            await supabaseClient
+                .from("games")
+                .select("*")
+                .eq("published", true)
+                .order("featured", {
+                    ascending: false
+                })
+                .order("created_at", {
+                    ascending: false
+                });
+
+
+        if (result.error) {
+
+            console.error(result.error);
+
+            gamesGrid.innerHTML = `
+                <div class="game-card">
+                    <div class="game-info">
+                        <h3>Games unavailable</h3>
+                        <p>
+                            The game database has not been configured yet.
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const games = result.data || [];
+
+
+        if (games.length === 0) {
+
+            gamesGrid.innerHTML = `
+                <div class="game-card">
+                    <div class="game-info">
+                        <h3>No games yet</h3>
+                        <p>
+                            Games added from the admin dashboard
+                            will appear here.
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            featuredGame.innerHTML = `
+                <div class="featured-content">
+                    <h3>No featured game</h3>
+                    <p>
+                        Add a game through the admin dashboard.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        gamesGrid.innerHTML =
+            games.map(function(game) {
+
+                const image =
+                    getImageURL(game.thumbnail_url);
+
+
+                return `
+                    <div class="game-card">
+
+                        ${
+                            image
+                            ?
+                            `
+                            <img
+                                class="game-image"
+                                src="${escapeHTML(image)}"
+                                alt="${escapeHTML(game.title)}"
+                                loading="lazy">
+                            `
+                            :
+                            ""
+                        }
+
+                        <div class="game-info">
+
+                            <span class="game-status">
+                                ${escapeHTML(game.status)}
+                            </span>
+
+                            <h3>
+                                ${escapeHTML(game.title)}
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(game.description)}
+                            </p>
+
+                            ${
+                                game.roblox_url
+                                ?
+                                `
+                                <a
+                                    class="button"
+                                    href="${escapeHTML(game.roblox_url)}"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    PLAY
+                                </a>
+                                `
+                                :
+                                ""
+                            }
+
+                        </div>
+
+                    </div>
+                `;
+
+            }).join("");
+
+
+        const featured =
+            games.find(function(game) {
+                return game.featured;
+            }) || games[0];
+
+
+        const featuredImage =
+            getImageURL(featured.thumbnail_url);
+
+
+        featuredGame.innerHTML = `
+
+            ${
+                featuredImage
+                ?
+                `
+                <img
+                    class="featured-image"
+                    src="${escapeHTML(featuredImage)}"
+                    alt="${escapeHTML(featured.title)}">
+                `
+                :
+                ""
+            }
+
+            <div class="featured-content">
+
+                <span class="game-status">
+                    ${escapeHTML(featured.status)}
+                </span>
+
+                <h3>
+                    ${escapeHTML(featured.title)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(featured.description)}
+                </p>
+
+                ${
+                    featured.roblox_url
+                    ?
+                    `
+                    <a
+                        class="button primary"
+                        href="${escapeHTML(featured.roblox_url)}"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        PLAY ON ROBLOX
+                    </a>
+                    `
+                    :
+                    ""
                 }
 
+            </div>
+        `;
+
+    }
+
+
+    /*
+    ========================================================
+    APPLICATION MODAL
+    ========================================================
+    */
+
+    const applicationModal =
+        document.getElementById("applicationModal");
+
+    const applicationForm =
+        document.getElementById("applicationForm");
+
+    const positionSelect =
+        document.getElementById("positionSelect");
+
+    const applicationContent =
+        document.getElementById("applicationContent");
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+    const submitApplication =
+        document.getElementById("submitApplication");
+
+    const formMessage =
+        document.getElementById("formMessage");
+
+
+    function openApplication(position) {
+
+        applicationForm.reset();
+
+        positionSelect.value = position;
+
+        applicationContent.style.display =
+            "block";
+
+        successMessage.classList.remove("show");
+
+        formMessage.textContent = "";
+
+        applicationModal.classList.add("active");
+
+        document.body.style.overflow =
+            "hidden";
+    }
+
+
+    function closeApplication() {
+
+        applicationModal.classList.remove("active");
+
+        document.body.style.overflow =
+            "";
+
+        applicationForm.reset();
+
+        applicationContent.style.display =
+            "block";
+
+        successMessage.classList.remove("show");
+
+        formMessage.textContent = "";
+    }
+
+
+    applicationModal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === applicationModal
+            ) {
+                closeApplication();
             }
-        );
+
+        }
+    );
 
 
-        /*
-        ========================================================
-        SUBMIT APPLICATION
-        ========================================================
-        */
+    document.addEventListener(
+        "keydown",
+        function(event) {
 
-        applicationForm.addEventListener(
-            "submit",
-            function(event) {
+            if (
+                event.key === "Escape" &&
+                applicationModal.classList.contains("active")
+            ) {
+                closeApplication();
+            }
 
-                event.preventDefault();
+        }
+    );
 
 
-                /*
-                Prevent double submissions.
-                */
+    /*
+    ========================================================
+    SUBMIT APPLICATION
+    ========================================================
+    */
 
-                submitApplication.disabled = true;
+    applicationForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            submitApplication.disabled = true;
+
+            submitApplication.textContent =
+                "SUBMITTING...";
+
+            formMessage.textContent = "";
+
+
+            const formData =
+                new FormData(applicationForm);
+
+
+            const website =
+                String(
+                    formData.get("website") || ""
+                ).trim();
+
+
+            if (website !== "") {
+
+                submitApplication.disabled = false;
 
                 submitApplication.textContent =
-                    "SUBMITTING...";
+                    "SUBMIT APPLICATION";
 
-
-                formMessage.classList.remove("show");
-
-                formMessage.textContent = "";
-
-
-                /*
-                Check the Google Apps Script URL.
-                */
-
-                if (
-                    !APPLICATION_URL ||
-                    APPLICATION_URL.includes(
-                        "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"
-                    )
-                ) {
-
-                    formMessage.textContent =
-                        "Application system is not configured.";
-
-                    formMessage.classList.add("show");
-
-                    submitApplication.disabled = false;
-
-                    submitApplication.textContent =
-                        "SUBMIT APPLICATION";
-
-                    return;
-                }
-
-
-                /*
-                Set the Google Apps Script endpoint.
-                */
-
-                applicationForm.action =
-                    APPLICATION_URL;
-
-
-                /*
-                Submit through the hidden iframe.
-                */
-
-                applicationForm.submit();
-
-
-                /*
-                Give Google Apps Script time to receive
-                the submission, then show confirmation.
-                */
-
-                setTimeout(
-                    function() {
-
-                        applicationContent.style.display =
-                            "none";
-
-                        successMessage.classList.add(
-                            "show"
-                        );
-
-                        submitApplication.disabled =
-                            false;
-
-                        submitApplication.textContent =
-                            "SUBMIT APPLICATION";
-
-                    },
-                    1200
-                );
-
+                return;
             }
-        );
 
-    </script>
+
+            const application = {
+
+                name:
+                    String(
+                        formData.get("name") || ""
+                    ).trim(),
+
+                roblox_username:
+                    String(
+                        formData.get("roblox_username") || ""
+                    ).trim(),
+
+                position:
+                    String(
+                        formData.get("position") || ""
+                    ).trim(),
+
+                portfolio:
+                    String(
+                        formData.get("portfolio") || ""
+                    ).trim() || null,
+
+                experience:
+                    String(
+                        formData.get("experience") || ""
+                    ).trim(),
+
+                reason:
+                    String(
+                        formData.get("reason") || ""
+                    ).trim(),
+
+                status:
+                    "Pending"
+
+            };
+
+
+            const result =
+                await supabaseClient
+                    .from("applications")
+                    .insert(application);
+
+
+            if (result.error) {
+
+                console.error(result.error);
+
+                formMessage.textContent =
+                    "Something went wrong. Please try again.";
+
+                submitApplication.disabled = false;
+
+                submitApplication.textContent =
+                    "SUBMIT APPLICATION";
+
+                return;
+            }
+
+
+            applicationContent.style.display =
+                "none";
+
+            successMessage.classList.add(
+                "show"
+            );
+
+            submitApplication.disabled = false;
+
+            submitApplication.textContent =
+                "SUBMIT APPLICATION";
+
+        }
+    );
+
+
+    /*
+    ========================================================
+    START
+    ========================================================
+    */
+
+    if (
+        !SUPABASE_URL.includes(
+            "PASTE_YOUR"
+        )
+    ) {
+        loadGames();
+    } else {
+
+        document.getElementById("gamesGrid").innerHTML = `
+            <div class="game-card">
+                <div class="game-info">
+                    <h3>Database setup required</h3>
+                    <p>
+                        Configure Supabase before games can load.
+                    </p>
+                </div>
+            </div>
+        `;
+
+    }
+
+</script>
 
 </body>
 </html>
