@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -581,6 +580,64 @@
         }
 
         /* ================================
+           JOBS
+        ================================= */
+
+        #jobs {
+            background: #050505;
+            border-top: 1px solid #171717;
+        }
+
+        .jobs-grid {
+            max-width: 1150px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 18px;
+        }
+
+        .job-card {
+            padding: 30px;
+
+            border: 1px solid #252525;
+            border-radius: 12px;
+
+            background: #0d0d0d;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-6px);
+            border-color: #555;
+        }
+
+        .job-number {
+            color: #555;
+
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .job-card h3 {
+            margin: 14px 0 10px;
+            font-size: 22px;
+        }
+
+        .job-card p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        /* ================================
            SOCIALS
         ================================= */
 
@@ -716,13 +773,13 @@
         </a>
 
         <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#games">Games</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#development">Development</a></li>
-    <li><a href="#socials">Socials</a></li>
-    <li><a href="#jobs">Jobs</a></li>
-</ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#games">Games</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#development">Development</a></li>
+            <li><a href="#socials">Socials</a></li>
+            <li><a href="#jobs">Jobs</a></li>
+        </ul>
 
     </nav>
 
@@ -736,17 +793,6 @@
         <section class="hero">
 
             <div class="hero-content">
-
-                <!--
-                    📝 LOGO
-
-                    This is currently a CSS recreation of your "C" logo.
-
-                    If you later have the actual logo image, replace this
-                    entire div with:
-
-                    <img src="images/logo.png" alt="Classified Studios Logo">
-                -->
 
                 <div class="logo-large">
                     C
@@ -774,8 +820,6 @@
                     <a class="button button-primary" href="#games">
                         VIEW GAMES
                     </a>
-
-                    <!-- 📝 REPLACE THIS WITH YOUR ROBLOX PROFILE/GROUP URL -->
 
                     <a
                         class="button button-dark"
@@ -824,20 +868,6 @@
 
             <div class="featured-game">
 
-                <!--
-                    📝 FEATURED GAME IMAGE
-
-                    Replace this div with:
-
-                    <img
-                        src="images/game1.png"
-                        alt="Your Game Name"
-                    >
-
-                    Put your image inside:
-                    images/game1.png
-                -->
-
                 <div class="featured-image">
                     GAME THUMBNAIL
                 </div>
@@ -846,8 +876,6 @@
                 <div class="featured-info">
 
                     <span class="game-status">
-                        <!-- 📝 CHANGE STATUS:
-                             AVAILABLE / IN DEVELOPMENT / COMING SOON -->
                         FEATURED GAME
                     </span>
 
@@ -864,8 +892,6 @@
                         game interesting and why players should
                         check it out.
                     </p>
-
-                    <!-- 📝 REPLACE WITH YOUR GAME'S ROBLOX URL -->
 
                     <a
                         class="button button-primary"
@@ -890,8 +916,6 @@
 
                 <article class="game-card">
 
-                    <!-- 📝 REPLACE WITH YOUR GAME IMAGE -->
-
                     <div class="game-card-image">
                         GAME IMAGE
                     </div>
@@ -907,8 +931,6 @@
                             <!-- 📝 GAME DESCRIPTION -->
                             Short description of this game.
                         </p>
-
-                        <!-- 📝 REPLACE WITH ROBLOX GAME URL -->
 
                         <a
                             class="button button-dark"
@@ -1063,9 +1085,6 @@
 
             <div class="development-grid">
 
-
-                <!-- DEVELOPMENT ITEM 1 -->
-
                 <article class="dev-card">
 
                     <div class="dev-number">
@@ -1079,14 +1098,11 @@
 
                     <p>
                         <!-- 📝 PROJECT DESCRIPTION -->
-
                         Describe what you're currently developing.
                     </p>
 
                 </article>
 
-
-                <!-- DEVELOPMENT ITEM 2 -->
 
                 <article class="dev-card">
 
@@ -1101,15 +1117,12 @@
 
                     <p>
                         <!-- 📝 PROJECT DESCRIPTION -->
-
                         Put information about another upcoming
                         project here.
                     </p>
 
                 </article>
 
-
-                <!-- DEVELOPMENT ITEM 3 -->
 
                 <article class="dev-card">
 
@@ -1124,10 +1137,156 @@
 
                     <p>
                         <!-- 📝 PROJECT DESCRIPTION -->
-
                         You can literally keep this project
                         classified until you're ready to reveal it.
                     </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             JOBS
+        =========================================== -->
+
+        <section id="jobs">
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    JOIN THE TEAM
+                </div>
+
+                <h2>
+                    Jobs
+                </h2>
+
+                <p>
+                    Want to help create the next Classified Studios
+                    game? Check out our available positions.
+                </p>
+
+            </div>
+
+
+            <div class="jobs-grid">
+
+
+                <!-- JOB 1 -->
+
+                <article class="job-card">
+
+                    <div class="job-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Animator
+                    </h3>
+
+                    <p>
+                        Create character, creature, and gameplay
+                        animations for our Roblox projects.
+                    </p>
+
+                    <!-- 📝 REPLACE # WITH YOUR APPLICATION LINK -->
+
+                    <a
+                        class="button button-dark"
+                        href="#"
+                    >
+                        APPLY
+                    </a>
+
+                </article>
+
+
+                <!-- JOB 2 -->
+
+                <article class="job-card">
+
+                    <div class="job-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Builder
+                    </h3>
+
+                    <p>
+                        Build detailed environments, maps,
+                        interiors, and locations for our games.
+                    </p>
+
+                    <!-- 📝 REPLACE # WITH YOUR APPLICATION LINK -->
+
+                    <a
+                        class="button button-dark"
+                        href="#"
+                    >
+                        APPLY
+                    </a>
+
+                </article>
+
+
+                <!-- JOB 3 -->
+
+                <article class="job-card">
+
+                    <div class="job-number">
+                        03
+                    </div>
+
+                    <h3>
+                        VFX Artist
+                    </h3>
+
+                    <p>
+                        Create visual effects that bring
+                        Classified Studios games to life.
+                    </p>
+
+                    <!-- 📝 REPLACE # WITH YOUR APPLICATION LINK -->
+
+                    <a
+                        class="button button-dark"
+                        href="#"
+                    >
+                        APPLY
+                    </a>
+
+                </article>
+
+
+                <!-- JOB 4 -->
+
+                <article class="job-card">
+
+                    <div class="job-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Scripter
+                    </h3>
+
+                    <p>
+                        Program gameplay systems, mechanics,
+                        features, and other Roblox experiences.
+                    </p>
+
+                    <!-- 📝 REPLACE # WITH YOUR APPLICATION LINK -->
+
+                    <a
+                        class="button button-dark"
+                        href="#"
+                    >
+                        APPLY
+                    </a>
 
                 </article>
 
@@ -1163,8 +1322,6 @@
                 <div class="social-buttons">
 
 
-                    <!-- 📝 REPLACE WITH YOUR ROBLOX URL -->
-
                     <a
                         class="button button-dark"
                         href="https://www.roblox.com/users/3259064637/profile"
@@ -1174,8 +1331,6 @@
                         ROBLOX
                     </a>
 
-
-                    <!-- 📝 REPLACE WITH YOUR DISCORD INVITE -->
 
                     <a
                         class="button button-dark"
@@ -1187,8 +1342,6 @@
                     </a>
 
 
-                    <!-- 📝 REPLACE WITH YOUR YOUTUBE CHANNEL -->
-
                     <a
                         class="button button-dark"
                         href="https://m.youtube.com/channel/UCJBBKeHI5Rr2fo5bdIufqnA?ra=m"
@@ -1198,8 +1351,6 @@
                         YOUTUBE
                     </a>
 
-
-                    <!-- 📝 DELETE THIS BUTTON IF YOU DON'T USE X -->
 
                     <a
                         class="button button-dark"
@@ -1228,16 +1379,12 @@
         <p>
             © 2026
             <strong>
-                <!-- 📝 PUT YOUR STUDIO NAME HERE -->
                 Classified Studios
             </strong>.
             All rights reserved.
         </p>
 
-        <!-- 📝 OPTIONAL: ADD A SMALL FOOTER MESSAGE HERE -->
-
     </footer>
 
 </body>
 </html>
-```
