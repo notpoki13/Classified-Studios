@@ -1,1379 +1,1900 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Classified Studios - Roblox Game Development Studio">
-    <title>Classified Studios</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #050505;
-            color: #ffffff;
-            line-height: 1.6;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            background: rgba(5, 5, 5, 0.95);
-            border-bottom: 1px solid #222;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 6%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .mini-logo {
-            width: 38px;
-            height: 38px;
-            border: 2px solid #aaa;
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-            font-weight: 900;
-            color: #ddd;
-            background: linear-gradient(145deg, #444, #080808);
-            box-shadow:
-                inset 2px 2px 5px rgba(255,255,255,0.2),
-                inset -2px -2px 5px rgba(0,0,0,0.8);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-
-        nav ul li a {
-            color: #aaa;
-            font-size: 14px;
-            font-weight: bold;
-            transition: 0.25s;
-        }
-
-        nav ul li a:hover {
-            color: #fff;
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 20px 80px;
-            background:
-                radial-gradient(circle at center, #202020 0%, #090909 45%, #020202 100%);
-        }
-
-        .hero-content {
-            max-width: 900px;
-        }
-
-        .hero-logo {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 30px;
-            border: 4px solid #aaa;
-            border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 105px;
-            font-weight: 900;
-            color: #d8d8d8;
-            background: linear-gradient(
-                145deg,
-                #777 0%,
-                #252525 35%,
-                #050505 70%,
-                #555 100%
-            );
-            box-shadow:
-                inset 5px 5px 12px rgba(255,255,255,0.25),
-                inset -8px -8px 15px rgba(0,0,0,0.8),
-                0 20px 60px rgba(0,0,0,0.6);
-        }
-
-        .hero h1 {
-            font-size: clamp(42px, 8vw, 82px);
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-        }
-
-        .hero p {
-            color: #999;
-            font-size: 18px;
-            max-width: 650px;
-            margin: auto;
-        }
-
-        .hero-buttons {
-            margin-top: 35px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 13px 25px;
-            border-radius: 7px;
-            border: 1px solid #555;
-            background: #111;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.25s;
-        }
-
-        .button:hover {
-            background: #292929;
-            transform: translateY(-2px);
-        }
-
-        .button.primary {
-            background: #eee;
-            color: #000;
-            border-color: #eee;
-        }
-
-        .button.primary:hover {
-            background: #fff;
-        }
-
-        section {
-            padding: 100px 7%;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 38px;
-            margin-bottom: 10px;
-        }
-
-        .section-title p {
-            color: #888;
-        }
-
-        .featured {
-            max-width: 1100px;
-            margin: auto;
-            background: linear-gradient(145deg, #171717, #090909);
-            border: 1px solid #292929;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .featured-image {
-            width: 100%;
-            max-height: 420px;
-            object-fit: cover;
-            display: block;
-            background: #101010;
-        }
-
-        .featured-content {
-            padding: 40px;
-        }
-
-        .featured-content h3 {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
-
-        .featured-content p {
-            color: #999;
-            margin-bottom: 25px;
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .game-card {
-            background: #101010;
-            border: 1px solid #252525;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: 0.25s;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: #555;
-        }
-
-        .game-image {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            display: block;
-            background: #090909;
-        }
-
-        .game-info {
-            padding: 25px;
-        }
-
-        .game-card h3 {
-            margin-bottom: 10px;
-        }
-
-        .game-card p {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .game-status {
-            display: inline-block;
-            color: #aaa;
-            border: 1px solid #333;
-            padding: 4px 9px;
-            border-radius: 20px;
-            font-size: 11px;
-            margin-bottom: 12px;
-        }
-
-        .about {
-            max-width: 900px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .about p {
-            color: #999;
-            font-size: 17px;
-        }
-
-        .development-grid {
-            max-width: 1100px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .dev-box {
-            padding: 30px;
-            background: #0f0f0f;
-            border: 1px solid #252525;
-            border-radius: 12px;
-        }
-
-        .dev-box h3 {
-            margin-bottom: 10px;
-        }
-
-        .dev-box p {
-            color: #888;
-        }
-
-        #jobs {
-            background: #080808;
-        }
-
-        .jobs-grid {
-            max-width: 1100px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 20px;
-        }
-
-        .job-card {
-            background: #111;
-            border: 1px solid #292929;
-            border-radius: 12px;
-            padding: 30px;
-            transition: 0.25s;
-        }
-
-        .job-card:hover {
-            border-color: #666;
-            transform: translateY(-4px);
-        }
-
-        .job-card h3 {
-            margin-bottom: 8px;
-        }
-
-        .job-card p {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .apply-button {
-            width: 100%;
-            border: none;
-            padding: 12px;
-            border-radius: 7px;
-            background: #eee;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.25s;
-        }
-
-        .apply-button:hover {
-            background: #fff;
-            transform: translateY(-2px);
-        }
-
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        footer {
-            border-top: 1px solid #222;
-            padding: 30px 7%;
-            text-align: center;
-            color: #666;
-            font-size: 13px;
-        }
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 2000;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-box {
-            width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 30px;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            right: 18px;
-            top: 15px;
-            border: none;
-            background: transparent;
-            color: #aaa;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-        .application-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .application-form label {
-            font-size: 13px;
-            color: #aaa;
-            font-weight: bold;
-        }
-
-        .application-form input,
-        .application-form select,
-        .application-form textarea {
-            width: 100%;
-            margin-top: 7px;
-            padding: 12px;
-            background: #080808;
-            color: #fff;
-            border: 1px solid #333;
-            border-radius: 7px;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .application-form textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .application-submit {
-            border: none;
-            padding: 13px;
-            border-radius: 7px;
-            background: #eee;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .application-submit:disabled {
-            opacity: 0.6;
-        }
-
-        .form-message {
-            color: #aaa;
-            margin-top: 8px;
-        }
-
-        .success-message {
-            display: none;
-            text-align: center;
-            padding: 25px;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        .website-field {
-            position: absolute !important;
-            left: -9999px !important;
-            width: 1px !important;
-            height: 1px !important;
-            overflow: hidden !important;
-        }
-
-        @media (max-width: 700px) {
-            nav {
-                padding: 0 4%;
-            }
-
-            nav ul {
-                gap: 12px;
-            }
-
-            nav ul li a {
-                font-size: 11px;
-            }
-
-            .nav-logo span {
-                display: none;
-            }
-
-            .hero-logo {
-                width: 120px;
-                height: 120px;
-                font-size: 80px;
-            }
-
-            .hero h1 {
-                letter-spacing: 2px;
-            }
-
-            .hero p {
-                font-size: 15px;
-            }
-
-            section {
-                padding: 75px 5%;
-            }
-
-            .featured-content {
-                padding: 25px;
-            }
-
-            .modal-box {
-                padding: 22px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Classified Studios</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050505;
+    color: #f2f2f2;
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+.container {
+    width: min(1150px, 92%);
+    margin: auto;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    background: rgba(5, 5, 5, 0.88);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid #222;
+}
+
+.nav-inner {
+    min-height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.nav-c {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    color: #111;
+    font-size: 25px;
+    font-weight: 900;
+
+    background: linear-gradient(
+        145deg,
+        #f0f0f0,
+        #777
+    );
+
+    box-shadow:
+        inset 2px 2px 4px rgba(255,255,255,.5),
+        inset -2px -2px 5px rgba(0,0,0,.6);
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #999;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    padding-top: 90px;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #1b1b1b 0%,
+            #090909 40%,
+            #050505 75%
+        );
+}
+
+.hero-content {
+    text-align: center;
+    width: 100%;
+}
+
+.hero-logo {
+    width: 145px;
+    height: 145px;
+
+    margin: 0 auto 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 30px;
+
+    color: #111;
+    font-size: 100px;
+    font-weight: 900;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fafafa,
+            #999 45%,
+            #444
+        );
+
+    box-shadow:
+        inset 5px 5px 12px rgba(255,255,255,.45),
+        inset -7px -7px 15px rgba(0,0,0,.7),
+        0 30px 80px rgba(0,0,0,.7);
+}
+
+.hero h1 {
+    font-size: clamp(42px, 8vw, 82px);
+    letter-spacing: 4px;
+    line-height: 1.05;
+
+    background: linear-gradient(
+        180deg,
+        #fff,
+        #777
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: 22px auto 0;
+
+    color: #999;
+    font-size: 18px;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section {
+    padding: 100px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.section-title h2 {
+    font-size: 38px;
+    letter-spacing: 2px;
+}
+
+.section-title p {
+    margin-top: 10px;
+    color: #777;
+}
+
+/* =========================
+   FEATURED GAME
+========================= */
+
+.featured {
+    border: 1px solid #292929;
+    border-radius: 18px;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #131313,
+            #080808
+        );
+
+    box-shadow: 0 25px 70px rgba(0,0,0,.4);
+}
+
+.featured-image {
+    width: 100%;
+    height: 360px;
+
+    object-fit: cover;
+
+    display: block;
+
+    background: #111;
+}
+
+.featured-content {
+    padding: 35px;
+}
+
+.featured-content h3 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.featured-content p {
+    color: #999;
+    max-width: 700px;
+}
+
+.roblox-button {
+    display: inline-block;
+
+    margin-top: 22px;
+
+    padding: 12px 20px;
+
+    border-radius: 9px;
+
+    color: #111;
+    background: linear-gradient(
+        145deg,
+        #eee,
+        #888
+    );
+
+    font-weight: 800;
+
+    transition: .2s;
+}
+
+.roblox-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+/* =========================
+   GAME GRID
+========================= */
+
+.games-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(260px, 1fr)
+        );
+
+    gap: 22px;
+}
+
+.game-card {
+    overflow: hidden;
+
+    border: 1px solid #292929;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121212,
+            #090909
+        );
+
+    transition: .25s;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: #444;
+}
+
+.game-card img {
+    width: 100%;
+    height: 175px;
+
+    display: block;
+
+    object-fit: cover;
+
+    background: #151515;
+}
+
+.game-content {
+    padding: 22px;
+}
+
+.game-content h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.game-content p {
+    color: #888;
+    min-height: 52px;
+}
+
+.game-link {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    color: #ccc;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.game-link:hover {
+    color: white;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about-box {
+    max-width: 850px;
+    margin: auto;
+
+    padding: 35px;
+
+    border: 1px solid #292929;
+    border-radius: 15px;
+
+    background: #0d0d0d;
+
+    text-align: center;
+}
+
+.about-box p {
+    color: #999;
+    font-size: 17px;
+}
+
+/* =========================
+   DEVELOPMENT
+========================= */
+
+.development-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+.dev-card {
+    padding: 28px;
+
+    border: 1px solid #292929;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121212,
+            #090909
+        );
+}
+
+.dev-card h3 {
+    margin-bottom: 8px;
+}
+
+.dev-card p {
+    color: #888;
+}
+
+/* =========================
+   JOBS
+========================= */
+
+.jobs-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+.job-card {
+    padding: 28px;
+
+    border: 1px solid #292929;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #121212,
+            #090909
+        );
+}
+
+.job-card h3 {
+    margin-bottom: 8px;
+}
+
+.job-card p {
+    color: #888;
+}
+
+.apply-button {
+    margin-top: 18px;
+
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #333;
+    border-radius: 8px;
+
+    color: white;
+    background: #151515;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.apply-button:hover {
+    background: #222;
+}
+
+/* =========================
+   SOCIALS
+========================= */
+
+.socials {
+    display: flex;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+.socials a {
+    padding: 11px 17px;
+
+    border: 1px solid #292929;
+    border-radius: 9px;
+
+    color: #aaa;
+    background: #0d0d0d;
+
+    transition: .2s;
+}
+
+.socials a:hover {
+    color: white;
+    border-color: #444;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 35px 0;
+
+    border-top: 1px solid #222;
+
+    text-align: center;
+
+    color: #666;
+    font-size: 13px;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0,0,0,.82);
+
+    backdrop-filter: blur(8px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: min(650px, 100%);
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 30px;
+
+    border: 1px solid #333;
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #080808
+        );
+
+    box-shadow: 0 30px 100px rgba(0,0,0,.7);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.close-button {
+    width: 35px;
+    height: 35px;
+
+    border: 1px solid #333;
+    border-radius: 8px;
+
+    color: #aaa;
+    background: #111;
+
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #aaa;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #303030;
+    border-radius: 8px;
+
+    outline: none;
+
+    color: white;
+    background: #0a0a0a;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #666;
+}
+
+.submit-button {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 0;
+    border-radius: 8px;
+
+    color: #111;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eee,
+            #888
+        );
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.submit-button:disabled {
+    opacity: .5;
+    cursor: wait;
+}
+
+.form-message {
+    margin-top: 15px;
+
+    text-align: center;
+
+    color: #aaa;
+}
+
+/* Honeypot */
+
+.website-field {
+    position: absolute !important;
+    left: -9999px !important;
+    opacity: 0 !important;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .nav-inner {
+        min-height: 62px;
+    }
+
+    .nav-links {
+        gap: 12px;
+    }
+
+    .nav-links a {
+        font-size: 11px;
+    }
+
+    .hero-logo {
+        width: 110px;
+        height: 110px;
+        font-size: 75px;
+    }
+
+    .hero h1 {
+        letter-spacing: 2px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    section {
+        padding: 75px 0;
+    }
+
+    .featured-image {
+        height: 220px;
+    }
+
+    .featured-content {
+        padding: 24px;
+    }
+
+    .featured-content h3 {
+        font-size: 26px;
+    }
+
+    .section-title h2 {
+        font-size: 30px;
+    }
+
+    .modal-box {
+        padding: 22px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<nav>
-    <a href="#home" class="nav-logo">
-        <div class="mini-logo">C</div>
-        <span>CLASSIFIED STUDIOS</span>
-    </a>
+<!-- =========================
+     NAVBAR
+========================= -->
 
-    <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#games">Games</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#development">Development</a></li>
-        <li><a href="#jobs">Jobs</a></li>
-    </ul>
+<nav class="navbar">
+
+    <div class="container nav-inner">
+
+        <a href="#home" class="nav-logo">
+
+            <div class="nav-c">
+                C
+            </div>
+
+            CLASSIFIED STUDIOS
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="#home">Home</a>
+            <a href="#games">Games</a>
+            <a href="#about">About</a>
+            <a href="#development">Development</a>
+            <a href="#jobs">Jobs</a>
+
+        </div>
+
+    </div>
+
 </nav>
 
+
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero" id="home">
-    <div class="hero-content">
-        <div class="hero-logo">C</div>
 
-        <h1>CLASSIFIED STUDIOS</h1>
+    <div class="container hero-content">
 
-        <p>
-            Creating unique Roblox experiences,
-            experimental projects, and games worth playing.
+        <div class="hero-logo">
+            C
+        </div>
+
+        <h1 id="heroTitle">
+            CLASSIFIED STUDIOS
+        </h1>
+
+        <p id="heroDescription">
+            A Roblox game development studio creating memorable
+            experiences, unique mechanics, and original ideas.
         </p>
 
-        <div class="hero-buttons">
-            <a class="button primary" href="#games">
-                VIEW GAMES
-            </a>
-
-            <a class="button" href="#jobs">
-                JOIN THE TEAM
-            </a>
-        </div>
     </div>
+
 </section>
 
-<section>
-    <div class="section-title">
-        <h2>Featured Game</h2>
-        <p>Our latest project.</p>
+
+<!-- =========================
+     FEATURED GAME
+========================= -->
+
+<section id="featuredSection">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Featured Game</h2>
+
+            <p>
+                Our latest highlighted experience.
+            </p>
+
+        </div>
+
+
+        <div id="featuredGame">
+
+            <article class="featured">
+
+                <img
+                    class="featured-image"
+                    src="/images/hello-neighbor.png"
+                    alt="Hello Neighbor"
+                >
+
+                <div class="featured-content">
+
+                    <h3>
+                        Hello Neighbor
+                    </h3>
+
+                    <p>
+                        Explore, survive, and uncover the secrets
+                        hidden inside the Neighbor's house.
+                    </p>
+
+                    <a
+                        class="roblox-button"
+                        href="https://www.roblox.com/games/86495471270335/Hello-Neighbor"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Play on Roblox
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
     </div>
 
-    <div class="featured" id="featuredGame">
-        <div class="featured-content">
-            <h3>Loading...</h3>
-            <p>Loading our featured game.</p>
-        </div>
-    </div>
 </section>
+
+
+<!-- =========================
+     GAMES
+========================= -->
 
 <section id="games">
-    <div class="section-title">
-        <h2>Our Games</h2>
-        <p>Projects developed by Classified Studios.</p>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Our Games</h2>
+
+            <p>
+                Experiences created by Classified Studios.
+            </p>
+
+        </div>
+
+
+        <div id="gamesGrid" class="games-grid">
+
+            <!-- Games are loaded from Supabase -->
+
+            <article class="game-card">
+
+                <img
+                    src="/images/hello-neighbor.png"
+                    alt="Hello Neighbor"
+                >
+
+                <div class="game-content">
+
+                    <h3>Hello Neighbor</h3>
+
+                    <p>
+                        Explore, survive, and uncover the secrets
+                        hidden inside the Neighbor's house.
+                    </p>
+
+                    <a
+                        class="game-link"
+                        href="https://www.roblox.com/games/86495471270335/Hello-Neighbor"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Play on Roblox →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="game-card">
+
+                <img
+                    src="/images/subliminal.png"
+                    alt="Subliminal"
+                >
+
+                <div class="game-content">
+
+                    <h3>Subliminal</h3>
+
+                    <p>
+                        A mysterious Roblox horror experience where
+                        reality may not be what it seems.
+                    </p>
+
+                    <a
+                        class="game-link"
+                        href="https://www.roblox.com/games/120870537763162/Subliminal"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Play on Roblox →
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
     </div>
 
-    <div class="games-grid" id="gamesGrid">
-        <div class="game-card">
-            <div class="game-info">
-                <h3>Loading games...</h3>
-                <p>Loading games from Classified Studios.</p>
-            </div>
-        </div>
-    </div>
 </section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
 
 <section id="about">
-    <div class="section-title">
-        <h2>About Us</h2>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>About Classified Studios</h2>
+
+        </div>
+
+
+        <div class="about-box">
+
+            <p id="aboutText">
+                Classified Studios is a Roblox game development studio
+                focused on creating memorable experiences, unique
+                mechanics, and original ideas.
+            </p>
+
+        </div>
+
     </div>
 
-    <div class="about">
-        <p>
-            Classified Studios is a Roblox game development
-            studio focused on creating memorable experiences,
-            interesting mechanics, and original ideas.
-        </p>
-    </div>
 </section>
+
+
+<!-- =========================
+     DEVELOPMENT
+========================= -->
 
 <section id="development">
-    <div class="section-title">
-        <h2>Development</h2>
-        <p>Building the future of Classified Studios.</p>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Development</h2>
+
+            <p>
+                What we work on.
+            </p>
+
+        </div>
+
+
+        <div class="development-grid">
+
+            <div class="dev-card">
+
+                <h3>Game Development</h3>
+
+                <p>
+                    Designing and developing unique Roblox experiences
+                    from concept to release.
+                </p>
+
+            </div>
+
+
+            <div class="dev-card">
+
+                <h3>Building</h3>
+
+                <p>
+                    Creating detailed environments, maps, structures,
+                    and gameplay spaces.
+                </p>
+
+            </div>
+
+
+            <div class="dev-card">
+
+                <h3>VFX</h3>
+
+                <p>
+                    Creating visual effects that make gameplay feel
+                    more immersive.
+                </p>
+
+            </div>
+
+
+            <div class="dev-card">
+
+                <h3>Scripting</h3>
+
+                <p>
+                    Building gameplay systems, mechanics, interfaces,
+                    and interactive features.
+                </p>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="development-grid">
-
-        <div class="dev-box">
-            <h3>🎮 Game Development</h3>
-            <p>
-                Designing gameplay systems and experiences for Roblox.
-            </p>
-        </div>
-
-        <div class="dev-box">
-            <h3>🏗️ Building</h3>
-            <p>
-                Creating environments, maps, locations and detailed worlds.
-            </p>
-        </div>
-
-        <div class="dev-box">
-            <h3>✨ VFX</h3>
-            <p>
-                Creating visual effects that make gameplay more immersive.
-            </p>
-        </div>
-
-        <div class="dev-box">
-            <h3>💻 Scripting</h3>
-            <p>
-                Developing gameplay systems, mechanics and technical features.
-            </p>
-        </div>
-
-    </div>
 </section>
+
+
+<!-- =========================
+     JOBS
+========================= -->
 
 <section id="jobs">
-    <div class="section-title">
-        <h2>Join Classified Studios</h2>
-        <p>
-            Think you can contribute to our projects?
-            Apply for a development position.
-        </p>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Join Classified Studios</h2>
+
+            <p>
+                Interested in working with us?
+            </p>
+
+        </div>
+
+
+        <div class="jobs-grid">
+
+            <div class="job-card">
+
+                <h3>Animator</h3>
+
+                <p>
+                    Create character and gameplay animations.
+                </p>
+
+                <button
+                    class="apply-button"
+                    data-position="Animator"
+                >
+                    Apply
+                </button>
+
+            </div>
+
+
+            <div class="job-card">
+
+                <h3>Builder</h3>
+
+                <p>
+                    Build environments, maps, and detailed
+                    gameplay locations.
+                </p>
+
+                <button
+                    class="apply-button"
+                    data-position="Builder"
+                >
+                    Apply
+                </button>
+
+            </div>
+
+
+            <div class="job-card">
+
+                <h3>VFX Artist</h3>
+
+                <p>
+                    Create visual effects for our games.
+                </p>
+
+                <button
+                    class="apply-button"
+                    data-position="VFX Artist"
+                >
+                    Apply
+                </button>
+
+            </div>
+
+
+            <div class="job-card">
+
+                <h3>Scripter</h3>
+
+                <p>
+                    Develop gameplay systems and mechanics.
+                </p>
+
+                <button
+                    class="apply-button"
+                    data-position="Scripter"
+                >
+                    Apply
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="jobs-grid">
-
-        <div class="job-card">
-            <h3>🎬 Animator</h3>
-            <p>Create character and gameplay animations.</p>
-            <button class="apply-button" onclick="openApplication('Animator')">
-                APPLY
-            </button>
-        </div>
-
-        <div class="job-card">
-            <h3>🏗️ Builder</h3>
-            <p>Build environments, maps and detailed locations.</p>
-            <button class="apply-button" onclick="openApplication('Builder')">
-                APPLY
-            </button>
-        </div>
-
-        <div class="job-card">
-            <h3>✨ VFX Artist</h3>
-            <p>Create visual effects and gameplay visuals.</p>
-            <button class="apply-button" onclick="openApplication('VFX Artist')">
-                APPLY
-            </button>
-        </div>
-
-        <div class="job-card">
-            <h3>💻 Scripter</h3>
-            <p>Develop gameplay systems and mechanics.</p>
-            <button class="apply-button" onclick="openApplication('Scripter')">
-                APPLY
-            </button>
-        </div>
-
-    </div>
 </section>
+
+
+<!-- =========================
+     SOCIALS
+========================= -->
 
 <section>
-    <div class="section-title">
-        <h2>Find Us</h2>
-        <p>Follow Classified Studios and keep up with our projects.</p>
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Socials</h2>
+
+            <p>
+                Follow Classified Studios.
+            </p>
+
+        </div>
+
+
+        <div class="socials">
+
+            <a
+                href="https://www.roblox.com/users/3259064637/profile"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Roblox
+            </a>
+
+            <a
+                href="https://discord.gg/pwR7Xxs7Ra"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Discord
+            </a>
+
+            <a
+                href="https://m.youtube.com/channel/UCJBBKeHI5Rr2fo5bdIufqnA?ra=m"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                YouTube
+            </a>
+
+            <a
+                href="https://x.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                X
+            </a>
+
+        </div>
+
     </div>
 
-    <div class="socials">
-
-        <a class="button"
-           href="https://www.roblox.com/users/3259064637/profile"
-           target="_blank"
-           rel="noopener noreferrer">
-            ROBLOX
-        </a>
-
-        <a class="button"
-           href="https://discord.gg/pwR7Xxs7Ra"
-           target="_blank"
-           rel="noopener noreferrer">
-            DISCORD
-        </a>
-
-        <a class="button"
-           href="https://m.youtube.com/channel/UCJBBKeHI5Rr2fo5bdIufqnA?ra=m"
-           target="_blank"
-           rel="noopener noreferrer">
-            YOUTUBE
-        </a>
-
-        <a class="button"
-           href="https://x.com/"
-           target="_blank"
-           rel="noopener noreferrer">
-            X
-        </a>
-
-    </div>
 </section>
 
-<div class="modal" id="applicationModal">
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    © 2026 Classified Studios. All rights reserved.
+
+</footer>
+
+
+<!-- =========================
+     APPLICATION MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="applicationModal"
+>
 
     <div class="modal-box">
 
-        <button
-            class="close-modal"
-            onclick="closeApplication()">
-            ×
-        </button>
-
-        <div id="applicationContent">
+        <div class="modal-header">
 
             <h2>Job Application</h2>
 
-            <p style="color:#777;margin-bottom:25px;">
-                Apply to join Classified Studios.
-            </p>
-
-            <form class="application-form" id="applicationForm">
-
-                <label>
-                    Name
-                    <input
-                        type="text"
-                        name="name"
-                        maxlength="60"
-                        required>
-                </label>
-
-                <label>
-                    Roblox Username
-                    <input
-                        type="text"
-                        name="roblox_username"
-                        maxlength="30"
-                        required>
-                </label>
-
-                <label>
-                    Position
-                    <select name="position" id="positionSelect" required>
-                        <option>Animator</option>
-                        <option>Builder</option>
-                        <option>VFX Artist</option>
-                        <option>Scripter</option>
-                    </select>
-                </label>
-
-                <label>
-                    Portfolio Link
-                    <input
-                        type="url"
-                        name="portfolio"
-                        maxlength="300"
-                        placeholder="https://...">
-                </label>
-
-                <label>
-                    Experience
-                    <textarea
-                        name="experience"
-                        maxlength="3000"
-                        required
-                        placeholder="Tell us about your experience..."></textarea>
-                </label>
-
-                <label>
-                    Why do you want to join?
-                    <textarea
-                        name="reason"
-                        maxlength="3000"
-                        required
-                        placeholder="Tell us why you want to join Classified Studios..."></textarea>
-                </label>
-
-                <div class="website-field">
-                    <input type="text" name="website" tabindex="-1">
-                </div>
-
-                <button
-                    class="application-submit"
-                    id="submitApplication">
-                    SUBMIT APPLICATION
-                </button>
-
-                <div
-                    class="form-message"
-                    id="formMessage">
-                </div>
-
-            </form>
-
-        </div>
-
-        <div class="success-message" id="successMessage">
-
-            <h3>Application Submitted!</h3>
-
-            <p style="color:#888;">
-                Your application has been sent to Classified Studios.
-            </p>
-
-            <p style="color:#888;margin-top:10px;">
-                Your application is now <strong>Pending</strong>.
-            </p>
-
             <button
-                class="button"
-                onclick="closeApplication()"
-                style="margin-top:20px;">
-                CLOSE
+                class="close-button"
+                id="closeModal"
+                type="button"
+            >
+                ×
             </button>
 
         </div>
+
+
+        <form id="applicationForm">
+
+            <div class="form-group">
+
+                <label for="name">
+                    Name
+                </label>
+
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="robloxUsername">
+                    Roblox Username
+                </label>
+
+                <input
+                    id="robloxUsername"
+                    name="roblox_username"
+                    type="text"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="position">
+                    Position
+                </label>
+
+                <select
+                    id="position"
+                    name="position"
+                    required
+                >
+
+                    <option value="">
+                        Select a position
+                    </option>
+
+                    <option value="Animator">
+                        Animator
+                    </option>
+
+                    <option value="Builder">
+                        Builder
+                    </option>
+
+                    <option value="VFX Artist">
+                        VFX Artist
+                    </option>
+
+                    <option value="Scripter">
+                        Scripter
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="portfolio">
+                    Portfolio Link
+                    <span style="color:#666;">
+                        (optional)
+                    </span>
+                </label>
+
+                <input
+                    id="portfolio"
+                    name="portfolio"
+                    type="url"
+                    placeholder="https://..."
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="experience">
+                    Experience
+                </label>
+
+                <textarea
+                    id="experience"
+                    name="experience"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="reason">
+                    Why do you want to join?
+                </label>
+
+                <textarea
+                    id="reason"
+                    name="reason"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- Anti-spam honeypot -->
+
+            <input
+                class="website-field"
+                name="website"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+            >
+
+
+            <button
+                class="submit-button"
+                id="submitApplication"
+                type="submit"
+            >
+                Submit Application
+            </button>
+
+
+            <div
+                class="form-message"
+                id="formMessage"
+            ></div>
+
+        </form>
 
     </div>
 
 </div>
 
-<footer>
-    © 2026 Classified Studios. All rights reserved.
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-    /*
-    ========================================================
-    SUPABASE CONFIG
-    ========================================================
+/* ==========================================
+   SUPABASE
+========================================== */
 
-    WE WILL PUT YOUR SUPABASE VALUES HERE LATER.
-    */
-
-    const SUPABASE_URL =
-        "PASTE_YOUR_SUPABASE_URL_HERE";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-        "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
-
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY
-        );
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-    /*
-    ========================================================
-    ESCAPE HTML
-    ========================================================
-    */
+/* ==========================================
+   HTML ESCAPING
+========================================== */
 
-    function escapeHTML(value) {
+function escapeHTML(value) {
 
-        return String(value || "").replace(
-            /[&<>"']/g,
-            function(character) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-                return {
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': "&quot;",
-                    "'": "&#039;"
-                }[character];
 
-            }
-        );
+/* ==========================================
+   SAFE URL
+========================================== */
 
+function safeUrl(value) {
+
+    if (!value) {
+        return "#";
+    }
+
+    const url = String(value).trim();
+
+    if (
+        url.startsWith("/") ||
+        url.startsWith("https://") ||
+        url.startsWith("http://")
+    ) {
+        return url;
+    }
+
+    return "#";
+}
+
+
+/* ==========================================
+   LOAD WEBSITE SETTINGS
+========================================== */
+
+async function loadSettings() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("site_settings")
+            .select("hero_title, hero_description, about_text")
+            .eq("id", 1)
+            .maybeSingle();
+
+    if (error || !data) {
+        console.log("Using default website settings.");
+        return;
     }
 
 
-    /*
-    ========================================================
-    IMAGE URL
-    ========================================================
-    */
+    if (data.hero_title) {
 
-    function getImageURL(image) {
-
-        if (!image) {
-            return "";
-        }
-
-        image = image.trim();
-
-        if (
-            image.startsWith("https://") ||
-            image.startsWith("http://") ||
-            image.startsWith("/")
-        ) {
-            return image;
-        }
-
-        return image;
+        document.getElementById("heroTitle")
+            .textContent = data.hero_title;
     }
 
 
-    /*
-    ========================================================
-    LOAD GAMES
-    ========================================================
-    */
+    if (data.hero_description) {
 
-    async function loadGames() {
-
-        const gamesGrid =
-            document.getElementById("gamesGrid");
-
-        const featuredGame =
-            document.getElementById("featuredGame");
+        document.getElementById("heroDescription")
+            .textContent = data.hero_description;
+    }
 
 
-        const result =
-            await supabaseClient
-                .from("games")
-                .select("*")
-                .eq("published", true)
-                .order("featured", {
-                    ascending: false
-                })
-                .order("created_at", {
-                    ascending: false
-                });
+    if (data.about_text) {
+
+        document.getElementById("aboutText")
+            .textContent = data.about_text;
+    }
+}
 
 
-        if (result.error) {
+/* ==========================================
+   LOAD GAMES
+========================================== */
 
-            console.error(result.error);
+async function loadGames() {
 
-            gamesGrid.innerHTML = `
-                <div class="game-card">
-                    <div class="game-info">
-                        <h3>Games unavailable</h3>
-                        <p>
-                            The game database has not been configured yet.
-                        </p>
-                    </div>
-                </div>
-            `;
+    const grid =
+        document.getElementById("gamesGrid");
 
-            return;
-        }
-
-
-        const games = result.data || [];
+    const { data, error } =
+        await supabaseClient
+            .from("games")
+            .select("*")
+            .eq("published", true)
+            .order("sort_order", {
+                ascending: true
+            });
 
 
-        if (games.length === 0) {
+    if (error) {
 
-            gamesGrid.innerHTML = `
-                <div class="game-card">
-                    <div class="game-info">
-                        <h3>No games yet</h3>
-                        <p>
-                            Games added from the admin dashboard
-                            will appear here.
-                        </p>
-                    </div>
-                </div>
-            `;
+        console.error(
+            "Could not load games:",
+            error
+        );
 
-            featuredGame.innerHTML = `
-                <div class="featured-content">
-                    <h3>No featured game</h3>
+        return;
+    }
+
+
+    if (!data || data.length === 0) {
+        return;
+    }
+
+
+    grid.innerHTML = data.map(game => {
+
+        const image =
+            safeUrl(game.image_url);
+
+        const roblox =
+            safeUrl(game.roblox_url);
+
+
+        return `
+            <article class="game-card">
+
+                ${
+                    image !== "#"
+                    ? `
+                        <img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(game.title)}"
+                            onerror="this.style.display='none'"
+                        >
+                    `
+                    : ""
+                }
+
+                <div class="game-content">
+
+                    <h3>
+                        ${escapeHTML(game.title)}
+                    </h3>
+
                     <p>
-                        Add a game through the admin dashboard.
+                        ${escapeHTML(game.description)}
                     </p>
+
+                    ${
+                        roblox !== "#"
+                        ? `
+                            <a
+                                class="game-link"
+                                href="${escapeHTML(roblox)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Play on Roblox →
+                            </a>
+                        `
+                        : ""
+                    }
+
                 </div>
-            `;
 
-            return;
-        }
+            </article>
+        `;
 
-
-        gamesGrid.innerHTML =
-            games.map(function(game) {
-
-                const image =
-                    getImageURL(game.thumbnail_url);
+    }).join("");
+}
 
 
-                return `
-                    <div class="game-card">
+/* ==========================================
+   LOAD FEATURED GAME
+========================================== */
 
-                        ${
-                            image
-                            ?
-                            `
-                            <img
-                                class="game-image"
-                                src="${escapeHTML(image)}"
-                                alt="${escapeHTML(game.title)}"
-                                loading="lazy">
-                            `
-                            :
-                            ""
-                        }
+async function loadFeaturedGame() {
 
-                        <div class="game-info">
-
-                            <span class="game-status">
-                                ${escapeHTML(game.status)}
-                            </span>
-
-                            <h3>
-                                ${escapeHTML(game.title)}
-                            </h3>
-
-                            <p>
-                                ${escapeHTML(game.description)}
-                            </p>
-
-                            ${
-                                game.roblox_url
-                                ?
-                                `
-                                <a
-                                    class="button"
-                                    href="${escapeHTML(game.roblox_url)}"
-                                    target="_blank"
-                                    rel="noopener noreferrer">
-                                    PLAY
-                                </a>
-                                `
-                                :
-                                ""
-                            }
-
-                        </div>
-
-                    </div>
-                `;
-
-            }).join("");
+    const container =
+        document.getElementById("featuredGame");
 
 
-        const featured =
-            games.find(function(game) {
-                return game.featured;
-            }) || games[0];
+    const { data, error } =
+        await supabaseClient
+            .from("games")
+            .select("*")
+            .eq("published", true)
+            .eq("featured", true)
+            .order("sort_order", {
+                ascending: true
+            })
+            .limit(1);
 
 
-        const featuredImage =
-            getImageURL(featured.thumbnail_url);
+    if (
+        error ||
+        !data ||
+        data.length === 0
+    ) {
+        return;
+    }
 
 
-        featuredGame.innerHTML = `
+    const game = data[0];
+
+
+    const image =
+        safeUrl(game.image_url);
+
+    const roblox =
+        safeUrl(game.roblox_url);
+
+
+    container.innerHTML = `
+
+        <article class="featured">
 
             ${
-                featuredImage
-                ?
+                image !== "#"
+                ? `
+                    <img
+                        class="featured-image"
+                        src="${escapeHTML(image)}"
+                        alt="${escapeHTML(game.title)}"
+                        onerror="this.style.display='none'"
+                    >
                 `
-                <img
-                    class="featured-image"
-                    src="${escapeHTML(featuredImage)}"
-                    alt="${escapeHTML(featured.title)}">
-                `
-                :
-                ""
+                : ""
             }
 
             <div class="featured-content">
 
-                <span class="game-status">
-                    ${escapeHTML(featured.status)}
-                </span>
-
                 <h3>
-                    ${escapeHTML(featured.title)}
+                    ${escapeHTML(game.title)}
                 </h3>
 
                 <p>
-                    ${escapeHTML(featured.description)}
+                    ${escapeHTML(game.description)}
                 </p>
 
                 ${
-                    featured.roblox_url
-                    ?
+                    roblox !== "#"
+                    ? `
+                        <a
+                            class="roblox-button"
+                            href="${escapeHTML(roblox)}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Play on Roblox
+                        </a>
                     `
-                    <a
-                        class="button primary"
-                        href="${escapeHTML(featured.roblox_url)}"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        PLAY ON ROBLOX
-                    </a>
-                    `
-                    :
-                    ""
+                    : ""
                 }
 
             </div>
-        `;
+
+        </article>
+
+    `;
+}
+
+
+/* ==========================================
+   APPLICATION MODAL
+========================================== */
+
+const modal =
+    document.getElementById("applicationModal");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+const applicationForm =
+    document.getElementById("applicationForm");
+
+const positionSelect =
+    document.getElementById("position");
+
+
+document
+    .querySelectorAll(".apply-button")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            positionSelect.value =
+                button.dataset.position;
+
+            modal.classList.add("active");
+
+            document
+                .getElementById("name")
+                .focus();
+        });
+
+    });
+
+
+closeModal.addEventListener(
+    "click",
+    () => {
+
+        modal.classList.remove("active");
 
     }
+);
 
 
-    /*
-    ========================================================
-    APPLICATION MODAL
-    ========================================================
-    */
+modal.addEventListener(
+    "click",
+    event => {
 
-    const applicationModal =
-        document.getElementById("applicationModal");
+        if (event.target === modal) {
 
-    const applicationForm =
-        document.getElementById("applicationForm");
-
-    const positionSelect =
-        document.getElementById("positionSelect");
-
-    const applicationContent =
-        document.getElementById("applicationContent");
-
-    const successMessage =
-        document.getElementById("successMessage");
-
-    const submitApplication =
-        document.getElementById("submitApplication");
-
-    const formMessage =
-        document.getElementById("formMessage");
-
-
-    function openApplication(position) {
-
-        applicationForm.reset();
-
-        positionSelect.value = position;
-
-        applicationContent.style.display =
-            "block";
-
-        successMessage.classList.remove("show");
-
-        formMessage.textContent = "";
-
-        applicationModal.classList.add("active");
-
-        document.body.style.overflow =
-            "hidden";
-    }
-
-
-    function closeApplication() {
-
-        applicationModal.classList.remove("active");
-
-        document.body.style.overflow =
-            "";
-
-        applicationForm.reset();
-
-        applicationContent.style.display =
-            "block";
-
-        successMessage.classList.remove("show");
-
-        formMessage.textContent = "";
-    }
-
-
-    applicationModal.addEventListener(
-        "click",
-        function(event) {
-
-            if (
-                event.target === applicationModal
-            ) {
-                closeApplication();
-            }
+            modal.classList.remove("active");
 
         }
-    );
+
+    }
+);
 
 
-    document.addEventListener(
-        "keydown",
-        function(event) {
+/* ==========================================
+   APPLICATION SUBMISSION
+========================================== */
 
-            if (
-                event.key === "Escape" &&
-                applicationModal.classList.contains("active")
-            ) {
-                closeApplication();
-            }
+applicationForm.addEventListener(
+    "submit",
+    async event => {
 
-        }
-    );
+        event.preventDefault();
 
 
-    /*
-    ========================================================
-    SUBMIT APPLICATION
-    ========================================================
-    */
-
-    applicationForm.addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
-
-            submitApplication.disabled = true;
-
-            submitApplication.textContent =
-                "SUBMITTING...";
-
-            formMessage.textContent = "";
-
-
-            const formData =
-                new FormData(applicationForm);
-
-
-            const website =
-                String(
-                    formData.get("website") || ""
-                ).trim();
-
-
-            if (website !== "") {
-
-                submitApplication.disabled = false;
-
-                submitApplication.textContent =
-                    "SUBMIT APPLICATION";
-
-                return;
-            }
-
-
-            const application = {
-
-                name:
-                    String(
-                        formData.get("name") || ""
-                    ).trim(),
-
-                roblox_username:
-                    String(
-                        formData.get("roblox_username") || ""
-                    ).trim(),
-
-                position:
-                    String(
-                        formData.get("position") || ""
-                    ).trim(),
-
-                portfolio:
-                    String(
-                        formData.get("portfolio") || ""
-                    ).trim() || null,
-
-                experience:
-                    String(
-                        formData.get("experience") || ""
-                    ).trim(),
-
-                reason:
-                    String(
-                        formData.get("reason") || ""
-                    ).trim(),
-
-                status:
-                    "Pending"
-
-            };
-
-
-            const result =
-                await supabaseClient
-                    .from("applications")
-                    .insert(application);
-
-
-            if (result.error) {
-
-                console.error(result.error);
-
-                formMessage.textContent =
-                    "Something went wrong. Please try again.";
-
-                submitApplication.disabled = false;
-
-                submitApplication.textContent =
-                    "SUBMIT APPLICATION";
-
-                return;
-            }
-
-
-            applicationContent.style.display =
-                "none";
-
-            successMessage.classList.add(
-                "show"
+        const submitButton =
+            document.getElementById(
+                "submitApplication"
             );
 
-            submitApplication.disabled = false;
+        const message =
+            document.getElementById(
+                "formMessage"
+            );
 
-            submitApplication.textContent =
-                "SUBMIT APPLICATION";
 
+        const formData =
+            new FormData(applicationForm);
+
+
+        /* Honeypot */
+
+        if (
+            String(
+                formData.get("website") || ""
+            ).trim()
+        ) {
+
+            return;
         }
-    );
 
 
-    /*
-    ========================================================
-    START
-    ========================================================
-    */
+        const application = {
 
-    if (
-        !SUPABASE_URL.includes(
-            "PASTE_YOUR"
-        )
-    ) {
-        loadGames();
-    } else {
+            name:
+                String(
+                    formData.get("name") || ""
+                ).trim(),
 
-        document.getElementById("gamesGrid").innerHTML = `
-            <div class="game-card">
-                <div class="game-info">
-                    <h3>Database setup required</h3>
-                    <p>
-                        Configure Supabase before games can load.
-                    </p>
-                </div>
-            </div>
-        `;
+            roblox_username:
+                String(
+                    formData.get(
+                        "roblox_username"
+                    ) || ""
+                ).trim(),
+
+            position:
+                String(
+                    formData.get(
+                        "position"
+                    ) || ""
+                ).trim(),
+
+            portfolio:
+                String(
+                    formData.get(
+                        "portfolio"
+                    ) || ""
+                ).trim(),
+
+            experience:
+                String(
+                    formData.get(
+                        "experience"
+                    ) || ""
+                ).trim(),
+
+            reason:
+                String(
+                    formData.get(
+                        "reason"
+                    ) || ""
+                ).trim(),
+
+            status: "Pending"
+        };
+
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "Submitting...";
+
+        message.textContent = "";
+
+
+        const { error } =
+            await supabaseClient
+                .from("applications")
+                .insert(application);
+
+
+        if (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Something went wrong. Please try again.";
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Submit Application";
+
+            return;
+        }
+
+
+        message.textContent =
+            "Application submitted successfully!";
+
+
+        applicationForm.reset();
+
+
+        setTimeout(() => {
+
+            modal.classList.remove("active");
+
+            message.textContent = "";
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Submit Application";
+
+        }, 1800);
 
     }
+);
+
+
+/* ==========================================
+   START WEBSITE
+========================================== */
+
+loadSettings();
+
+loadGames();
+
+loadFeaturedGame();
 
 </script>
 
