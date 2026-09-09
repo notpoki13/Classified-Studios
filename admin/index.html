@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classified Studios — Admin</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../config.js"></script>
+<title>Classified Studios — Admin</title>
 
 <style>
 * {
@@ -20,15 +18,14 @@ html {
 body {
     margin: 0;
     background: #050505;
-    color: #f5f5f5;
+    color: #fff;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 button,
 input,
-textarea,
-select {
-    font: inherit;
+textarea {
+    font-family: inherit;
 }
 
 button {
@@ -39,84 +36,97 @@ button {
     display: none !important;
 }
 
-/* LOGIN */
+.muted {
+    color: #888;
+}
 
-#loginScreen {
+.error {
+    color: #ff8f8f;
+}
+
+.success-text {
+    color: #9cffaa;
+}
+
+.message {
+    min-height: 20px;
+    color: #999;
+}
+
+.login-container {
     min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 20px;
+    background:
+        radial-gradient(circle at center, #222, #050505 65%);
 }
 
 .login-box {
     width: 100%;
-    max-width: 420px;
-    padding: 35px;
-    border: 1px solid #292929;
+    max-width: 430px;
+    background: #111;
+    border: 1px solid #333;
     border-radius: 16px;
-    background: linear-gradient(145deg, #111, #080808);
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    padding: 30px;
+    box-shadow: 0 20px 80px rgba(0,0,0,.7);
 }
 
-.logo {
-    width: 65px;
-    height: 65px;
-    margin: 0 auto 20px;
-    border-radius: 15px;
+.logo,
+.mini-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 42px;
     font-weight: 900;
-    color: #111;
-    background: linear-gradient(145deg, #eee, #666);
-    box-shadow:
-        inset 2px 2px 5px rgba(255,255,255,.5),
-        inset -2px -2px 5px rgba(0,0,0,.5);
+    background: linear-gradient(145deg, #666, #080808);
+    border: 2px solid #aaa;
+}
+
+.logo {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.mini-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    font-size: 24px;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
     margin-top: 0;
 }
 
-.login-box h1 {
-    text-align: center;
-    margin-bottom: 8px;
-}
-
-.subtitle {
-    text-align: center;
-    color: #888;
-    margin-bottom: 28px;
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 label {
-    display: block;
     color: #aaa;
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 input,
-textarea,
-select {
+textarea {
     width: 100%;
-    padding: 13px;
-    margin-bottom: 18px;
-    color: white;
-    background: #0d0d0d;
-    border: 1px solid #303030;
-    border-radius: 9px;
+    margin-top: 7px;
+    padding: 12px;
+    background: #080808;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 7px;
     outline: none;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: #777;
 }
 
 textarea {
@@ -124,302 +134,208 @@ textarea {
     resize: vertical;
 }
 
-.primary {
-    width: 100%;
-    padding: 13px;
-    border: 0;
-    border-radius: 9px;
-    background: linear-gradient(145deg, #eee, #888);
-    color: #050505;
-    font-weight: 800;
+input:focus,
+textarea:focus {
+    border-color: #777;
 }
 
-.primary:hover {
-    filter: brightness(1.1);
+input[type="checkbox"] {
+    width: auto;
+    margin: 0 8px 0 0;
 }
 
-.error {
-    color: #ff6666;
-    text-align: center;
-    margin-top: 15px;
+.button {
+    border: 1px solid #555;
+    background: #eee;
+    color: #000;
+    padding: 11px 16px;
+    border-radius: 7px;
+    font-weight: bold;
 }
 
-/* DASHBOARD */
+.button:hover {
+    background: #fff;
+}
 
-#dashboard {
+.button.dark {
+    background: #111;
+    color: #fff;
+}
+
+.button.dark:hover {
+    background: #222;
+}
+
+.button.danger {
+    background: #211010;
+    color: #ffb5b5;
+    border-color: #522;
+}
+
+.button.danger:hover {
+    background: #351515;
+}
+
+.button.success {
+    background: #102211;
+    color: #b9ffbf;
+    border-color: #28552d;
+}
+
+.button.success:hover {
+    background: #17351b;
+}
+
+.button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.admin {
     min-height: 100vh;
 }
 
 .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
     height: 70px;
-    padding: 0 25px;
+    border-bottom: 1px solid #222;
+    background: rgba(5,5,5,.97);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #222;
-    background: rgba(5,5,5,.94);
-    backdrop-filter: blur(10px);
+    padding: 0 5%;
+    position: sticky;
+    top: 0;
+    z-index: 20;
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-weight: 900;
+    gap: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
-.brand-logo {
-    width: 38px;
-    height: 38px;
-    border-radius: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #111;
-    font-size: 25px;
-    font-weight: 900;
-    background: linear-gradient(145deg, #eee, #666);
-}
-
-.logout {
-    padding: 9px 15px;
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: #ddd;
-    background: #111;
-}
-
-.logout:hover {
-    background: #1c1c1c;
-}
-
-.layout {
-    display: flex;
-    min-height: calc(100vh - 70px);
-}
-
-.sidebar {
-    width: 230px;
-    flex-shrink: 0;
-    padding: 20px 12px;
-    border-right: 1px solid #222;
-    background: #080808;
-}
-
-.nav-btn {
-    width: 100%;
-    padding: 13px;
-    margin-bottom: 8px;
-    border: 1px solid transparent;
-    border-radius: 9px;
-    text-align: left;
-    color: #aaa;
-    background: transparent;
-}
-
-.nav-btn:hover,
-.nav-btn.active {
-    color: white;
-    background: #151515;
-    border-color: #292929;
-}
-
-.content {
-    width: 100%;
+.dashboard {
     max-width: 1200px;
-    padding: 30px;
     margin: auto;
+    padding: 40px 5%;
 }
 
-.page {
-    display: none;
+.tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 25px 0;
 }
 
-.page.active {
-    display: block;
+.tab {
+    border: 1px solid #333;
+    background: #111;
+    color: #aaa;
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-weight: bold;
 }
 
-.page-header {
-    margin-bottom: 25px;
+.tab:hover {
+    color: #fff;
 }
 
-.page-header p {
-    color: #888;
+.tab.active {
+    background: #eee;
+    color: #000;
+    border-color: #eee;
 }
 
-/* CARDS */
-
-.card {
-    padding: 22px;
-    margin-bottom: 20px;
+.panel {
+    background: #111;
     border: 1px solid #292929;
-    border-radius: 13px;
-    background: linear-gradient(145deg, #111, #090909);
+    border-radius: 14px;
+    padding: 25px;
 }
 
-.card h3 {
-    margin-bottom: 8px;
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
 }
 
-.muted {
-    color: #888;
+.stat {
+    background: #0a0a0a;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.stat-number {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.item {
+    background: #090909;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.item-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #111;
+    margin-bottom: 15px;
+}
+
+.pill {
+    display: inline-block;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 4px 9px;
+    color: #aaa;
+    font-size: 11px;
+    margin-bottom: 10px;
 }
 
 .actions {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
-    margin-top: 15px;
-}
-
-.btn {
-    padding: 9px 13px;
-    border: 1px solid #333;
-    border-radius: 8px;
-    color: white;
-    background: #151515;
-}
-
-.btn:hover {
-    background: #202020;
-}
-
-.btn-danger {
-    border-color: #572222;
-    color: #ff8888;
-}
-
-.btn-success {
-    border-color: #27532d;
-    color: #83d98d;
-}
-
-/* APPLICATIONS */
-
-.application {
-    position: relative;
-}
-
-.application-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
     flex-wrap: wrap;
-}
-
-.status {
-    padding: 5px 9px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    background: #222;
-}
-
-.status.Accepted {
-    color: #8eea9a;
-    background: #17351c;
-}
-
-.status.Rejected {
-    color: #ff8585;
-    background: #351717;
-}
-
-.status.Pending {
-    color: #ddd;
-    background: #242424;
-}
-
-.application-info {
     margin-top: 15px;
+}
+
+.application-text {
+    color: #999;
+    white-space: pre-wrap;
     line-height: 1.6;
-    color: #ccc;
 }
 
-.application-info strong {
-    color: white;
+hr {
+    border: 0;
+    border-top: 1px solid #292929;
+    margin: 25px 0;
 }
 
-.small-text {
-    font-size: 13px;
-    color: #777;
-}
-
-/* GAMES */
-
-.game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 18px;
-}
-
-.game-card {
-    overflow: hidden;
-    border: 1px solid #292929;
-    border-radius: 13px;
-    background: #0d0d0d;
-}
-
-.game-image {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    display: block;
-    background: #171717;
-}
-
-.game-body {
-    padding: 17px;
-}
-
-.badges {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin: 10px 0;
-}
-
-.badge {
-    padding: 4px 7px;
-    border-radius: 5px;
-    font-size: 11px;
-    background: #222;
-    color: #aaa;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 700px) {
+@media(max-width:700px) {
     .topbar {
-        padding: 0 15px;
+        padding: 0 4%;
     }
 
-    .layout {
-        display: block;
+    .brand span {
+        display: none;
     }
 
-    .sidebar {
-        width: 100%;
-        display: flex;
-        overflow-x: auto;
-        border-right: 0;
-        border-bottom: 1px solid #222;
-    }
-
-    .nav-btn {
-        min-width: max-content;
-        margin: 0 5px 0 0;
-    }
-
-    .content {
-        padding: 20px 15px;
-    }
-
-    .login-box {
-        padding: 25px;
+    .dashboard {
+        padding: 25px 4%;
     }
 }
 </style>
@@ -427,39 +343,44 @@ textarea {
 
 <body>
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
 
-<section id="loginScreen">
+<div id="loginView" class="login-container">
+
     <div class="login-box">
 
         <div class="logo">C</div>
 
-        <h1>Classified Studios</h1>
+        <h1>Admin Login</h1>
 
-        <p class="subtitle">
-            Administrator Dashboard
+        <p class="muted">
+            Classified Studios private dashboard.
         </p>
 
-        <form id="loginForm">
+        <form id="loginForm" class="form">
 
-            <label for="email">Email</label>
-            <input
-                id="email"
-                type="email"
-                autocomplete="email"
-                required
-            >
+            <label>
+                Email
+                <input
+                    id="email"
+                    type="email"
+                    autocomplete="username"
+                    required>
+            </label>
 
-            <label for="password">Password</label>
-            <input
-                id="password"
-                type="password"
-                autocomplete="current-password"
-                required
-            >
+            <label>
+                Password
+                <input
+                    id="password"
+                    type="password"
+                    autocomplete="current-password"
+                    required>
+            </label>
 
-            <button class="primary" type="submit">
-                Sign In
+            <button id="loginButton" class="button" type="submit">
+                SIGN IN
             </button>
 
             <div id="loginError" class="error"></div>
@@ -467,836 +388,915 @@ textarea {
         </form>
 
     </div>
-</section>
 
+</div>
 
-<!-- DASHBOARD -->
 
-<section id="dashboard" class="hidden">
+<!-- =========================
+     ADMIN
+========================= -->
 
-    <header class="topbar">
+<div id="adminView" class="admin hidden">
 
-        <div class="brand">
-            <div class="brand-logo">C</div>
-            Classified Studios Admin
-        </div>
+<header class="topbar">
 
-        <button class="logout" id="logoutBtn">
-            Log Out
-        </button>
+    <div class="brand">
 
-    </header>
+        <div class="mini-logo">C</div>
 
-
-    <div class="layout">
-
-        <aside class="sidebar">
-
-            <button class="nav-btn active" data-page="applications">
-                Applications
-            </button>
-
-            <button class="nav-btn" data-page="games">
-                Games
-            </button>
-
-            <button class="nav-btn" data-page="settings">
-                Website Settings
-            </button>
-
-        </aside>
-
-
-        <main class="content">
-
-
-            <!-- APPLICATIONS -->
-
-            <section id="applicationsPage" class="page active">
-
-                <div class="page-header">
-                    <h1>Job Applications</h1>
-                    <p>
-                        Review and manage applications submitted through the website.
-                    </p>
-                </div>
-
-                <div id="applicationsList">
-                    <div class="card muted">
-                        Loading applications...
-                    </div>
-                </div>
-
-            </section>
-
-
-            <!-- GAMES -->
-
-            <section id="gamesPage" class="page">
-
-                <div class="page-header">
-                    <h1>Games</h1>
-                    <p>
-                        Add and manage games without editing index.html.
-                    </p>
-                </div>
-
-
-                <div class="card">
-
-                    <h2 id="gameFormTitle">
-                        Add Game
-                    </h2>
-
-                    <form id="gameForm">
-
-                        <input type="hidden" id="gameId">
-
-                        <label>Game Name</label>
-                        <input id="gameTitle" required>
-
-                        <label>Description</label>
-                        <textarea id="gameDescription" required></textarea>
-
-                        <label>Image Path</label>
-                        <input
-                            id="gameImage"
-                            placeholder="/images/my-game.png"
-                        >
-
-                        <label>Roblox Game URL</label>
-                        <input
-                            id="gameRoblox"
-                            placeholder="https://www.roblox.com/games/..."
-                        >
-
-                        <label>Display Order</label>
-                        <input
-                            id="gameOrder"
-                            type="number"
-                            value="0"
-                        >
-
-                        <label>
-                            <input
-                                id="gameFeatured"
-                                type="checkbox"
-                                style="width:auto;margin-right:8px;"
-                            >
-                            Featured game
-                        </label>
-
-                        <label>
-                            <input
-                                id="gamePublished"
-                                type="checkbox"
-                                checked
-                                style="width:auto;margin-right:8px;"
-                            >
-                            Published
-                        </label>
-
-                        <div class="actions">
-
-                            <button class="primary" type="submit" style="width:auto;">
-                                Save Game
-                            </button>
-
-                            <button
-                                class="btn"
-                                type="button"
-                                id="cancelGameEdit"
-                            >
-                                Cancel
-                            </button>
-
-                        </div>
-
-                        <div id="gameMessage" class="muted"></div>
-
-                    </form>
-
-                </div>
-
-
-                <h2>Existing Games</h2>
-
-                <div id="gamesList" class="game-grid">
-                    <div class="card muted">
-                        Loading games...
-                    </div>
-                </div>
-
-            </section>
-
-
-            <!-- SETTINGS -->
-
-            <section id="settingsPage" class="page">
-
-                <div class="page-header">
-                    <h1>Website Settings</h1>
-                    <p>
-                        Change important website text without editing index.html.
-                    </p>
-                </div>
-
-                <div class="card">
-
-                    <form id="settingsForm">
-
-                        <label>Hero Title</label>
-                        <input id="heroTitle" required>
-
-                        <label>Hero Description</label>
-                        <textarea id="heroDescription" required></textarea>
-
-                        <label>About Text</label>
-                        <textarea id="aboutText" required></textarea>
-
-                        <button
-                            class="primary"
-                            type="submit"
-                            style="width:auto;"
-                        >
-                            Save Settings
-                        </button>
-
-                        <div id="settingsMessage" class="muted"></div>
-
-                    </form>
-
-                </div>
-
-            </section>
-
-        </main>
+        <span>
+            CLASSIFIED STUDIOS — ADMIN
+        </span>
 
     </div>
 
-</section>
+    <button id="logoutButton" class="button dark">
+        LOG OUT
+    </button>
+
+</header>
+
+
+<main class="dashboard">
+
+    <h1>Dashboard</h1>
+
+    <p class="muted">
+        Manage Classified Studios without editing index.html.
+    </p>
+
+
+    <!-- TABS -->
+
+    <div class="tabs">
+
+        <button
+            class="tab active"
+            data-panel="dashboardPanel">
+            Dashboard
+        </button>
+
+        <button
+            class="tab"
+            data-panel="gamesPanel">
+            Games
+        </button>
+
+        <button
+            class="tab"
+            data-panel="applicationsPanel">
+            Applications
+        </button>
+
+        <button
+            class="tab"
+            data-panel="settingsPanel">
+            Website Settings
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         DASHBOARD PANEL
+    ========================= -->
+
+    <section id="dashboardPanel" class="panel admin-panel">
+
+        <h2>Overview</h2>
+
+        <div class="stats">
+
+            <div class="stat">
+                <div id="gameCount" class="stat-number">
+                    0
+                </div>
+
+                <div class="muted">
+                    Published Games
+                </div>
+            </div>
+
+            <div class="stat">
+                <div id="pendingCount" class="stat-number">
+                    0
+                </div>
+
+                <div class="muted">
+                    Pending Applications
+                </div>
+            </div>
+
+            <div class="stat">
+                <div id="totalGameCount" class="stat-number">
+                    0
+                </div>
+
+                <div class="muted">
+                    Total Games
+                </div>
+            </div>
+
+            <div class="stat">
+                <div id="totalApplicationCount" class="stat-number">
+                    0
+                </div>
+
+                <div class="muted">
+                    Total Applications
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GAMES PANEL
+    ========================= -->
+
+    <section
+        id="gamesPanel"
+        class="panel admin-panel hidden">
+
+        <h2>Games</h2>
+
+        <p class="muted">
+            Add, edit, publish, hide, feature, or delete games.
+        </p>
+
+
+        <form id="gameForm" class="form">
+
+            <input
+                id="gameId"
+                type="hidden">
+
+
+            <label>
+                Game Name
+
+                <input
+                    id="gameTitle"
+                    maxlength="100"
+                    required>
+            </label>
+
+
+            <label>
+                Description
+
+                <textarea
+                    id="gameDescription"
+                    maxlength="1000"
+                    required></textarea>
+            </label>
+
+
+            <label>
+                Image Path
+
+                <input
+                    id="gameImage"
+                    type="text"
+                    maxlength="500"
+                    placeholder="/images/hello-neighbor.png">
+            </label>
+
+            <p class="muted">
+                Optional. Example:
+                <strong>/images/hello-neighbor.png</strong>
+            </p>
+
+
+            <label>
+                Roblox Game URL
+
+                <input
+                    id="gameURL"
+                    type="url"
+                    maxlength="500"
+                    placeholder="https://www.roblox.com/games/...">
+            </label>
+
+
+            <label>
+                Sort Order
+
+                <input
+                    id="gameSortOrder"
+                    type="number"
+                    min="0"
+                    step="1"
+                    value="0">
+            </label>
+
+
+            <label>
+                <input
+                    id="gameFeatured"
+                    type="checkbox">
+
+                Featured Game
+            </label>
+
+
+            <label>
+                <input
+                    id="gamePublished"
+                    type="checkbox"
+                    checked>
+
+                Published
+            </label>
+
+
+            <div class="actions">
+
+                <button class="button" type="submit">
+                    SAVE GAME
+                </button>
+
+                <button
+                    id="clearGame"
+                    class="button dark"
+                    type="button">
+                    CLEAR
+                </button>
+
+            </div>
+
+            <div id="gameMessage" class="message"></div>
+
+        </form>
+
+
+        <hr>
+
+        <h2>All Games</h2>
+
+        <div id="gamesList" class="grid"></div>
+
+    </section>
+
+
+    <!-- =========================
+         APPLICATIONS PANEL
+    ========================= -->
+
+    <section
+        id="applicationsPanel"
+        class="panel admin-panel hidden">
+
+        <h2>Applications</h2>
+
+        <p class="muted">
+            Review applications submitted through the Jobs section.
+        </p>
+
+        <div id="applicationsList" class="grid"></div>
+
+    </section>
+
+
+    <!-- =========================
+         SETTINGS PANEL
+    ========================= -->
+
+    <section
+        id="settingsPanel"
+        class="panel admin-panel hidden">
+
+        <h2>Website Settings</h2>
+
+        <p class="muted">
+            Change the main website content without editing index.html.
+        </p>
+
+
+        <form id="settingsForm" class="form">
+
+            <label>
+                Hero Title
+
+                <input
+                    id="heroTitle"
+                    maxlength="200"
+                    required>
+            </label>
+
+
+            <label>
+                Hero Description
+
+                <textarea
+                    id="heroDescription"
+                    maxlength="2000"
+                    required></textarea>
+            </label>
+
+
+            <label>
+                About Text
+
+                <textarea
+                    id="aboutText"
+                    maxlength="5000"
+                    required></textarea>
+            </label>
+
+
+            <div class="actions">
+
+                <button
+                    class="button"
+                    type="submit">
+                    SAVE WEBSITE SETTINGS
+                </button>
+
+            </div>
+
+            <div id="settingsMessage" class="message"></div>
+
+        </form>
+
+    </section>
+
+</main>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- YOUR CONFIG -->
+
+<script src="../config.js"></script>
 
 
 <script>
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+
+/* ========================================================
+   SUPABASE
+======================================================== */
+
+if (
+    typeof SUPABASE_URL === "undefined" ||
+    typeof SUPABASE_KEY === "undefined"
+) {
+    document.getElementById("loginError").textContent =
+        "config.js could not be loaded.";
+    throw new Error("config.js missing.");
+}
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
 
 let currentUser = null;
 
 
-/* ============================================
+/* ========================================================
    HELPERS
-============================================ */
+======================================================== */
 
 function escapeHTML(value) {
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        function(character) {
+
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            }[character];
+
+        }
+    );
+
 }
 
 
 function safeUrl(value) {
 
-    if (!value) return "#";
-
-    const valueString = String(value).trim();
-
-    if (
-        valueString.startsWith("/") ||
-        valueString.startsWith("https://") ||
-        valueString.startsWith("http://")
-    ) {
-        return valueString;
+    if (!value) {
+        return "";
     }
 
-    return "#";
+    try {
+
+        const url = new URL(
+            value,
+            window.location.origin
+        );
+
+        if (
+            url.protocol === "http:" ||
+            url.protocol === "https:"
+        ) {
+            return url.href;
+        }
+
+    } catch (error) {}
+
+    return "";
+
 }
 
 
-function formatDate(value) {
+/* ========================================================
+   LOGIN / LOGOUT
+======================================================== */
 
-    if (!value) return "Unknown";
+function showLogin() {
 
-    return new Date(value).toLocaleString();
+    document
+        .getElementById("loginView")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("adminView")
+        .classList.add("hidden");
+
 }
 
 
-/* ============================================
-   ADMIN AUTH CHECK
-============================================ */
+function showAdmin() {
+
+    document
+        .getElementById("loginView")
+        .classList.add("hidden");
+
+    document
+        .getElementById("adminView")
+        .classList.remove("hidden");
+
+}
+
 
 async function checkAdmin() {
 
-    const {
-        data: { session }
-    } = await supabaseClient.auth.getSession();
-
-    if (!session) {
-        showLogin();
-        return;
+    if (!currentUser) {
+        return false;
     }
 
-    currentUser = session.user;
+    const result =
+        await supabaseClient
+            .from("admin_users")
+            .select("id")
+            .eq("id", currentUser.id)
+            .maybeSingle();
 
-    const { data, error } = await supabaseClient
-        .from("admin_users")
-        .select("id")
-        .eq("id", currentUser.id)
-        .maybeSingle();
+    if (result.error) {
 
-    if (error || !data) {
+        console.error(result.error);
 
         await supabaseClient.auth.signOut();
 
         showLogin();
 
         document.getElementById("loginError").textContent =
-            "This account does not have administrator access.";
+            "Could not verify administrator access.";
 
-        return;
+        return false;
     }
 
-    showDashboard();
-
-    await loadApplications();
-    await loadGames();
-    await loadSettings();
-}
-
-
-function showLogin() {
-
-    document
-        .getElementById("loginScreen")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("dashboard")
-        .classList.add("hidden");
-}
-
-
-function showDashboard() {
-
-    document
-        .getElementById("loginScreen")
-        .classList.add("hidden");
-
-    document
-        .getElementById("dashboard")
-        .classList.remove("hidden");
-}
-
-
-/* ============================================
-   LOGIN
-============================================ */
-
-document
-    .getElementById("loginForm")
-    .addEventListener("submit", async function(event) {
-
-        event.preventDefault();
-
-        const email =
-            document.getElementById("email").value.trim();
-
-        const password =
-            document.getElementById("password").value;
-
-        const errorBox =
-            document.getElementById("loginError");
-
-        errorBox.textContent = "Signing in...";
-
-        const { error } =
-            await supabaseClient.auth.signInWithPassword({
-                email,
-                password
-            });
-
-        if (error) {
-
-            errorBox.textContent = error.message;
-
-            return;
-        }
-
-        errorBox.textContent = "";
-
-        await checkAdmin();
-    });
-
-
-/* ============================================
-   LOGOUT
-============================================ */
-
-document
-    .getElementById("logoutBtn")
-    .addEventListener("click", async function() {
+    if (!result.data) {
 
         await supabaseClient.auth.signOut();
 
         currentUser = null;
 
         showLogin();
-    });
 
+        document.getElementById("loginError").textContent =
+            "This account is not an administrator.";
 
-/* ============================================
-   NAVIGATION
-============================================ */
-
-document.querySelectorAll(".nav-btn").forEach(button => {
-
-    button.addEventListener("click", function() {
-
-        document.querySelectorAll(".nav-btn")
-            .forEach(btn => btn.classList.remove("active"));
-
-        document.querySelectorAll(".page")
-            .forEach(page => page.classList.remove("active"));
-
-        this.classList.add("active");
-
-        const pageName = this.dataset.page;
-
-        document
-            .getElementById(pageName + "Page")
-            .classList.add("active");
-
-    });
-
-});
-
-
-/* ============================================
-   APPLICATIONS
-============================================ */
-
-async function loadApplications() {
-
-    const container =
-        document.getElementById("applicationsList");
-
-    const { data, error } =
-        await supabaseClient
-            .from("applications")
-            .select("*")
-            .order("submitted_at", { ascending: false });
-
-    if (error) {
-
-        container.innerHTML = `
-            <div class="card">
-                <p class="error">
-                    Failed to load applications.
-                </p>
-                <p class="small-text">
-                    ${escapeHTML(error.message)}
-                </p>
-            </div>
-        `;
-
-        return;
+        return false;
     }
 
-    if (!data || data.length === 0) {
-
-        container.innerHTML = `
-            <div class="card muted">
-                No applications yet.
-            </div>
-        `;
-
-        return;
-    }
-
-    container.innerHTML = data.map(application => `
-
-        <div class="card application">
-
-            <div class="application-header">
-
-                <div>
-                    <h3>
-                        ${escapeHTML(application.name)}
-                    </h3>
-
-                    <div class="small-text">
-                        Submitted ${escapeHTML(
-                            formatDate(application.submitted_at)
-                        )}
-                    </div>
-                </div>
-
-                <div class="status ${escapeHTML(application.status)}">
-                    ${escapeHTML(application.status)}
-                </div>
-
-            </div>
+    return true;
+}
 
 
-            <div class="application-info">
+/* LOGIN */
 
-                <p>
-                    <strong>Roblox Username:</strong>
-                    ${escapeHTML(application.roblox_username)}
-                </p>
+document
+    .getElementById("loginForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
 
-                <p>
-                    <strong>Position:</strong>
-                    ${escapeHTML(application.position)}
-                </p>
+            event.preventDefault();
 
-                <p>
-                    <strong>Portfolio:</strong>
-                    ${
-                        application.portfolio
-                        ? `<a
-                            href="${safeUrl(application.portfolio)}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style="color:#bbb;"
-                           >Open Portfolio</a>`
-                        : "None"
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+            const button =
+                document
+                    .getElementById("loginButton");
+
+            const error =
+                document
+                    .getElementById("loginError");
+
+            button.disabled = true;
+            button.textContent = "SIGNING IN...";
+            error.textContent = "";
+
+            const result =
+                await supabaseClient.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+            if (result.error) {
+
+                error.textContent =
+                    "Login failed: " +
+                    result.error.message;
+
+                button.disabled = false;
+                button.textContent = "SIGN IN";
+
+                return;
+            }
+
+            currentUser =
+                result.data.user;
+
+            const isAdmin =
+                await checkAdmin();
+
+            if (!isAdmin) {
+
+                button.disabled = false;
+                button.textContent = "SIGN IN";
+
+                return;
+            }
+
+            showAdmin();
+
+            await refreshDashboard();
+
+            button.disabled = false;
+            button.textContent = "SIGN IN";
+
+        }
+    );
+
+
+/* LOGOUT */
+
+document
+    .getElementById("logoutButton")
+    .addEventListener(
+        "click",
+        async function() {
+
+            await supabaseClient.auth.signOut();
+
+            currentUser = null;
+
+            showLogin();
+
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+
+        }
+    );
+
+
+/* ========================================================
+   TABS
+======================================================== */
+
+document
+    .querySelectorAll(".tab")
+    .forEach(
+        function(tab) {
+
+            tab.addEventListener(
+                "click",
+                async function() {
+
+                    document
+                        .querySelectorAll(".tab")
+                        .forEach(
+                            function(otherTab) {
+                                otherTab.classList.remove("active");
+                            }
+                        );
+
+                    tab.classList.add("active");
+
+                    document
+                        .querySelectorAll(".admin-panel")
+                        .forEach(
+                            function(panel) {
+                                panel.classList.add("hidden");
+                            }
+                        );
+
+                    const panel =
+                        document.getElementById(
+                            tab.dataset.panel
+                        );
+
+                    panel.classList.remove("hidden");
+
+
+                    if (
+                        tab.dataset.panel ===
+                        "dashboardPanel"
+                    ) {
+                        await refreshDashboard();
                     }
-                </p>
-
-                <p>
-                    <strong>Experience:</strong><br>
-                    ${escapeHTML(application.experience)}
-                </p>
-
-                <p>
-                    <strong>Why they want to join:</strong><br>
-                    ${escapeHTML(application.reason)}
-                </p>
-
-            </div>
 
 
-            <label>Admin Notes</label>
-
-            <textarea
-                id="notes-${application.id}"
-            >${escapeHTML(application.admin_notes)}</textarea>
-
-
-            <div class="actions">
-
-                <button
-                    class="btn btn-success"
-                    onclick="updateApplication(
-                        '${application.id}',
-                        'Accepted'
-                    )"
-                >
-                    Accept
-                </button>
-
-                <button
-                    class="btn btn-danger"
-                    onclick="updateApplication(
-                        '${application.id}',
-                        'Rejected'
-                    )"
-                >
-                    Reject
-                </button>
-
-                <button
-                    class="btn"
-                    onclick="updateApplication(
-                        '${application.id}',
-                        'Pending'
-                    )"
-                >
-                    Set Pending
-                </button>
-
-                <button
-                    class="btn btn-danger"
-                    onclick="deleteApplication(
-                        '${application.id}'
-                    )"
-                >
-                    Delete
-                </button>
-
-            </div>
-
-        </div>
-
-    `).join("");
-}
+                    if (
+                        tab.dataset.panel ===
+                        "gamesPanel"
+                    ) {
+                        await loadAdminGames();
+                    }
 
 
-async function updateApplication(id, status) {
+                    if (
+                        tab.dataset.panel ===
+                        "applicationsPanel"
+                    ) {
+                        await loadApplications();
+                    }
 
-    const notesElement =
-        document.getElementById("notes-" + id);
 
-    const adminNotes =
-        notesElement ? notesElement.value : "";
+                    if (
+                        tab.dataset.panel ===
+                        "settingsPanel"
+                    ) {
+                        await loadSettings();
+                    }
 
-    const reviewedAt =
-        status === "Pending"
-            ? null
-            : new Date().toISOString();
+                }
+            );
 
-    const { error } =
+        }
+    );
+
+
+/* ========================================================
+   DASHBOARD
+======================================================== */
+
+async function refreshDashboard() {
+
+    const gamesResult =
         await supabaseClient
-            .from("applications")
-            .update({
-                status,
-                admin_notes: adminNotes,
-                reviewed_at: reviewedAt
+            .from("games")
+            .select("id, published", {
+                count: "exact"
+            });
+
+    const publishedGamesResult =
+        await supabaseClient
+            .from("games")
+            .select("id", {
+                count: "exact",
+                head: true
             })
-            .eq("id", id);
+            .eq("published", true);
 
-    if (error) {
-
-        alert("Failed to update application:\n\n" + error.message);
-
-        return;
-    }
-
-    await loadApplications();
-}
-
-
-async function deleteApplication(id) {
-
-    if (!confirm("Delete this application permanently?")) {
-        return;
-    }
-
-    const { error } =
+    const pendingApplicationsResult =
         await supabaseClient
             .from("applications")
-            .delete()
-            .eq("id", id);
+            .select("id", {
+                count: "exact",
+                head: true
+            })
+            .eq("status", "Pending");
 
-    if (error) {
+    const applicationsResult =
+        await supabaseClient
+            .from("applications")
+            .select("id", {
+                count: "exact",
+                head: true
+            });
 
-        alert("Failed to delete application:\n\n" + error.message);
 
-        return;
-    }
+    document.getElementById("gameCount").textContent =
+        publishedGamesResult.count || 0;
 
-    await loadApplications();
+    document.getElementById("pendingCount").textContent =
+        pendingApplicationsResult.count || 0;
+
+    document.getElementById("totalGameCount").textContent =
+        gamesResult.count || 0;
+
+    document.getElementById("totalApplicationCount").textContent =
+        applicationsResult.count || 0;
+
 }
 
 
-/* ============================================
+/* ========================================================
    GAMES
-============================================ */
+======================================================== */
 
-async function loadGames() {
+async function loadAdminGames() {
 
-    const container =
+    const box =
         document.getElementById("gamesList");
 
-    const { data, error } =
+    box.innerHTML =
+        "<p class='message'>Loading games...</p>";
+
+    const result =
         await supabaseClient
             .from("games")
             .select("*")
-            .order("sort_order", { ascending: true });
+            .order("sort_order", {
+                ascending: true
+            })
+            .order("created_at", {
+                ascending: false
+            });
 
-    if (error) {
 
-        container.innerHTML = `
-            <div class="card">
-                <p class="error">
-                    Failed to load games.
-                </p>
-                <p class="small-text">
-                    ${escapeHTML(error.message)}
-                </p>
-            </div>
-        `;
+    if (result.error) {
 
-        return;
-    }
+        console.error(result.error);
 
-    if (!data || data.length === 0) {
-
-        container.innerHTML = `
-            <div class="card muted">
-                No games yet.
-            </div>
-        `;
+        box.innerHTML =
+            "<p class='error'>Could not load games.</p>";
 
         return;
     }
 
-    container.innerHTML = data.map(game => `
 
-        <article class="game-card">
+    const games =
+        result.data || [];
 
-            ${
-                game.image_url
-                ? `<img
-                    class="game-image"
-                    src="${safeUrl(game.image_url)}"
-                    alt=""
-                    onerror="this.style.display='none'"
-                   >`
-                : ""
+
+    if (games.length === 0) {
+
+        box.innerHTML =
+            "<p class='message'>No games yet.</p>";
+
+        return;
+    }
+
+
+    box.innerHTML =
+        games.map(
+            function(game) {
+
+                const image =
+                    safeUrl(game.image_url);
+
+                return `
+
+                    <article class="item">
+
+                        ${
+                            image
+                            ?
+                            `
+                            <img
+                                class="item-image"
+                                src="${escapeHTML(image)}"
+                                alt=""
+                                onerror="this.style.display='none'">
+                            `
+                            :
+                            ""
+                        }
+
+                        <span class="pill">
+                            ${
+                                game.published
+                                ? "PUBLISHED"
+                                : "HIDDEN"
+                            }
+                        </span>
+
+                        ${
+                            game.featured
+                            ?
+                            `
+                            <span class="pill">
+                                FEATURED
+                            </span>
+                            `
+                            :
+                            ""
+                        }
+
+                        <h3>
+                            ${escapeHTML(game.title)}
+                        </h3>
+
+                        <p class="muted">
+                            ${escapeHTML(game.description)}
+                        </p>
+
+                        <p class="muted">
+                            Sort order:
+                            ${Number(game.sort_order) || 0}
+                        </p>
+
+                        <div class="actions">
+
+                            <button
+                                class="button"
+                                onclick="editGame('${escapeHTML(game.id)}')">
+                                EDIT
+                            </button>
+
+                            <button
+                                class="button dark"
+                                onclick="togglePublished('${escapeHTML(game.id)}', ${game.published ? "false" : "true"})">
+                                ${
+                                    game.published
+                                    ? "HIDE"
+                                    : "PUBLISH"
+                                }
+                            </button>
+
+                            <button
+                                class="button"
+                                onclick="toggleFeatured('${escapeHTML(game.id)}', ${game.featured ? "false" : "true"})">
+                                ${
+                                    game.featured
+                                    ? "UNFEATURE"
+                                    : "FEATURE"
+                                }
+                            </button>
+
+                            <button
+                                class="button danger"
+                                onclick="deleteGame('${escapeHTML(game.id)}')">
+                                DELETE
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                `;
+
             }
+        ).join("");
 
-            <div class="game-body">
-
-                <h3>
-                    ${escapeHTML(game.title)}
-                </h3>
-
-                <p class="muted">
-                    ${escapeHTML(game.description)}
-                </p>
-
-                <div class="badges">
-
-                    ${
-                        game.featured
-                        ? `<span class="badge">Featured</span>`
-                        : ""
-                    }
-
-                    <span class="badge">
-                        ${game.published ? "Published" : "Hidden"}
-                    </span>
-
-                </div>
-
-                <div class="actions">
-
-                    <button
-                        class="btn"
-                        onclick='editGame(${JSON.stringify(game)})'
-                    >
-                        Edit
-                    </button>
-
-                    <button
-                        class="btn btn-danger"
-                        onclick="deleteGame('${game.id}')"
-                    >
-                        Delete
-                    </button>
-
-                    ${
-                        game.roblox_url
-                        ? `<a
-                            class="btn"
-                            href="${safeUrl(game.roblox_url)}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                           >
-                            Roblox
-                           </a>`
-                        : ""
-                    }
-
-                </div>
-
-            </div>
-
-        </article>
-
-    `).join("");
 }
 
 
-document
-    .getElementById("gameForm")
-    .addEventListener("submit", async function(event) {
+/* EDIT GAME */
 
-        event.preventDefault();
+async function editGame(id) {
 
-        const id =
-            document.getElementById("gameId").value;
-
-        const game = {
-
-            title:
-                document.getElementById("gameTitle").value.trim(),
-
-            description:
-                document.getElementById("gameDescription").value.trim(),
-
-            image_url:
-                document.getElementById("gameImage").value.trim(),
-
-            roblox_url:
-                document.getElementById("gameRoblox").value.trim(),
-
-            sort_order:
-                Number(document.getElementById("gameOrder").value) || 0,
-
-            featured:
-                document.getElementById("gameFeatured").checked,
-
-            published:
-                document.getElementById("gamePublished").checked
-        };
-
-        const message =
-            document.getElementById("gameMessage");
-
-        message.textContent = "Saving...";
+    const result =
+        await supabaseClient
+            .from("games")
+            .select("*")
+            .eq("id", id)
+            .single();
 
 
-        let result;
+    if (result.error) {
 
-        if (id) {
+        console.error(result.error);
 
-            result =
-                await supabaseClient
-                    .from("games")
-                    .update(game)
-                    .eq("id", id);
+        alert("Could not load game.");
 
-        } else {
-
-            result =
-                await supabaseClient
-                    .from("games")
-                    .insert(game);
-        }
+        return;
+    }
 
 
-        if (result.error) {
+    const game =
+        result.data;
 
-            message.textContent =
-                "Error: " + result.error.message;
-
-            return;
-        }
-
-
-        message.textContent = "Game saved!";
-
-        resetGameForm();
-
-        await loadGames();
-    });
-
-
-function editGame(game) {
-
-    document.getElementById("gameFormTitle").textContent =
-        "Edit Game";
 
     document.getElementById("gameId").value =
-        game.id;
+        game.id || "";
 
     document.getElementById("gameTitle").value =
         game.title || "";
@@ -1307,142 +1307,884 @@ function editGame(game) {
     document.getElementById("gameImage").value =
         game.image_url || "";
 
-    document.getElementById("gameRoblox").value =
+    document.getElementById("gameURL").value =
         game.roblox_url || "";
 
-    document.getElementById("gameOrder").value =
-        game.sort_order || 0;
+    document.getElementById("gameSortOrder").value =
+        Number(game.sort_order) || 0;
 
     document.getElementById("gameFeatured").checked =
-        !!game.featured;
+        Boolean(game.featured);
 
     document.getElementById("gamePublished").checked =
-        !!game.published;
+        Boolean(game.published);
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+
+    document.getElementById("gameMessage").textContent =
+        "Editing " + game.title;
+
+
+    document.getElementById("gamesPanel").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
     });
+
 }
 
 
-function resetGameForm() {
+/* SAVE GAME */
 
-    document.getElementById("gameForm").reset();
+document
+    .getElementById("gameForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
 
-    document.getElementById("gameId").value = "";
+            event.preventDefault();
 
-    document.getElementById("gamePublished").checked = true;
+            const id =
+                document
+                    .getElementById("gameId")
+                    .value
+                    .trim();
 
-    document.getElementById("gameFormTitle").textContent =
-        "Add Game";
+
+            const title =
+                document
+                    .getElementById("gameTitle")
+                    .value
+                    .trim();
+
+
+            const description =
+                document
+                    .getElementById("gameDescription")
+                    .value
+                    .trim();
+
+
+            const imageUrl =
+                document
+                    .getElementById("gameImage")
+                    .value
+                    .trim();
+
+
+            const robloxUrl =
+                document
+                    .getElementById("gameURL")
+                    .value
+                    .trim();
+
+
+            const sortOrder =
+                Number(
+                    document
+                        .getElementById("gameSortOrder")
+                        .value
+                ) || 0;
+
+
+            const featured =
+                document
+                    .getElementById("gameFeatured")
+                    .checked;
+
+
+            const published =
+                document
+                    .getElementById("gamePublished")
+                    .checked;
+
+
+            const message =
+                document
+                    .getElementById("gameMessage");
+
+
+            message.textContent =
+                "Saving game...";
+
+
+            const game = {
+
+                title,
+
+                description,
+
+                image_url:
+                    imageUrl || null,
+
+                roblox_url:
+                    robloxUrl || null,
+
+                featured,
+
+                published,
+
+                sort_order:
+                    sortOrder
+
+            };
+
+
+            let result;
+
+
+            if (featured) {
+
+                /*
+                If this game is featured,
+                remove featured status from
+                all other games first.
+                */
+
+                const unfeatureResult =
+                    await supabaseClient
+                        .from("games")
+                        .update({
+                            featured: false
+                        })
+                        .neq(
+                            "id",
+                            id || "00000000-0000-0000-0000-000000000000"
+                        );
+
+                if (unfeatureResult.error) {
+
+                    console.error(
+                        unfeatureResult.error
+                    );
+
+                    message.textContent =
+                        "Could not update featured game.";
+
+                    return;
+                }
+
+            }
+
+
+            if (id) {
+
+                result =
+                    await supabaseClient
+                        .from("games")
+                        .update(game)
+                        .eq("id", id);
+
+            } else {
+
+                result =
+                    await supabaseClient
+                        .from("games")
+                        .insert(game);
+
+            }
+
+
+            if (result.error) {
+
+                console.error(result.error);
+
+                message.textContent =
+                    "Could not save game: " +
+                    result.error.message;
+
+                return;
+            }
+
+
+            message.textContent =
+                "Game saved successfully.";
+
+            clearGameForm();
+
+            await loadAdminGames();
+
+            await refreshDashboard();
+
+        }
+    );
+
+
+/* CLEAR GAME */
+
+function clearGameForm() {
+
+    document
+        .getElementById("gameForm")
+        .reset();
+
+    document
+        .getElementById("gameId")
+        .value = "";
+
+    document
+        .getElementById("gamePublished")
+        .checked = true;
+
+    document
+        .getElementById("gameFeatured")
+        .checked = false;
+
+    document
+        .getElementById("gameSortOrder")
+        .value = 0;
+
+    document
+        .getElementById("gameMessage")
+        .textContent = "";
+
 }
 
 
 document
-    .getElementById("cancelGameEdit")
-    .addEventListener("click", resetGameForm);
+    .getElementById("clearGame")
+    .addEventListener(
+        "click",
+        clearGameForm
+    );
 
+
+/* DELETE GAME */
 
 async function deleteGame(id) {
 
-    if (!confirm("Delete this game permanently?")) {
+    if (
+        !confirm(
+            "Are you sure you want to permanently delete this game?"
+        )
+    ) {
         return;
     }
 
-    const { error } =
+
+    const result =
         await supabaseClient
             .from("games")
             .delete()
             .eq("id", id);
 
-    if (error) {
 
-        alert("Failed to delete game:\n\n" + error.message);
+    if (result.error) {
+
+        console.error(result.error);
+
+        alert(
+            "Could not delete game:\n" +
+            result.error.message
+        );
 
         return;
     }
 
-    await loadGames();
+
+    await loadAdminGames();
+
+    await refreshDashboard();
+
 }
 
 
-/* ============================================
-   SETTINGS
-============================================ */
+/* PUBLISH / HIDE */
 
-async function loadSettings() {
+async function togglePublished(id, value) {
 
-    const { data, error } =
+    const published =
+        value === true ||
+        value === "true";
+
+
+    const result =
         await supabaseClient
-            .from("site_settings")
-            .select("*")
-            .eq("id", 1)
-            .maybeSingle();
+            .from("games")
+            .update({
+                published
+            })
+            .eq("id", id);
 
-    if (error || !data) {
+
+    if (result.error) {
+
+        console.error(result.error);
+
+        alert(
+            "Could not change publishing status:\n" +
+            result.error.message
+        );
+
         return;
     }
 
-    document.getElementById("heroTitle").value =
-        data.hero_title || "";
 
-    document.getElementById("heroDescription").value =
-        data.hero_description || "";
+    await loadAdminGames();
 
-    document.getElementById("aboutText").value =
-        data.about_text || "";
+    await refreshDashboard();
+
 }
 
 
-document
-    .getElementById("settingsForm")
-    .addEventListener("submit", async function(event) {
+/* FEATURE / UNFEATURE */
 
-        event.preventDefault();
+async function toggleFeatured(id, value) {
 
-        const message =
-            document.getElementById("settingsMessage");
-
-        message.textContent = "Saving...";
+    const featured =
+        value === true ||
+        value === "true";
 
 
-        const { error } =
+    if (featured) {
+
+        const unfeatureResult =
             await supabaseClient
-                .from("site_settings")
-                .upsert({
-
-                    id: 1,
-
-                    hero_title:
-                        document.getElementById("heroTitle").value.trim(),
-
-                    hero_description:
-                        document.getElementById("heroDescription").value.trim(),
-
-                    about_text:
-                        document.getElementById("aboutText").value.trim()
-                });
+                .from("games")
+                .update({
+                    featured: false
+                })
+                .neq(
+                    "id",
+                    id
+                );
 
 
-        if (error) {
+        if (unfeatureResult.error) {
 
-            message.textContent =
-                "Error: " + error.message;
+            console.error(
+                unfeatureResult.error
+            );
+
+            alert(
+                "Could not update featured games."
+            );
 
             return;
         }
 
+    }
+
+
+    const result =
+        await supabaseClient
+            .from("games")
+            .update({
+                featured
+            })
+            .eq("id", id);
+
+
+    if (result.error) {
+
+        console.error(result.error);
+
+        alert(
+            "Could not change featured status:\n" +
+            result.error.message
+        );
+
+        return;
+    }
+
+
+    await loadAdminGames();
+
+}
+
+
+/* ========================================================
+   APPLICATIONS
+======================================================== */
+
+async function loadApplications() {
+
+    const box =
+        document.getElementById(
+            "applicationsList"
+        );
+
+
+    box.innerHTML =
+        "<p class='message'>Loading applications...</p>";
+
+
+    const result =
+        await supabaseClient
+            .from("applications")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    if (result.error) {
+
+        console.error(result.error);
+
+        box.innerHTML =
+            "<p class='error'>Could not load applications.</p>";
+
+        return;
+    }
+
+
+    const applications =
+        result.data || [];
+
+
+    if (applications.length === 0) {
+
+        box.innerHTML =
+            "<p class='message'>No applications yet.</p>";
+
+        return;
+    }
+
+
+    box.innerHTML =
+        applications.map(
+            function(application) {
+
+                const portfolio =
+                    safeUrl(
+                        application.portfolio
+                    );
+
+
+                return `
+
+                    <article class="item">
+
+                        <span class="pill">
+                            ${escapeHTML(application.status)}
+                        </span>
+
+                        <h3>
+                            ${escapeHTML(application.name)}
+                        </h3>
+
+                        <p class="muted">
+                            <strong>Roblox:</strong>
+                            ${escapeHTML(application.roblox_username)}
+                        </p>
+
+                        <p class="muted">
+                            <strong>Position:</strong>
+                            ${escapeHTML(application.position)}
+                        </p>
+
+                        ${
+                            portfolio
+                            ?
+                            `
+                            <p>
+                                <a
+                                    href="${escapeHTML(portfolio)}"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    View Portfolio
+                                </a>
+                            </p>
+                            `
+                            :
+                            ""
+                        }
+
+                        <h4>
+                            Experience
+                        </h4>
+
+                        <p class="application-text">
+                            ${escapeHTML(application.experience)}
+                        </p>
+
+                        <h4>
+                            Why Join?
+                        </h4>
+
+                        <p class="application-text">
+                            ${escapeHTML(application.reason)}
+                        </p>
+
+                        ${
+                            application.admin_notes
+                            ?
+                            `
+                            <h4>
+                                Admin Notes
+                            </h4>
+
+                            <p class="application-text">
+                                ${escapeHTML(application.admin_notes)}
+                            </p>
+                            `
+                            :
+                            ""
+                        }
+
+                        <div class="actions">
+
+                            <button
+                                class="button success"
+                                onclick="setApplicationStatus(
+                                    '${escapeHTML(application.id)}',
+                                    'Accepted'
+                                )">
+                                ACCEPT
+                            </button>
+
+                            <button
+                                class="button danger"
+                                onclick="setApplicationStatus(
+                                    '${escapeHTML(application.id)}',
+                                    'Rejected'
+                                )">
+                                REJECT
+                            </button>
+
+                            ${
+                                application.status !== "Pending"
+                                ?
+                                `
+                                <button
+                                    class="button dark"
+                                    onclick="setApplicationStatus(
+                                        '${escapeHTML(application.id)}',
+                                        'Pending'
+                                    )">
+                                    SET PENDING
+                                </button>
+                                `
+                                :
+                                ""
+                            }
+
+                            <button
+                                class="button danger"
+                                onclick="deleteApplication('${escapeHTML(application.id)}')">
+                                DELETE
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* CHANGE APPLICATION STATUS */
+
+async function setApplicationStatus(
+    id,
+    status
+) {
+
+    const result =
+        await supabaseClient
+            .from("applications")
+            .update({
+                status,
+                reviewed_at:
+                    status === "Pending"
+                    ? null
+                    : new Date().toISOString()
+            })
+            .eq("id", id);
+
+
+    if (result.error) {
+
+        console.error(result.error);
+
+        alert(
+            "Could not update application:\n" +
+            result.error.message
+        );
+
+        return;
+    }
+
+
+    await loadApplications();
+
+    await refreshDashboard();
+
+}
+
+
+/* DELETE APPLICATION */
+
+async function deleteApplication(id) {
+
+    if (
+        !confirm(
+            "Are you sure you want to delete this application?"
+        )
+    ) {
+        return;
+    }
+
+
+    const result =
+        await supabaseClient
+            .from("applications")
+            .delete()
+            .eq("id", id);
+
+
+    if (result.error) {
+
+        console.error(result.error);
+
+        alert(
+            "Could not delete application:\n" +
+            result.error.message
+        );
+
+        return;
+    }
+
+
+    await loadApplications();
+
+    await refreshDashboard();
+
+}
+
+
+/* ========================================================
+   WEBSITE SETTINGS
+======================================================== */
+
+async function loadSettings() {
+
+    const message =
+        document
+            .getElementById("settingsMessage");
+
+
+    message.textContent =
+        "Loading settings...";
+
+
+    const result =
+        await supabaseClient
+            .from("site_settings")
+            .select(
+                "id, hero_title, hero_description, about_text"
+            )
+            .eq("id", 1)
+            .maybeSingle();
+
+
+    if (result.error) {
+
+        console.error(result.error);
+
         message.textContent =
-            "Settings saved!";
-    });
+            "Could not load website settings.";
+
+        return;
+    }
 
 
-/* ============================================
+    if (!result.data) {
+
+        message.textContent =
+            "No website settings found.";
+
+        return;
+    }
+
+
+    const settings =
+        result.data;
+
+
+    document.getElementById("heroTitle").value =
+        settings.hero_title || "";
+
+    document.getElementById("heroDescription").value =
+        settings.hero_description || "";
+
+    document.getElementById("aboutText").value =
+        settings.about_text || "";
+
+
+    message.textContent = "";
+
+}
+
+
+/* SAVE SETTINGS */
+
+document
+    .getElementById("settingsForm")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const message =
+                document
+                    .getElementById("settingsMessage");
+
+
+            message.textContent =
+                "Saving website settings...";
+
+
+            const settings = {
+
+                id: 1,
+
+                hero_title:
+                    document
+                        .getElementById("heroTitle")
+                        .value
+                        .trim(),
+
+                hero_description:
+                    document
+                        .getElementById("heroDescription")
+                        .value
+                        .trim(),
+
+                about_text:
+                    document
+                        .getElementById("aboutText")
+                        .value
+                        .trim()
+
+            };
+
+
+            const result =
+                await supabaseClient
+                    .from("site_settings")
+                    .upsert(
+                        settings,
+                        {
+                            onConflict: "id"
+                        }
+                    );
+
+
+            if (result.error) {
+
+                console.error(result.error);
+
+                message.textContent =
+                    "Could not save settings: " +
+                    result.error.message;
+
+                return;
+            }
+
+
+            message.textContent =
+                "Website settings saved successfully.";
+
+        }
+    );
+
+
+/* ========================================================
    START
-============================================ */
+======================================================== */
 
-checkAdmin();
+async function start() {
+
+    try {
+
+        const sessionResult =
+            await supabaseClient.auth.getSession();
+
+
+        if (
+            sessionResult.error
+        ) {
+
+            console.error(
+                sessionResult.error
+            );
+
+            showLogin();
+
+            return;
+        }
+
+
+        const session =
+            sessionResult.data.session;
+
+
+        if (!session) {
+
+            showLogin();
+
+            return;
+        }
+
+
+        currentUser =
+            session.user;
+
+
+        const isAdmin =
+            await checkAdmin();
+
+
+        if (!isAdmin) {
+            return;
+        }
+
+
+        showAdmin();
+
+        await refreshDashboard();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showLogin();
+
+        document
+            .getElementById("loginError")
+            .textContent =
+            "Something went wrong loading the admin panel.";
+
+    }
+
+}
+
+
+supabaseClient.auth.onAuthStateChange(
+    function(event, session) {
+
+        if (
+            event === "SIGNED_OUT"
+        ) {
+
+            currentUser = null;
+
+            showLogin();
+
+        }
+
+    }
+);
+
+
+start();
 
 </script>
 
