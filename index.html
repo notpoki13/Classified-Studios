@@ -45,6 +45,72 @@ select {
 }
 
 /* =========================
+   GLOBAL ANNOUNCEMENT
+========================= */
+
+#globalAnnouncement {
+    display: none;
+
+    position: relative;
+
+    width: 100%;
+
+    background: #111;
+
+    border-bottom: 1px solid #333;
+
+    color: #fff;
+
+    padding: 13px 50px 13px 18px;
+
+    text-align: center;
+
+    font-size: 14px;
+    line-height: 1.4;
+
+    z-index: 3000;
+}
+
+#globalAnnouncement.show {
+    display: block;
+}
+
+#globalAnnouncementText {
+    display: block;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+#globalAnnouncementClose {
+    position: absolute;
+
+    right: 18px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: 0;
+
+    background: transparent;
+
+    color: #888;
+
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+#globalAnnouncementClose:hover {
+    color: #fff;
+}
+
+/* =========================
    NAVBAR
 ========================= */
 
@@ -744,11 +810,40 @@ footer {
     .modal-box {
         padding: 22px;
     }
+
+    #globalAnnouncement {
+        font-size: 13px;
+        padding-left: 12px;
+        padding-right: 45px;
+    }
+
+    #globalAnnouncementClose {
+        right: 12px;
+    }
 }
 </style>
 </head>
 
 <body>
+
+<!-- =========================
+     GLOBAL ANNOUNCEMENT
+========================= -->
+
+<div id="globalAnnouncement">
+
+    <span id="globalAnnouncementText"></span>
+
+    <button
+        id="globalAnnouncementClose"
+        type="button"
+        aria-label="Dismiss announcement"
+    >
+        ×
+    </button>
+
+</div>
+
 
 <!-- =========================
      NAVBAR
@@ -1464,6 +1559,71 @@ function safeUrl(value) {
 
 
 /* ==========================================
+   LOAD GLOBAL ANNOUNCEMENT
+========================================== */
+
+async function loadGlobalAnnouncement() {
+
+    const banner =
+        document.getElementById(
+            "globalAnnouncement"
+        );
+
+    const text =
+        document.getElementById(
+            "globalAnnouncementText"
+        );
+
+    const closeButton =
+        document.getElementById(
+            "globalAnnouncementClose"
+        );
+
+
+    if (!banner || !text) {
+        return;
+    }
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("announcements")
+            .select("message, active")
+            .eq("active", true)
+            .limit(1)
+            .maybeSingle();
+
+
+    if (
+        error ||
+        !data ||
+        !data.message
+    ) {
+
+        banner.classList.remove("show");
+
+        return;
+    }
+
+
+    text.textContent = data.message;
+
+    banner.classList.add("show");
+
+
+    if (closeButton) {
+
+        closeButton.onclick = function() {
+
+            banner.classList.remove("show");
+
+        };
+
+    }
+}
+
+
+/* ==========================================
    LOAD WEBSITE SETTINGS
 ========================================== */
 
@@ -1477,7 +1637,11 @@ async function loadSettings() {
             .maybeSingle();
 
     if (error || !data) {
-        console.log("Using default website settings.");
+
+        console.log(
+            "Using default website settings."
+        );
+
         return;
     }
 
@@ -1486,6 +1650,7 @@ async function loadSettings() {
 
         document.getElementById("heroTitle")
             .textContent = data.hero_title;
+
     }
 
 
@@ -1493,6 +1658,7 @@ async function loadSettings() {
 
         document.getElementById("heroDescription")
             .textContent = data.hero_description;
+
     }
 
 
@@ -1500,6 +1666,7 @@ async function loadSettings() {
 
         document.getElementById("aboutText")
             .textContent = data.about_text;
+
     }
 }
 
@@ -1512,6 +1679,7 @@ async function loadGames() {
 
     const grid =
         document.getElementById("gamesGrid");
+
 
     const { data, error } =
         await supabaseClient
@@ -1604,7 +1772,9 @@ async function loadGames() {
 async function loadFeaturedGame() {
 
     const container =
-        document.getElementById("featuredGame");
+        document.getElementById(
+            "featuredGame"
+        );
 
 
     const { data, error } =
@@ -1624,6 +1794,7 @@ async function loadFeaturedGame() {
         !data ||
         data.length === 0
     ) {
+
         return;
     }
 
@@ -1693,33 +1864,47 @@ async function loadFeaturedGame() {
 ========================================== */
 
 const modal =
-    document.getElementById("applicationModal");
+    document.getElementById(
+        "applicationModal"
+    );
 
 const closeModal =
-    document.getElementById("closeModal");
+    document.getElementById(
+        "closeModal"
+    );
 
 const applicationForm =
-    document.getElementById("applicationForm");
+    document.getElementById(
+        "applicationForm"
+    );
 
 const positionSelect =
-    document.getElementById("position");
+    document.getElementById(
+        "position"
+    );
 
 
 document
     .querySelectorAll(".apply-button")
     .forEach(button => {
 
-        button.addEventListener("click", () => {
+        button.addEventListener(
+            "click",
+            () => {
 
-            positionSelect.value =
-                button.dataset.position;
+                positionSelect.value =
+                    button.dataset.position;
 
-            modal.classList.add("active");
+                modal.classList.add(
+                    "active"
+                );
 
-            document
-                .getElementById("name")
-                .focus();
-        });
+                document
+                    .getElementById("name")
+                    .focus();
+
+            }
+        );
 
     });
 
@@ -1728,7 +1913,9 @@ closeModal.addEventListener(
     "click",
     () => {
 
-        modal.classList.remove("active");
+        modal.classList.remove(
+            "active"
+        );
 
     }
 );
@@ -1738,9 +1925,13 @@ modal.addEventListener(
     "click",
     event => {
 
-        if (event.target === modal) {
+        if (
+            event.target === modal
+        ) {
 
-            modal.classList.remove("active");
+            modal.classList.remove(
+                "active"
+            );
 
         }
 
@@ -1771,14 +1962,18 @@ applicationForm.addEventListener(
 
 
         const formData =
-            new FormData(applicationForm);
+            new FormData(
+                applicationForm
+            );
 
 
         /* Honeypot */
 
         if (
             String(
-                formData.get("website") || ""
+                formData.get(
+                    "website"
+                ) || ""
             ).trim()
         ) {
 
@@ -1790,7 +1985,9 @@ applicationForm.addEventListener(
 
             name:
                 String(
-                    formData.get("name") || ""
+                    formData.get(
+                        "name"
+                    ) || ""
                 ).trim(),
 
             roblox_username:
@@ -1829,6 +2026,7 @@ applicationForm.addEventListener(
                 ).trim(),
 
             status: "Pending"
+
         };
 
 
@@ -1843,7 +2041,9 @@ applicationForm.addEventListener(
         const { error } =
             await supabaseClient
                 .from("applications")
-                .insert(application);
+                .insert(
+                    application
+                );
 
 
         if (error) {
@@ -1869,18 +2069,24 @@ applicationForm.addEventListener(
         applicationForm.reset();
 
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            modal.classList.remove("active");
+                modal.classList.remove(
+                    "active"
+                );
 
-            message.textContent = "";
+                message.textContent = "";
 
-            submitButton.disabled = false;
+                submitButton.disabled =
+                    false;
 
-            submitButton.textContent =
-                "Submit Application";
+                submitButton.textContent =
+                    "Submit Application";
 
-        }, 1800);
+            },
+            1800
+        );
 
     }
 );
@@ -1889,6 +2095,8 @@ applicationForm.addEventListener(
 /* ==========================================
    START WEBSITE
 ========================================== */
+
+loadGlobalAnnouncement();
 
 loadSettings();
 
