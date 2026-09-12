@@ -4,12 +4,37 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Classified Studios</title>
+<title>Vixel Games</title>
+<meta
+    name="description"
+    content="Vixel Games — an independent game development studio creating original worlds, experiences, and technology."
+>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 
 <style>
+:root {
+    --bg: #0b0b12;
+    --bg-deep: #07070d;
+    --surface: #10101a;
+    --surface-2: #141421;
+    --border: rgba(255,255,255,.09);
+
+    --text: #f7f7fb;
+    --muted: #9191a3;
+    --muted-2: #676778;
+
+    --purple: #9b5cff;
+    --indigo: #315dff;
+
+    --max-width: 1180px;
+
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 11px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -18,13 +43,36 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 90px;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #050505;
-    color: #f2f2f2;
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(91, 48, 180, .17),
+            transparent 38%
+        ),
+        var(--bg);
+
     line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body.modal-open {
+    overflow: hidden;
 }
 
 a {
@@ -39,14 +87,89 @@ select {
     font: inherit;
 }
 
-.container {
-    width: min(1150px, 92%);
-    margin: auto;
+button {
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* =========================
+.container {
+    width: min(var(--max-width), calc(100% - 40px));
+    margin-inline: auto;
+}
+
+
+/* =========================================================
+   BACKGROUND GRID
+========================================================= */
+
+.background-grid {
+    position: fixed;
+    inset: 0;
+
+    z-index: -3;
+
+    pointer-events: none;
+
+    opacity: .18;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 64px 64px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 75%
+        );
+}
+
+
+/* =========================================================
+   AMBIENT LIGHT
+========================================================= */
+
+.ambient {
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    opacity: .10;
+
+    pointer-events: none;
+
+    z-index: -2;
+}
+
+.ambient-purple {
+    top: 10%;
+    left: -250px;
+    background: #873cff;
+}
+
+.ambient-blue {
+    top: 45%;
+    right: -280px;
+    background: #315dff;
+}
+
+
+/* =========================================================
    GLOBAL ANNOUNCEMENT
-========================= */
+========================================================= */
 
 #globalAnnouncement {
     display: none;
@@ -55,18 +178,22 @@ select {
 
     width: 100%;
 
-    background: #111;
+    padding: 11px 55px 11px 20px;
 
-    border-bottom: 1px solid #333;
+    color: #e9e9f1;
 
-    color: #fff;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(155,92,255,.14),
+            rgba(49,93,255,.10)
+        );
 
-    padding: 13px 50px 13px 18px;
+    border-bottom: 1px solid var(--border);
 
     text-align: center;
 
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 13px;
 
     z-index: 3000;
 }
@@ -78,116 +205,230 @@ select {
 #globalAnnouncementText {
     display: block;
 
-    max-width: 1200px;
+    max-width: 1000px;
 
-    margin: 0 auto;
+    margin-inline: auto;
 
     white-space: pre-wrap;
+
     overflow-wrap: anywhere;
 }
 
 #globalAnnouncementClose {
     position: absolute;
 
-    right: 18px;
     top: 50%;
+    right: 18px;
+
+    width: 30px;
+    height: 30px;
 
     transform: translateY(-50%);
 
-    border: 0;
+    border: 1px solid transparent;
+
+    border-radius: 8px;
+
+    color: var(--muted);
 
     background: transparent;
 
-    color: #888;
-
-    font-size: 22px;
-    line-height: 1;
-
     cursor: pointer;
+
+    transition:
+        color .2s ease,
+        background .2s ease;
 }
 
 #globalAnnouncementClose:hover {
-    color: #fff;
+    color: white;
+    background: rgba(255,255,255,.06);
 }
 
-/* =========================
+
+/* =========================================================
    NAVBAR
-========================= */
+========================================================= */
 
 .navbar {
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100%;
+
     z-index: 1000;
 
-    background: rgba(5, 5, 5, 0.88);
-    backdrop-filter: blur(12px);
+    background:
+        rgba(7,7,13,.76);
 
-    border-bottom: 1px solid #222;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
 .nav-inner {
-    min-height: 72px;
+    min-height: 76px;
 
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 }
 
 .nav-logo {
-    display: flex;
+    display: inline-flex;
+
     align-items: center;
+
     gap: 12px;
 
-    font-size: 18px;
-    font-weight: 900;
-    letter-spacing: 1px;
+    font-size: 16px;
+
+    font-weight: 850;
+
+    letter-spacing: .14em;
 }
 
-.nav-c {
-    width: 38px;
-    height: 38px;
+.nav-mark {
+    width: 36px;
+    height: 36px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
 
-    border-radius: 9px;
+    border-radius: 10px;
 
-    color: #111;
-    font-size: 25px;
-    font-weight: 900;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(155,92,255,.20),
+            rgba(49,93,255,.12)
+        );
 
-    background: linear-gradient(
-        145deg,
-        #f0f0f0,
-        #777
-    );
+    border: 1px solid rgba(155,92,255,.30);
 
     box-shadow:
-        inset 2px 2px 4px rgba(255,255,255,.5),
-        inset -2px -2px 5px rgba(0,0,0,.6);
+        0 0 25px rgba(115,74,255,.12);
+}
+
+.nav-mark svg {
+    width: 23px;
+    height: 23px;
 }
 
 .nav-links {
     display: flex;
-    gap: 25px;
+
+    align-items: center;
+
+    gap: 30px;
 }
 
 .nav-links a {
-    color: #999;
-    font-size: 14px;
-    transition: .2s;
+    position: relative;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        color .2s ease;
+}
+
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -8px;
+
+    width: 0;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--purple),
+            var(--indigo)
+        );
+
+    transition: width .2s ease;
 }
 
 .nav-links a:hover {
     color: white;
 }
 
-/* =========================
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-menu {
+    display: none;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    color: white;
+
+    background: rgba(255,255,255,.035);
+
+    cursor: pointer;
+}
+
+.nav-menu span {
+    display: block;
+
+    width: 18px;
+    height: 1px;
+
+    margin: 4px auto;
+
+    background: currentColor;
+}
+
+
+/* =========================================================
+   VIXEL MARK
+========================================================= */
+
+.vixel-mark {
+    position: relative;
+
+    width: 170px;
+    height: 170px;
+
+    margin-inline: auto;
+
+    display: grid;
+    place-items: center;
+
+    filter:
+        drop-shadow(
+            0 0 28px rgba(128,77,255,.22)
+        );
+}
+
+.vixel-mark svg {
+    width: 100%;
+    height: 100%;
+
+    overflow: visible;
+}
+
+
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero {
     min-height: 100vh;
@@ -195,171 +436,390 @@ select {
     display: flex;
     align-items: center;
 
-    padding-top: 90px;
+    padding-top: 110px;
+    padding-bottom: 80px;
+
+    position: relative;
+}
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    top: 22%;
+    left: 50%;
+
+    width: 650px;
+    height: 350px;
+
+    transform:
+        translateX(-50%);
 
     background:
         radial-gradient(
-            circle at 50% 35%,
-            #1b1b1b 0%,
-            #090909 40%,
-            #050505 75%
+            ellipse,
+            rgba(117,67,255,.14),
+            transparent 68%
         );
+
+    pointer-events: none;
 }
 
 .hero-content {
+    position: relative;
+
     text-align: center;
-    width: 100%;
 }
 
-.hero-logo {
-    width: 145px;
-    height: 145px;
+.hero-eyebrow {
+    display: inline-flex;
 
-    margin: 0 auto 35px;
-
-    display: flex;
     align-items: center;
-    justify-content: center;
 
-    border-radius: 30px;
+    gap: 9px;
 
-    color: #111;
-    font-size: 100px;
+    margin-bottom: 30px;
+
+    padding: 7px 12px;
+
+    border: 1px solid rgba(155,92,255,.20);
+
+    border-radius: 999px;
+
+    color: #b8b4c9;
+
+    background: rgba(155,92,255,.06);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: .16em;
+
+    text-transform: uppercase;
+}
+
+.hero-eyebrow-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--indigo)
+        );
+
+    box-shadow:
+        0 0 12px rgba(155,92,255,.7);
+}
+
+.hero h1 {
+    margin-top: 36px;
+
+    font-size:
+        clamp(
+            44px,
+            9vw,
+            92px
+        );
+
+    line-height: .95;
+
+    letter-spacing:
+        clamp(
+            .03em,
+            .6vw,
+            .08em
+        );
+
     font-weight: 900;
 
     background:
         linear-gradient(
-            145deg,
-            #fafafa,
-            #999 45%,
-            #444
+            180deg,
+            #ffffff 0%,
+            #e7e6ef 45%,
+            #77768a 100%
         );
 
-    box-shadow:
-        inset 5px 5px 12px rgba(255,255,255,.45),
-        inset -7px -7px 15px rgba(0,0,0,.7),
-        0 30px 80px rgba(0,0,0,.7);
-}
-
-.hero h1 {
-    font-size: clamp(42px, 8vw, 82px);
-    letter-spacing: 4px;
-    line-height: 1.05;
-
-    background: linear-gradient(
-        180deg,
-        #fff,
-        #777
-    );
-
     -webkit-background-clip: text;
+    background-clip: text;
+
     -webkit-text-fill-color: transparent;
 }
 
-.hero p {
+.hero-description {
     max-width: 650px;
-    margin: 22px auto 0;
 
-    color: #999;
-    font-size: 18px;
+    margin: 25px auto 0;
+
+    color: var(--muted);
+
+    font-size:
+        clamp(
+            15px,
+            2vw,
+            18px
+        );
 }
 
-/* =========================
-   SECTIONS
-========================= */
+.hero-actions {
+    display: flex;
 
-section {
-    padding: 100px 0;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 32px;
 }
 
-.section-title {
-    text-align: center;
-    margin-bottom: 55px;
+.primary-button,
+.secondary-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 46px;
+
+    padding:
+        0 20px;
+
+    border-radius: 11px;
+
+    font-size: 13px;
+
+    font-weight: 750;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease;
 }
 
-.section-title h2 {
-    font-size: 38px;
-    letter-spacing: 2px;
-}
-
-.section-title p {
-    margin-top: 10px;
-    color: #777;
-}
-
-/* =========================
-   FEATURED GAME
-========================= */
-
-.featured {
-    border: 1px solid #292929;
-    border-radius: 18px;
-    overflow: hidden;
+.primary-button {
+    color: white;
 
     background:
         linear-gradient(
-            145deg,
-            #131313,
-            #080808
+            135deg,
+            #864cff,
+            #315dff
         );
 
-    box-shadow: 0 25px 70px rgba(0,0,0,.4);
+    box-shadow:
+        0 12px 35px rgba(76,57,200,.25);
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+    transform: translateY(-2px);
+}
+
+.secondary-button {
+    border: 1px solid var(--border);
+
+    color: #d7d7e0;
+
+    background:
+        rgba(255,255,255,.035);
+}
+
+.secondary-button:hover {
+    border-color:
+        rgba(155,92,255,.35);
+
+    background:
+        rgba(155,92,255,.06);
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+section {
+    padding: 110px 0;
+}
+
+.section-header {
+    margin-bottom: 42px;
+}
+
+.section-kicker {
+    margin-bottom: 9px;
+
+    color: #8f72ff;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .18em;
+
+    text-transform: uppercase;
+}
+
+.section-header h2 {
+    font-size:
+        clamp(
+            30px,
+            5vw,
+            48px
+        );
+
+    line-height: 1.05;
+
+    letter-spacing: -.025em;
+}
+
+.section-header p {
+    max-width: 600px;
+
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   FEATURED GAME
+========================================================= */
+
+.featured {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(320px, .75fr);
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.015)
+        );
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.32);
+}
+
+.featured-image-wrap {
+    min-height: 410px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(112,66,255,.18),
+            transparent 60%
+        ),
+        #101019;
 }
 
 .featured-image {
     width: 100%;
-    height: 360px;
+    height: 100%;
 
-    object-fit: cover;
+    min-height: 410px;
 
     display: block;
 
-    background: #111;
+    object-fit: cover;
+}
+
+.featured-image-wrap::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 55%,
+            rgba(11,11,18,.65)
+        );
+
+    pointer-events: none;
 }
 
 .featured-content {
-    padding: 35px;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 48px;
 }
 
-.featured-content h3 {
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.featured-content p {
-    color: #999;
-    max-width: 700px;
-}
-
-.roblox-button {
+.featured-label {
     display: inline-block;
 
-    margin-top: 22px;
+    margin-bottom: 15px;
 
-    padding: 12px 20px;
+    color: #9f83ff;
 
-    border-radius: 9px;
-
-    color: #111;
-    background: linear-gradient(
-        145deg,
-        #eee,
-        #888
-    );
+    font-size: 10px;
 
     font-weight: 800;
 
-    transition: .2s;
+    letter-spacing: .18em;
+
+    text-transform: uppercase;
 }
 
-.roblox-button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
+.featured-content h3 {
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            42px
+        );
+
+    line-height: 1;
+
+    letter-spacing: -.03em;
 }
 
-/* =========================
-   GAME GRID
-========================= */
+.featured-content p {
+    margin-top: 16px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+.featured-content .primary-button {
+    align-self: flex-start;
+
+    margin-top: 25px;
+}
+
+
+/* =========================================================
+   GAMES
+========================================================= */
 
 .games-grid {
     display: grid;
@@ -370,133 +830,239 @@ section {
             minmax(260px, 1fr)
         );
 
-    gap: 22px;
+    gap: 18px;
 }
 
 .game-card {
     overflow: hidden;
 
-    border: 1px solid #292929;
-    border-radius: 14px;
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius-md);
 
     background:
         linear-gradient(
             145deg,
-            #121212,
-            #090909
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
         );
 
-    transition: .25s;
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .game-card:hover {
     transform: translateY(-5px);
-    border-color: #444;
+
+    border-color:
+        rgba(155,92,255,.28);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.25);
 }
 
-.game-card img {
+.game-card-image {
     width: 100%;
-    height: 175px;
+    height: 190px;
 
     display: block;
 
     object-fit: cover;
 
-    background: #151515;
+    background: #101019;
 }
 
 .game-content {
-    padding: 22px;
+    padding: 24px;
 }
 
 .game-content h3 {
-    font-size: 22px;
-    margin-bottom: 8px;
+    font-size: 21px;
+
+    letter-spacing: -.015em;
 }
 
 .game-content p {
-    color: #888;
-    min-height: 52px;
+    min-height: 50px;
+
+    margin-top: 8px;
+
+    color: var(--muted);
+
+    font-size: 13px;
 }
 
 .game-link {
-    display: inline-block;
+    display: inline-flex;
 
-    margin-top: 15px;
+    align-items: center;
 
-    color: #ccc;
-    font-size: 14px;
-    font-weight: bold;
+    gap: 7px;
+
+    margin-top: 18px;
+
+    color: #c5b6ff;
+
+    font-size: 12px;
+
+    font-weight: 750;
 }
 
 .game-link:hover {
     color: white;
 }
 
-/* =========================
+
+/* =========================================================
    ABOUT
-========================= */
+========================================================= */
+
+.about-layout {
+    display: grid;
+
+    grid-template-columns:
+        .8fr
+        1.2fr;
+
+    gap: 25px;
+
+    align-items: stretch;
+}
+
+.about-intro,
+.about-box {
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.04),
+            rgba(255,255,255,.012)
+        );
+}
+
+.about-intro {
+    min-height: 300px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    padding: 34px;
+}
+
+.about-intro h3 {
+    font-size: 30px;
+
+    line-height: 1.05;
+
+    letter-spacing: -.03em;
+}
+
+.about-intro span {
+    display: block;
+
+    margin-top: 13px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
 
 .about-box {
-    max-width: 850px;
-    margin: auto;
-
-    padding: 35px;
-
-    border: 1px solid #292929;
-    border-radius: 15px;
-
-    background: #0d0d0d;
-
-    text-align: center;
+    padding: 34px;
 }
 
 .about-box p {
-    color: #999;
-    font-size: 17px;
+    color: var(--muted);
+
+    font-size: 16px;
+
+    line-height: 1.9;
 }
 
-/* =========================
+
+/* =========================================================
    DEVELOPMENT
-========================= */
+========================================================= */
 
 .development-grid {
     display: grid;
 
     grid-template-columns:
         repeat(
-            auto-fit,
-            minmax(220px, 1fr)
+            4,
+            1fr
         );
 
-    gap: 18px;
+    gap: 15px;
 }
 
 .dev-card {
-    padding: 28px;
+    min-height: 210px;
 
-    border: 1px solid #292929;
-    border-radius: 14px;
+    padding: 27px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius-md);
 
     background:
         linear-gradient(
             145deg,
-            #121212,
-            #090909
+            rgba(255,255,255,.04),
+            rgba(255,255,255,.012)
         );
+
+    transition:
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+.dev-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(155,92,255,.24);
+}
+
+.dev-number {
+    margin-bottom: 45px;
+
+    color: #7050d8;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: .12em;
 }
 
 .dev-card h3 {
-    margin-bottom: 8px;
+    font-size: 17px;
 }
 
 .dev-card p {
-    color: #888;
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 12px;
 }
 
-/* =========================
+
+/* =========================================================
    JOBS
-========================= */
+========================================================= */
 
 .jobs-grid {
     display: grid;
@@ -504,104 +1070,153 @@ section {
     grid-template-columns:
         repeat(
             auto-fit,
-            minmax(220px, 1fr)
+            minmax(230px, 1fr)
         );
 
-    gap: 18px;
+    gap: 15px;
 }
 
 .job-card {
-    padding: 28px;
+    padding: 27px;
 
-    border: 1px solid #292929;
-    border-radius: 14px;
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius-md);
 
     background:
         linear-gradient(
             145deg,
-            #121212,
-            #090909
+            rgba(255,255,255,.04),
+            rgba(255,255,255,.012)
         );
 }
 
 .job-card h3 {
-    margin-bottom: 8px;
+    font-size: 18px;
 }
 
 .job-card p {
-    color: #888;
+    min-height: 48px;
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 12px;
 }
 
 .apply-button {
-    margin-top: 18px;
-
     width: 100%;
 
-    padding: 11px;
+    margin-top: 20px;
 
-    border: 1px solid #333;
-    border-radius: 8px;
+    min-height: 40px;
 
-    color: white;
-    background: #151515;
+    border:
+        1px solid rgba(155,92,255,.20);
+
+    border-radius: 9px;
+
+    color: #d9d0ff;
+
+    background:
+        rgba(155,92,255,.07);
 
     cursor: pointer;
 
-    transition: .2s;
+    font-size: 12px;
+
+    font-weight: 750;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
 }
 
 .apply-button:hover {
-    background: #222;
+    background:
+        rgba(155,92,255,.14);
+
+    border-color:
+        rgba(155,92,255,.35);
 }
 
-/* =========================
+
+/* =========================================================
    SOCIALS
-========================= */
+========================================================= */
 
 .socials {
     display: flex;
+
     justify-content: center;
 
     flex-wrap: wrap;
 
-    gap: 12px;
+    gap: 10px;
 }
 
 .socials a {
-    padding: 11px 17px;
+    min-width: 100px;
 
-    border: 1px solid #292929;
+    padding: 11px 16px;
+
+    border:
+        1px solid var(--border);
+
     border-radius: 9px;
 
-    color: #aaa;
-    background: #0d0d0d;
+    color: var(--muted);
 
-    transition: .2s;
+    background:
+        rgba(255,255,255,.025);
+
+    text-align: center;
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    transition:
+        color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
 }
 
 .socials a:hover {
     color: white;
-    border-color: #444;
+
+    border-color:
+        rgba(155,92,255,.28);
+
+    transform: translateY(-2px);
 }
 
-/* =========================
+
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 footer {
     padding: 35px 0;
 
-    border-top: 1px solid #222;
+    border-top:
+        1px solid rgba(255,255,255,.06);
+
+    color: var(--muted-2);
 
     text-align: center;
 
-    color: #666;
-    font-size: 13px;
+    font-size: 11px;
+
+    letter-spacing: .02em;
 }
 
-/* =========================
+
+/* =========================================================
    MODAL
-========================= */
+========================================================= */
 
 .modal {
     position: fixed;
@@ -617,9 +1232,11 @@ footer {
 
     padding: 20px;
 
-    background: rgba(0,0,0,.82);
+    background:
+        rgba(0,0,0,.78);
 
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .modal.active {
@@ -628,42 +1245,55 @@ footer {
 
 .modal-box {
     width: min(650px, 100%);
+
     max-height: 90vh;
 
     overflow-y: auto;
 
-    padding: 30px;
+    padding: 32px;
 
-    border: 1px solid #333;
-    border-radius: 15px;
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    border-radius: 20px;
 
     background:
         linear-gradient(
             145deg,
-            #151515,
-            #080808
+            #15151f,
+            #0b0b12
         );
 
-    box-shadow: 0 30px 100px rgba(0,0,0,.7);
+    box-shadow:
+        0 40px 120px rgba(0,0,0,.7);
 }
 
 .modal-header {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
-    margin-bottom: 25px;
+    margin-bottom: 27px;
+}
+
+.modal-header h2 {
+    font-size: 23px;
 }
 
 .close-button {
-    width: 35px;
-    height: 35px;
+    width: 38px;
+    height: 38px;
 
-    border: 1px solid #333;
-    border-radius: 8px;
+    border:
+        1px solid var(--border);
 
-    color: #aaa;
-    background: #111;
+    border-radius: 9px;
+
+    color: var(--muted);
+
+    background:
+        rgba(255,255,255,.03);
 
     cursor: pointer;
 }
@@ -681,8 +1311,11 @@ footer {
 
     margin-bottom: 7px;
 
-    color: #aaa;
-    font-size: 14px;
+    color: #b7b7c5;
+
+    font-size: 12px;
+
+    font-weight: 650;
 }
 
 .form-group input,
@@ -690,121 +1323,261 @@ footer {
 .form-group select {
     width: 100%;
 
-    padding: 12px;
+    padding: 12px 13px;
 
-    border: 1px solid #303030;
-    border-radius: 8px;
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    border-radius: 9px;
 
     outline: none;
 
     color: white;
-    background: #0a0a0a;
-}
 
-.form-group textarea {
-    min-height: 120px;
-    resize: vertical;
+    background:
+        #0a0a11;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-    border-color: #666;
+    border-color:
+        rgba(155,92,255,.55);
+
+    box-shadow:
+        0 0 0 3px rgba(155,92,255,.08);
+}
+
+.form-group textarea {
+    min-height: 120px;
+
+    resize: vertical;
 }
 
 .submit-button {
     width: 100%;
 
-    padding: 13px;
+    min-height: 45px;
 
     border: 0;
-    border-radius: 8px;
 
-    color: #111;
+    border-radius: 10px;
+
+    color: white;
 
     background:
         linear-gradient(
-            145deg,
-            #eee,
-            #888
+            135deg,
+            #864cff,
+            #315dff
         );
 
     font-weight: 800;
 
     cursor: pointer;
+
+    box-shadow:
+        0 10px 30px rgba(70,55,180,.20);
 }
 
 .submit-button:disabled {
     opacity: .5;
+
     cursor: wait;
 }
 
 .form-message {
-    margin-top: 15px;
+    min-height: 20px;
+
+    margin-top: 13px;
+
+    color: var(--muted);
 
     text-align: center;
 
-    color: #aaa;
+    font-size: 12px;
 }
-
-/* Honeypot */
 
 .website-field {
     position: absolute !important;
+
     left: -9999px !important;
+
+    width: 1px !important;
+    height: 1px !important;
+
     opacity: 0 !important;
 }
 
-/* =========================
+
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
-@media (max-width: 700px) {
-
-    .nav-inner {
-        min-height: 62px;
-    }
+@media (max-width: 850px) {
 
     .nav-links {
-        gap: 12px;
+        position: absolute;
+
+        top: 70px;
+        right: 20px;
+
+        width: 220px;
+
+        padding: 12px;
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 2px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 14px;
+
+        background:
+            rgba(12,12,19,.97);
+
+        backdrop-filter: blur(20px);
+
+        box-shadow:
+            0 25px 60px rgba(0,0,0,.45);
+    }
+
+    .nav-links.open {
+        display: flex;
     }
 
     .nav-links a {
-        font-size: 11px;
+        padding: 11px 12px;
+
+        border-radius: 8px;
     }
 
-    .hero-logo {
-        width: 110px;
-        height: 110px;
-        font-size: 75px;
+    .nav-links a:hover {
+        background:
+            rgba(255,255,255,.04);
+    }
+
+    .nav-links a::after {
+        display: none;
+    }
+
+    .nav-menu {
+        display: block;
+    }
+
+    .featured {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-image-wrap,
+    .featured-image {
+        min-height: 280px;
+    }
+
+    .about-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .development-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .container {
+        width:
+            min(
+                var(--max-width),
+                calc(100% - 28px)
+            );
+    }
+
+    .nav-inner {
+        min-height: 66px;
+    }
+
+    .nav-links {
+        top: 62px;
+        right: 14px;
+    }
+
+    .hero {
+        padding-top: 100px;
+    }
+
+    .vixel-mark {
+        width: 135px;
+        height: 135px;
     }
 
     .hero h1 {
-        letter-spacing: 2px;
+        margin-top: 27px;
+
+        font-size: 45px;
     }
 
-    .hero p {
-        font-size: 15px;
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        width: min(320px, 100%);
+
+        margin-inline: auto;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
     }
 
     section {
-        padding: 75px 0;
+        padding: 80px 0;
     }
 
-    .featured-image {
-        height: 220px;
+    .section-header {
+        margin-bottom: 28px;
     }
 
     .featured-content {
-        padding: 24px;
+        padding: 28px;
     }
 
-    .featured-content h3 {
-        font-size: 26px;
+    .featured-image-wrap,
+    .featured-image {
+        min-height: 220px;
     }
 
-    .section-title h2 {
-        font-size: 30px;
+    .development-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dev-card {
+        min-height: auto;
+    }
+
+    .dev-number {
+        margin-bottom: 28px;
     }
 
     .modal-box {
@@ -812,13 +1585,10 @@ footer {
     }
 
     #globalAnnouncement {
-        font-size: 13px;
         padding-left: 12px;
         padding-right: 45px;
-    }
 
-    #globalAnnouncementClose {
-        right: 12px;
+        font-size: 12px;
     }
 }
 </style>
@@ -826,9 +1596,14 @@ footer {
 
 <body>
 
-<!-- =========================
+<div class="background-grid"></div>
+<div class="ambient ambient-purple"></div>
+<div class="ambient ambient-blue"></div>
+
+
+<!-- =========================================================
      GLOBAL ANNOUNCEMENT
-========================= -->
+========================================================= -->
 
 <div id="globalAnnouncement">
 
@@ -845,31 +1620,110 @@ footer {
 </div>
 
 
-<!-- =========================
+<!-- =========================================================
      NAVBAR
-========================= -->
+========================================================= -->
 
 <nav class="navbar">
 
     <div class="container nav-inner">
 
-        <a href="#home" class="nav-logo">
+        <a
+            href="#home"
+            class="nav-logo"
+            aria-label="Vixel Games home"
+        >
 
-            <div class="nav-c">
-                C
+            <div class="nav-mark">
+
+                <svg
+                    viewBox="0 0 100 100"
+                    fill="none"
+                    aria-hidden="true"
+                >
+
+                    <defs>
+
+                        <linearGradient
+                            id="navGradient"
+                            x1="15"
+                            y1="10"
+                            x2="85"
+                            y2="90"
+                            gradientUnits="userSpaceOnUse"
+                        >
+
+                            <stop
+                                stop-color="#B46CFF"
+                            />
+
+                            <stop
+                                offset="1"
+                                stop-color="#315DFF"
+                            />
+
+                        </linearGradient>
+
+                    </defs>
+
+                    <path
+                        d="M50 8L88 30V70L50 92L12 70V30L50 8Z"
+                        stroke="url(#navGradient)"
+                        stroke-width="7"
+                    />
+
+                    <path
+                        d="M31 39L50 28L69 39L50 50L31 39Z"
+                        stroke="url(#navGradient)"
+                        stroke-width="5"
+                    />
+
+                    <path
+                        d="M31 61L50 72L69 61"
+                        stroke="url(#navGradient)"
+                        stroke-width="5"
+                    />
+
+                    <path
+                        d="M50 50V72"
+                        stroke="url(#navGradient)"
+                        stroke-width="5"
+                    />
+
+                </svg>
+
             </div>
 
-            CLASSIFIED STUDIOS
+            VIXEL
 
         </a>
 
-        <div class="nav-links">
+
+        <button
+            class="nav-menu"
+            id="navMenu"
+            type="button"
+            aria-label="Open navigation"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+
+        <div
+            class="nav-links"
+            id="navLinks"
+        >
 
             <a href="#home">Home</a>
             <a href="#games">Games</a>
             <a href="#about">About</a>
             <a href="#development">Development</a>
-            <a href="#jobs">Jobs</a>
+            <a href="#jobs">Careers</a>
 
         </div>
 
@@ -878,46 +1732,230 @@ footer {
 </nav>
 
 
-<!-- =========================
+<!-- =========================================================
      HERO
-========================= -->
+========================================================= -->
 
-<section class="hero" id="home">
+<section
+    class="hero"
+    id="home"
+>
 
     <div class="container hero-content">
 
-        <div class="hero-logo">
-            C
+        <div class="hero-eyebrow">
+
+            <span class="hero-eyebrow-dot"></span>
+
+            VIXEL VISION 2027
+
         </div>
 
+
+        <div class="vixel-mark">
+
+            <svg
+                viewBox="0 0 200 200"
+                fill="none"
+                aria-label="Vixel Games emblem"
+            >
+
+                <defs>
+
+                    <linearGradient
+                        id="vixelGradient"
+                        x1="35"
+                        y1="15"
+                        x2="170"
+                        y2="185"
+                        gradientUnits="userSpaceOnUse"
+                    >
+
+                        <stop
+                            stop-color="#C17BFF"
+                        />
+
+                        <stop
+                            offset=".45"
+                            stop-color="#8255FF"
+                        />
+
+                        <stop
+                            offset="1"
+                            stop-color="#315DFF"
+                        />
+
+                    </linearGradient>
+
+                    <filter
+                        id="vixelGlow"
+                        x="-50%"
+                        y="-50%"
+                        width="200%"
+                        height="200%"
+                    >
+
+                        <feGaussianBlur
+                            stdDeviation="5"
+                            result="blur"
+                        />
+
+                        <feMerge>
+
+                            <feMergeNode
+                                in="blur"
+                            />
+
+                            <feMergeNode
+                                in="SourceGraphic"
+                            />
+
+                        </feMerge>
+
+                    </filter>
+
+                </defs>
+
+
+                <g
+                    stroke="url(#vixelGradient)"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    filter="url(#vixelGlow)"
+                >
+
+                    <!-- Outer hexagonal structure -->
+
+                    <path
+                        d="M100 12L169 52V132L100 172L31 132V52L100 12Z"
+                        stroke-width="5"
+                    />
+
+                    <!-- Inner structural planes -->
+
+                    <path
+                        d="M100 32L151 61V123L100 152L49 123V61L100 32Z"
+                        stroke-width="3.5"
+                    />
+
+                    <!-- Upper-left channel -->
+
+                    <path
+                        d="M31 52L100 92L169 52"
+                        stroke-width="5"
+                    />
+
+                    <!-- Lower structural channels -->
+
+                    <path
+                        d="M31 132L100 92L169 132"
+                        stroke-width="5"
+                    />
+
+                    <!-- Central seam -->
+
+                    <path
+                        d="M100 92V172"
+                        stroke-width="4"
+                    />
+
+                    <!-- Nested upper chevrons -->
+
+                    <path
+                        d="M54 59L100 86L146 59"
+                        stroke-width="3"
+                    />
+
+                    <path
+                        d="M65 66L100 87L135 66"
+                        stroke-width="2"
+                    />
+
+                    <!-- Lower chevrons -->
+
+                    <path
+                        d="M54 125L100 98L146 125"
+                        stroke-width="3"
+                    />
+
+                    <path
+                        d="M65 119L100 98L135 119"
+                        stroke-width="2"
+                    />
+
+                    <!-- Center convergence -->
+
+                    <path
+                        d="M86 92L100 84L114 92L100 100L86 92Z"
+                        stroke-width="3"
+                    />
+
+                </g>
+
+            </svg>
+
+        </div>
+
+
         <h1 id="heroTitle">
-            CLASSIFIED STUDIOS
+            VIXEL GAMES
         </h1>
 
-        <p id="heroDescription">
-            A Roblox game development studio creating memorable
-            experiences, unique mechanics, and original ideas.
+
+        <p
+            class="hero-description"
+            id="heroDescription"
+        >
+            Creating original worlds, experiences, and ideas
+            built to leave a lasting impression.
         </p>
+
+
+        <div class="hero-actions">
+
+            <a
+                href="#games"
+                class="primary-button"
+            >
+                Explore our games
+            </a>
+
+            <a
+                href="#about"
+                class="secondary-button"
+            >
+                Discover Vixel
+            </a>
+
+        </div>
 
     </div>
 
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      FEATURED GAME
-========================= -->
+========================================================= -->
 
 <section id="featuredSection">
 
     <div class="container">
 
-        <div class="section-title">
+        <div class="section-header">
 
-            <h2>Featured Game</h2>
+            <div class="section-kicker">
+                Featured
+            </div>
+
+            <h2>
+                One experience.<br>
+                One world.
+            </h2>
 
             <p>
-                Our latest highlighted experience.
+                Discover the experience currently at the center
+                of Vixel Games.
             </p>
 
         </div>
@@ -927,13 +1965,22 @@ footer {
 
             <article class="featured">
 
-                <img
-                    class="featured-image"
-                    src="/images/hello-neighbor.png"
-                    alt="Hello Neighbor"
-                >
+                <div class="featured-image-wrap">
+
+                    <img
+                        class="featured-image"
+                        src="/images/hello-neighbor.png"
+                        alt="Hello Neighbor"
+                    >
+
+                </div>
+
 
                 <div class="featured-content">
+
+                    <span class="featured-label">
+                        Featured experience
+                    </span>
 
                     <h3>
                         Hello Neighbor
@@ -945,7 +1992,7 @@ footer {
                     </p>
 
                     <a
-                        class="roblox-button"
+                        class="primary-button"
                         href="https://www.roblox.com/games/86495471270335/Hello-Neighbor"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -964,39 +2011,49 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      GAMES
-========================= -->
+========================================================= -->
 
 <section id="games">
 
     <div class="container">
 
-        <div class="section-title">
+        <div class="section-header">
 
-            <h2>Our Games</h2>
+            <div class="section-kicker">
+                Our work
+            </div>
+
+            <h2>
+                Games
+            </h2>
 
             <p>
-                Experiences created by Classified Studios.
+                Experiences developed by Vixel Games.
             </p>
 
         </div>
 
 
-        <div id="gamesGrid" class="games-grid">
-
-            <!-- Games are loaded from Supabase -->
+        <div
+            id="gamesGrid"
+            class="games-grid"
+        >
 
             <article class="game-card">
 
                 <img
+                    class="game-card-image"
                     src="/images/hello-neighbor.png"
                     alt="Hello Neighbor"
                 >
 
                 <div class="game-content">
 
-                    <h3>Hello Neighbor</h3>
+                    <h3>
+                        Hello Neighbor
+                    </h3>
 
                     <p>
                         Explore, survive, and uncover the secrets
@@ -1020,16 +2077,19 @@ footer {
             <article class="game-card">
 
                 <img
+                    class="game-card-image"
                     src="/images/subliminal.png"
                     alt="Subliminal"
                 >
 
                 <div class="game-content">
 
-                    <h3>Subliminal</h3>
+                    <h3>
+                        Subliminal
+                    </h3>
 
                     <p>
-                        A mysterious Roblox horror experience where
+                        A mysterious horror experience where
                         reality may not be what it seems.
                     </p>
 
@@ -1053,28 +2113,53 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      ABOUT
-========================= -->
+========================================================= -->
 
 <section id="about">
 
     <div class="container">
 
-        <div class="section-title">
+        <div class="section-header">
 
-            <h2>About Classified Studios</h2>
+            <div class="section-kicker">
+                Who we are
+            </div>
+
+            <h2>
+                Built with purpose.
+            </h2>
 
         </div>
 
 
-        <div class="about-box">
+        <div class="about-layout">
 
-            <p id="aboutText">
-                Classified Studios is a Roblox game development studio
-                focused on creating memorable experiences, unique
-                mechanics, and original ideas.
-            </p>
+            <div class="about-intro">
+
+                <h3>
+                    Vixel Games
+                </h3>
+
+                <span>
+                    Independent game development studio
+                </span>
+
+            </div>
+
+
+            <div class="about-box">
+
+                <p id="aboutText">
+                    Vixel Games is a game development studio focused
+                    on creating memorable experiences, unique
+                    mechanics, detailed worlds, and original ideas.
+                    Our goal is to build games that players remember
+                    long after they leave them.
+                </p>
+
+            </div>
 
         </div>
 
@@ -1083,20 +2168,26 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      DEVELOPMENT
-========================= -->
+========================================================= -->
 
 <section id="development">
 
     <div class="container">
 
-        <div class="section-title">
+        <div class="section-header">
 
-            <h2>Development</h2>
+            <div class="section-kicker">
+                Behind the games
+            </div>
+
+            <h2>
+                Development
+            </h2>
 
             <p>
-                What we work on.
+                The disciplines that bring our experiences to life.
             </p>
 
         </div>
@@ -1106,11 +2197,17 @@ footer {
 
             <div class="dev-card">
 
-                <h3>Game Development</h3>
+                <div class="dev-number">
+                    01
+                </div>
+
+                <h3>
+                    Game Development
+                </h3>
 
                 <p>
-                    Designing and developing unique Roblox experiences
-                    from concept to release.
+                    Designing and developing original Roblox
+                    experiences from concept to release.
                 </p>
 
             </div>
@@ -1118,11 +2215,17 @@ footer {
 
             <div class="dev-card">
 
-                <h3>Building</h3>
+                <div class="dev-number">
+                    02
+                </div>
+
+                <h3>
+                    Building
+                </h3>
 
                 <p>
-                    Creating detailed environments, maps, structures,
-                    and gameplay spaces.
+                    Creating detailed environments, maps,
+                    structures, and gameplay spaces.
                 </p>
 
             </div>
@@ -1130,11 +2233,17 @@ footer {
 
             <div class="dev-card">
 
-                <h3>VFX</h3>
+                <div class="dev-number">
+                    03
+                </div>
+
+                <h3>
+                    VFX
+                </h3>
 
                 <p>
-                    Creating visual effects that make gameplay feel
-                    more immersive.
+                    Creating visual effects that make gameplay
+                    more immersive and expressive.
                 </p>
 
             </div>
@@ -1142,11 +2251,17 @@ footer {
 
             <div class="dev-card">
 
-                <h3>Scripting</h3>
+                <div class="dev-number">
+                    04
+                </div>
+
+                <h3>
+                    Scripting
+                </h3>
 
                 <p>
-                    Building gameplay systems, mechanics, interfaces,
-                    and interactive features.
+                    Building gameplay systems, mechanics,
+                    interfaces, and interactive features.
                 </p>
 
             </div>
@@ -1158,20 +2273,27 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      JOBS
-========================= -->
+========================================================= -->
 
 <section id="jobs">
 
     <div class="container">
 
-        <div class="section-title">
+        <div class="section-header">
 
-            <h2>Join Classified Studios</h2>
+            <div class="section-kicker">
+                Careers
+            </div>
+
+            <h2>
+                Build with Vixel.
+            </h2>
 
             <p>
-                Interested in working with us?
+                We're looking for talented creators who want
+                to help build the next generation of experiences.
             </p>
 
         </div>
@@ -1181,7 +2303,9 @@ footer {
 
             <div class="job-card">
 
-                <h3>Animator</h3>
+                <h3>
+                    Animator
+                </h3>
 
                 <p>
                     Create character and gameplay animations.
@@ -1190,6 +2314,7 @@ footer {
                 <button
                     class="apply-button"
                     data-position="Animator"
+                    type="button"
                 >
                     Apply
                 </button>
@@ -1199,7 +2324,9 @@ footer {
 
             <div class="job-card">
 
-                <h3>Builder</h3>
+                <h3>
+                    Builder
+                </h3>
 
                 <p>
                     Build environments, maps, and detailed
@@ -1209,6 +2336,7 @@ footer {
                 <button
                     class="apply-button"
                     data-position="Builder"
+                    type="button"
                 >
                     Apply
                 </button>
@@ -1218,7 +2346,9 @@ footer {
 
             <div class="job-card">
 
-                <h3>VFX Artist</h3>
+                <h3>
+                    VFX Artist
+                </h3>
 
                 <p>
                     Create visual effects for our games.
@@ -1227,6 +2357,7 @@ footer {
                 <button
                     class="apply-button"
                     data-position="VFX Artist"
+                    type="button"
                 >
                     Apply
                 </button>
@@ -1236,7 +2367,9 @@ footer {
 
             <div class="job-card">
 
-                <h3>Scripter</h3>
+                <h3>
+                    Scripter
+                </h3>
 
                 <p>
                     Develop gameplay systems and mechanics.
@@ -1245,6 +2378,7 @@ footer {
                 <button
                     class="apply-button"
                     data-position="Scripter"
+                    type="button"
                 >
                     Apply
                 </button>
@@ -1258,21 +2392,23 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      SOCIALS
-========================= -->
+========================================================= -->
 
 <section>
 
     <div class="container">
 
-        <div class="section-title">
+        <div class="section-header">
 
-            <h2>Socials</h2>
+            <div class="section-kicker">
+                Connect
+            </div>
 
-            <p>
-                Follow Classified Studios.
-            </p>
+            <h2>
+                Find Vixel.
+            </h2>
 
         </div>
 
@@ -1318,36 +2454,49 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- =========================================================
      FOOTER
-========================= -->
+========================================================= -->
 
 <footer>
 
-    © 2026 Classified Studios. All rights reserved.
+    <div class="container">
+
+        © 2026 Vixel Games. All rights reserved.
+
+    </div>
 
 </footer>
 
 
-<!-- =========================
+<!-- =========================================================
      APPLICATION MODAL
-========================= -->
+========================================================= -->
 
 <div
     class="modal"
     id="applicationModal"
+    aria-hidden="true"
 >
 
-    <div class="modal-box">
+    <div
+        class="modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="applicationTitle"
+    >
 
         <div class="modal-header">
 
-            <h2>Job Application</h2>
+            <h2 id="applicationTitle">
+                Join Vixel
+            </h2>
 
             <button
                 class="close-button"
                 id="closeModal"
                 type="button"
+                aria-label="Close application"
             >
                 ×
             </button>
@@ -1367,6 +2516,7 @@ footer {
                     id="name"
                     name="name"
                     type="text"
+                    maxlength="100"
                     required
                 >
 
@@ -1383,6 +2533,7 @@ footer {
                     id="robloxUsername"
                     name="roblox_username"
                     type="text"
+                    maxlength="30"
                     required
                 >
 
@@ -1439,6 +2590,7 @@ footer {
                     id="portfolio"
                     name="portfolio"
                     type="url"
+                    maxlength="500"
                     placeholder="https://..."
                 >
 
@@ -1454,6 +2606,7 @@ footer {
                 <textarea
                     id="experience"
                     name="experience"
+                    maxlength="3000"
                     required
                 ></textarea>
 
@@ -1469,13 +2622,12 @@ footer {
                 <textarea
                     id="reason"
                     name="reason"
+                    maxlength="3000"
                     required
                 ></textarea>
 
             </div>
 
-
-            <!-- Anti-spam honeypot -->
 
             <input
                 class="website-field"
@@ -1483,6 +2635,7 @@ footer {
                 type="text"
                 tabindex="-1"
                 autocomplete="off"
+                aria-hidden="true"
             >
 
 
@@ -1498,6 +2651,8 @@ footer {
             <div
                 class="form-message"
                 id="formMessage"
+                role="status"
+                aria-live="polite"
             ></div>
 
         </form>
@@ -1508,20 +2663,46 @@ footer {
 
 
 <script>
+"use strict";
 
-/* ==========================================
+
+/* =========================================================
    SUPABASE
-========================================== */
+========================================================= */
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+let supabaseClient = null;
+
+try {
+
+    if (
+        typeof window.supabase === "undefined" ||
+        typeof SUPABASE_URL !== "string" ||
+        typeof SUPABASE_KEY !== "string"
+    ) {
+        throw new Error(
+            "Supabase configuration is missing."
+        );
+    }
+
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+} catch (error) {
+
+    console.error(
+        "Supabase initialization failed:",
+        error
+    );
+
+}
 
 
-/* ==========================================
-   HTML ESCAPING
-========================================== */
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function escapeHTML(value) {
 
@@ -1531,12 +2712,9 @@ function escapeHTML(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
 
-
-/* ==========================================
-   SAFE URL
-========================================== */
 
 function safeUrl(value) {
 
@@ -1544,7 +2722,9 @@ function safeUrl(value) {
         return "#";
     }
 
-    const url = String(value).trim();
+    const url =
+        String(value)
+            .trim();
 
     if (
         url.startsWith("/") ||
@@ -1555,12 +2735,13 @@ function safeUrl(value) {
     }
 
     return "#";
+
 }
 
 
-/* ==========================================
-   LOAD GLOBAL ANNOUNCEMENT
-========================================== */
+/* =========================================================
+   ANNOUNCEMENT
+========================================================= */
 
 async function loadGlobalAnnouncement() {
 
@@ -1580,158 +2761,420 @@ async function loadGlobalAnnouncement() {
         );
 
 
-    if (!banner || !text) {
-        return;
-    }
-
-
-    const { data, error } =
-        await supabaseClient
-            .from("announcements")
-            .select("message, active")
-            .eq("active", true)
-            .limit(1)
-            .maybeSingle();
-
-
     if (
-        error ||
-        !data ||
-        !data.message
+        !banner ||
+        !text ||
+        !supabaseClient
     ) {
-
-        banner.classList.remove("show");
-
         return;
     }
 
 
-    text.textContent = data.message;
+    try {
 
-    banner.classList.add("show");
+        const result =
+            await supabaseClient
+                .from("announcements")
+                .select("message, active")
+                .eq("active", true)
+                .limit(1)
+                .maybeSingle();
 
 
-    if (closeButton) {
+        if (result.error) {
 
-        closeButton.onclick = function() {
+            console.error(
+                "Could not load announcement:",
+                result.error
+            );
 
-            banner.classList.remove("show");
+            return;
+        }
 
-        };
+
+        const data =
+            result.data;
+
+
+        if (
+            !data ||
+            !data.message
+        ) {
+            return;
+        }
+
+
+        text.textContent =
+            data.message;
+
+        banner.classList.add(
+            "show"
+        );
+
+
+        closeButton.onclick =
+            () => {
+
+                banner.classList.remove(
+                    "show"
+                );
+
+            };
+
+    } catch (error) {
+
+        console.error(
+            "Announcement request failed:",
+            error
+        );
 
     }
+
 }
 
 
-/* ==========================================
-   LOAD WEBSITE SETTINGS
-========================================== */
+/* =========================================================
+   SETTINGS
+========================================================= */
 
 async function loadSettings() {
 
-    const { data, error } =
-        await supabaseClient
-            .from("site_settings")
-            .select("hero_title, hero_description, about_text")
-            .eq("id", 1)
-            .maybeSingle();
-
-    if (error || !data) {
-
-        console.log(
-            "Using default website settings."
-        );
-
+    if (!supabaseClient) {
         return;
     }
 
 
-    if (data.hero_title) {
+    try {
 
-        document.getElementById("heroTitle")
-            .textContent = data.hero_title;
+        const result =
+            await supabaseClient
+                .from("site_settings")
+                .select(
+                    "hero_title, hero_description, about_text"
+                )
+                .eq("id", 1)
+                .maybeSingle();
+
+
+        if (result.error) {
+
+            console.error(
+                "Could not load site settings:",
+                result.error
+            );
+
+            return;
+        }
+
+
+        const data =
+            result.data;
+
+
+        if (!data) {
+            return;
+        }
+
+
+        const heroTitle =
+            document.getElementById(
+                "heroTitle"
+            );
+
+        const heroDescription =
+            document.getElementById(
+                "heroDescription"
+            );
+
+        const aboutText =
+            document.getElementById(
+                "aboutText"
+            );
+
+
+        if (
+            data.hero_title &&
+            heroTitle
+        ) {
+
+            heroTitle.textContent =
+                data.hero_title;
+
+        }
+
+
+        if (
+            data.hero_description &&
+            heroDescription
+        ) {
+
+            heroDescription.textContent =
+                data.hero_description;
+
+        }
+
+
+        if (
+            data.about_text &&
+            aboutText
+        ) {
+
+            aboutText.textContent =
+                data.about_text;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Settings request failed:",
+            error
+        );
 
     }
 
-
-    if (data.hero_description) {
-
-        document.getElementById("heroDescription")
-            .textContent = data.hero_description;
-
-    }
-
-
-    if (data.about_text) {
-
-        document.getElementById("aboutText")
-            .textContent = data.about_text;
-
-    }
 }
 
 
-/* ==========================================
-   LOAD GAMES
-========================================== */
+/* =========================================================
+   GAMES
+========================================================= */
 
 async function loadGames() {
 
     const grid =
-        document.getElementById("gamesGrid");
+        document.getElementById(
+            "gamesGrid"
+        );
 
 
-    const { data, error } =
-        await supabaseClient
-            .from("games")
-            .select("*")
-            .eq("published", true)
-            .order("sort_order", {
-                ascending: true
-            });
+    if (
+        !grid ||
+        !supabaseClient
+    ) {
+        return;
+    }
 
 
-    if (error) {
+    try {
+
+        const result =
+            await supabaseClient
+                .from("games")
+                .select("*")
+                .eq("published", true)
+                .order(
+                    "sort_order",
+                    {
+                        ascending: true
+                    }
+                );
+
+
+        if (result.error) {
+
+            console.error(
+                "Could not load games:",
+                result.error
+            );
+
+            return;
+        }
+
+
+        const data =
+            result.data;
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+            return;
+        }
+
+
+        grid.innerHTML =
+            data.map(
+                game => {
+
+                    const image =
+                        safeUrl(
+                            game.image_url
+                        );
+
+                    const roblox =
+                        safeUrl(
+                            game.roblox_url
+                        );
+
+
+                    return `
+                        <article class="game-card">
+
+                            ${
+                                image !== "#"
+                                ? `
+                                    <img
+                                        class="game-card-image"
+                                        src="${escapeHTML(image)}"
+                                        alt="${escapeHTML(game.title)}"
+                                        loading="lazy"
+                                        onerror="this.style.display='none'"
+                                    >
+                                `
+                                : ""
+                            }
+
+                            <div class="game-content">
+
+                                <h3>
+                                    ${escapeHTML(game.title)}
+                                </h3>
+
+                                <p>
+                                    ${escapeHTML(game.description)}
+                                </p>
+
+                                ${
+                                    roblox !== "#"
+                                    ? `
+                                        <a
+                                            class="game-link"
+                                            href="${escapeHTML(roblox)}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Play on Roblox →
+                                        </a>
+                                    `
+                                    : ""
+                                }
+
+                            </div>
+
+                        </article>
+                    `;
+
+                }
+            ).join("");
+
+
+    } catch (error) {
 
         console.error(
-            "Could not load games:",
+            "Games request failed:",
             error
         );
 
+    }
+
+}
+
+
+/* =========================================================
+   FEATURED GAME
+========================================================= */
+
+async function loadFeaturedGame() {
+
+    const container =
+        document.getElementById(
+            "featuredGame"
+        );
+
+
+    if (
+        !container ||
+        !supabaseClient
+    ) {
         return;
     }
 
 
-    if (!data || data.length === 0) {
-        return;
-    }
+    try {
+
+        const result =
+            await supabaseClient
+                .from("games")
+                .select("*")
+                .eq("published", true)
+                .eq("featured", true)
+                .order(
+                    "sort_order",
+                    {
+                        ascending: true
+                    }
+                )
+                .limit(1);
 
 
-    grid.innerHTML = data.map(game => {
+        if (result.error) {
+
+            console.error(
+                "Could not load featured game:",
+                result.error
+            );
+
+            return;
+        }
+
+
+        const data =
+            result.data;
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+            return;
+        }
+
+
+        const game =
+            data[0];
+
 
         const image =
-            safeUrl(game.image_url);
+            safeUrl(
+                game.image_url
+            );
 
         const roblox =
-            safeUrl(game.roblox_url);
+            safeUrl(
+                game.roblox_url
+            );
 
 
-        return `
-            <article class="game-card">
+        container.innerHTML = `
 
-                ${
-                    image !== "#"
-                    ? `
-                        <img
-                            src="${escapeHTML(image)}"
-                            alt="${escapeHTML(game.title)}"
-                            onerror="this.style.display='none'"
-                        >
-                    `
-                    : ""
-                }
+            <article class="featured">
 
-                <div class="game-content">
+                <div class="featured-image-wrap">
+
+                    ${
+                        image !== "#"
+                        ? `
+                            <img
+                                class="featured-image"
+                                src="${escapeHTML(image)}"
+                                alt="${escapeHTML(game.title)}"
+                                loading="lazy"
+                                onerror="this.style.display='none'"
+                            >
+                        `
+                        : ""
+                    }
+
+                </div>
+
+
+                <div class="featured-content">
+
+                    <span class="featured-label">
+                        Featured experience
+                    </span>
 
                     <h3>
                         ${escapeHTML(game.title)}
@@ -1745,12 +3188,12 @@ async function loadGames() {
                         roblox !== "#"
                         ? `
                             <a
-                                class="game-link"
+                                class="primary-button"
                                 href="${escapeHTML(roblox)}"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Play on Roblox →
+                                Play on Roblox
                             </a>
                         `
                         : ""
@@ -1759,109 +3202,89 @@ async function loadGames() {
                 </div>
 
             </article>
+
         `;
 
-    }).join("");
-}
+    } catch (error) {
 
-
-/* ==========================================
-   LOAD FEATURED GAME
-========================================== */
-
-async function loadFeaturedGame() {
-
-    const container =
-        document.getElementById(
-            "featuredGame"
+        console.error(
+            "Featured game request failed:",
+            error
         );
 
-
-    const { data, error } =
-        await supabaseClient
-            .from("games")
-            .select("*")
-            .eq("published", true)
-            .eq("featured", true)
-            .order("sort_order", {
-                ascending: true
-            })
-            .limit(1);
-
-
-    if (
-        error ||
-        !data ||
-        data.length === 0
-    ) {
-
-        return;
     }
 
-
-    const game = data[0];
-
-
-    const image =
-        safeUrl(game.image_url);
-
-    const roblox =
-        safeUrl(game.roblox_url);
-
-
-    container.innerHTML = `
-
-        <article class="featured">
-
-            ${
-                image !== "#"
-                ? `
-                    <img
-                        class="featured-image"
-                        src="${escapeHTML(image)}"
-                        alt="${escapeHTML(game.title)}"
-                        onerror="this.style.display='none'"
-                    >
-                `
-                : ""
-            }
-
-            <div class="featured-content">
-
-                <h3>
-                    ${escapeHTML(game.title)}
-                </h3>
-
-                <p>
-                    ${escapeHTML(game.description)}
-                </p>
-
-                ${
-                    roblox !== "#"
-                    ? `
-                        <a
-                            class="roblox-button"
-                            href="${escapeHTML(roblox)}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Play on Roblox
-                        </a>
-                    `
-                    : ""
-                }
-
-            </div>
-
-        </article>
-
-    `;
 }
 
 
-/* ==========================================
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+const navMenu =
+    document.getElementById(
+        "navMenu"
+    );
+
+const navLinks =
+    document.getElementById(
+        "navLinks"
+    );
+
+
+if (
+    navMenu &&
+    navLinks
+) {
+
+    navMenu.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                navLinks.classList.toggle(
+                    "open"
+                );
+
+            navMenu.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        }
+    );
+
+
+    navLinks
+        .querySelectorAll("a")
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        navLinks.classList.remove(
+                            "open"
+                        );
+
+                        navMenu.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
    APPLICATION MODAL
-========================================== */
+========================================================= */
 
 const modal =
     document.getElementById(
@@ -1884,54 +3307,139 @@ const positionSelect =
     );
 
 
-document
-    .querySelectorAll(".apply-button")
-    .forEach(button => {
+function openApplicationModal(
+    position
+) {
 
-        button.addEventListener(
-            "click",
-            () => {
+    if (
+        !modal ||
+        !positionSelect
+    ) {
+        return;
+    }
 
-                positionSelect.value =
-                    button.dataset.position;
 
-                modal.classList.add(
-                    "active"
-                );
+    positionSelect.value =
+        position;
 
-                document
-                    .getElementById("name")
-                    .focus();
 
-            }
+    modal.classList.add(
+        "active"
+    );
+
+    modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+
+    const nameInput =
+        document.getElementById(
+            "name"
         );
 
-    });
 
+    if (nameInput) {
 
-closeModal.addEventListener(
-    "click",
-    () => {
-
-        modal.classList.remove(
-            "active"
+        setTimeout(
+            () => nameInput.focus(),
+            50
         );
 
     }
-);
+
+}
 
 
-modal.addEventListener(
-    "click",
+function closeApplicationModal() {
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.remove(
+        "active"
+    );
+
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+}
+
+
+document
+    .querySelectorAll(
+        ".apply-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    openApplicationModal(
+                        button.dataset.position || ""
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+if (closeModal) {
+
+    closeModal.addEventListener(
+        "click",
+        closeApplicationModal
+    );
+
+}
+
+
+if (modal) {
+
+    modal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeApplicationModal();
+
+            }
+
+        }
+    );
+
+}
+
+
+document.addEventListener(
+    "keydown",
     event => {
 
         if (
-            event.target === modal
+            event.key === "Escape" &&
+            modal?.classList.contains("active")
         ) {
 
-            modal.classList.remove(
-                "active"
-            );
+            closeApplicationModal();
 
         }
 
@@ -1939,169 +3447,216 @@ modal.addEventListener(
 );
 
 
-/* ==========================================
+/* =========================================================
    APPLICATION SUBMISSION
-========================================== */
+========================================================= */
 
-applicationForm.addEventListener(
-    "submit",
-    async event => {
+if (applicationForm) {
 
-        event.preventDefault();
+    applicationForm.addEventListener(
+        "submit",
+        async event => {
 
-
-        const submitButton =
-            document.getElementById(
-                "submitApplication"
-            );
-
-        const message =
-            document.getElementById(
-                "formMessage"
-            );
+            event.preventDefault();
 
 
-        const formData =
-            new FormData(
-                applicationForm
-            );
+            const submitButton =
+                document.getElementById(
+                    "submitApplication"
+                );
 
-
-        /* Honeypot */
-
-        if (
-            String(
-                formData.get(
-                    "website"
-                ) || ""
-            ).trim()
-        ) {
-
-            return;
-        }
-
-
-        const application = {
-
-            name:
-                String(
-                    formData.get(
-                        "name"
-                    ) || ""
-                ).trim(),
-
-            roblox_username:
-                String(
-                    formData.get(
-                        "roblox_username"
-                    ) || ""
-                ).trim(),
-
-            position:
-                String(
-                    formData.get(
-                        "position"
-                    ) || ""
-                ).trim(),
-
-            portfolio:
-                String(
-                    formData.get(
-                        "portfolio"
-                    ) || ""
-                ).trim(),
-
-            experience:
-                String(
-                    formData.get(
-                        "experience"
-                    ) || ""
-                ).trim(),
-
-            reason:
-                String(
-                    formData.get(
-                        "reason"
-                    ) || ""
-                ).trim(),
-
-            status: "Pending"
-
-        };
-
-
-        submitButton.disabled = true;
-
-        submitButton.textContent =
-            "Submitting...";
-
-        message.textContent = "";
-
-
-        const { error } =
-            await supabaseClient
-                .from("applications")
-                .insert(
-                    application
+            const message =
+                document.getElementById(
+                    "formMessage"
                 );
 
 
-        if (error) {
+            if (
+                !submitButton ||
+                !message
+            ) {
+                return;
+            }
 
-            console.error(error);
 
-            message.textContent =
-                "Something went wrong. Please try again.";
+            const formData =
+                new FormData(
+                    applicationForm
+                );
 
-            submitButton.disabled = false;
+
+            const honeypot =
+                String(
+                    formData.get(
+                        "website"
+                    ) || ""
+                ).trim();
+
+
+            if (honeypot) {
+                return;
+            }
+
+
+            if (!supabaseClient) {
+
+                message.textContent =
+                    "The application system is currently unavailable.";
+
+                return;
+            }
+
+
+            const application = {
+
+                name:
+                    String(
+                        formData.get(
+                            "name"
+                        ) || ""
+                    ).trim(),
+
+                roblox_username:
+                    String(
+                        formData.get(
+                            "roblox_username"
+                        ) || ""
+                    ).trim(),
+
+                position:
+                    String(
+                        formData.get(
+                            "position"
+                        ) || ""
+                    ).trim(),
+
+                portfolio:
+                    String(
+                        formData.get(
+                            "portfolio"
+                        ) || ""
+                    ).trim(),
+
+                experience:
+                    String(
+                        formData.get(
+                            "experience"
+                        ) || ""
+                    ).trim(),
+
+                reason:
+                    String(
+                        formData.get(
+                            "reason"
+                        ) || ""
+                    ).trim(),
+
+                status:
+                    "Pending"
+
+            };
+
+
+            submitButton.disabled =
+                true;
 
             submitButton.textContent =
-                "Submit Application";
+                "Submitting...";
 
-            return;
-        }
-
-
-        message.textContent =
-            "Application submitted successfully!";
+            message.textContent =
+                "";
 
 
-        applicationForm.reset();
+            try {
+
+                const result =
+                    await supabaseClient
+                        .from("applications")
+                        .insert(
+                            application
+                        );
 
 
-        setTimeout(
-            () => {
+                if (result.error) {
 
-                modal.classList.remove(
-                    "active"
+                    console.error(
+                        "Application submission failed:",
+                        result.error
+                    );
+
+                    message.textContent =
+                        "Something went wrong. Please try again.";
+
+                    return;
+                }
+
+
+                message.textContent =
+                    "Application submitted successfully!";
+
+
+                applicationForm.reset();
+
+
+                setTimeout(
+                    () => {
+
+                        closeApplicationModal();
+
+                        message.textContent =
+                            "";
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.textContent =
+                            "Submit Application";
+
+                    },
+                    1800
                 );
 
-                message.textContent = "";
 
-                submitButton.disabled =
-                    false;
+            } catch (error) {
 
-                submitButton.textContent =
-                    "Submit Application";
+                console.error(
+                    "Application request failed:",
+                    error
+                );
 
-            },
-            1800
-        );
+                message.textContent =
+                    "Something went wrong. Please try again.";
 
-    }
-);
+            } finally {
+
+                if (
+                    submitButton.textContent ===
+                    "Submitting..."
+                ) {
+
+                    submitButton.disabled =
+                        false;
+
+                    submitButton.textContent =
+                        "Submit Application";
+
+                }
+
+            }
+
+        }
+    );
+
+}
 
 
-/* ==========================================
-   START WEBSITE
-========================================== */
+/* =========================================================
+   START
+========================================================= */
 
 loadGlobalAnnouncement();
-
 loadSettings();
-
 loadGames();
-
 loadFeaturedGame();
 
 </script>
